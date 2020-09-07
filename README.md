@@ -1,7 +1,7 @@
 # EELSfitter
 
 This repository contains the EELSfitter code developed for the ZLP-subtraction in EEL spectra, 
-developed in 'Python 3.8'. 
+developed in Python 3.8. 
 
 **Fitter.ipynb** contains both the data preparation for training and the NN model that 
 carries out the training.
