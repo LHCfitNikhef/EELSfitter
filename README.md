@@ -72,7 +72,7 @@ The notebook is structured as follows:
 - Keep only the data points with $\Delta E \le \Delta E_{\rm I}$ and drop the points with higher energy losses.
 - Calculate experimental central values and uncertainties by means of EWD.
 - Add pseudo datapoints for $\Delta E \ge \Delta E_{\rm II}$
-\[ \Delta\]
+`in line` $\beta$ `code`
 
 
 
