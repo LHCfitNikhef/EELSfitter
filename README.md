@@ -1,3 +1,6 @@
+![Banner](Data/Banner.pdf)
+
+
 # EELSfitter
 
 Welcome to the repository containing the **EELSfitter** code! **EELSfiter** is an open-source Python-based framework developed for the analysis and interpretation of Electron Energy Loss Spectroscopy (EELS) measurements in Transmission Electron Microscopy (TEM). **EELSfitter** is based on the machine learning techniques developed by the [NNPDF Collaboration](http://nnpdf.mi.infn.it/) in the context of applications in high energy physics, in particular feed-forward neural networks for unbiased regression in multidimensional problems.
