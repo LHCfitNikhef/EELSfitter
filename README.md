@@ -24,7 +24,7 @@ If you have any question about the code and its usage or would like to suggest a
 If you use **EELSfitter** in a scientific publication, please cite the original publication:
 
 - *Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning*, 
-Laurien Roest, Sabrya E. van Heijst, Luigi Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.aaaaa](https://arxiv.org/abs/2009.00014).
+Laurien I. Roest, Sabrya E. van Heijst, Luigi Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.aaaaa](https://arxiv.org/abs/2009.00014).
 
 as well as the [DOI:(...)](https://google.com/) associated to the code.
 
@@ -33,10 +33,10 @@ as well as the [DOI:(...)](https://google.com/) associated to the code.
 Up to now the **EELSfitter** code has been used in the following scientific publications:
 
 - *Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning*, 
-Laurien Roest, Sabrya E. van Heijst, Luigi Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.aaaaa](https://arxiv.org/abs/2009.00014).
+Laurien I. Roest, Sabrya E. van Heijst, Luigi Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.aaaaa](https://arxiv.org/abs/2009.00014).
 
 - *Fingerprinting 2H/3R Polytypism in WS2 Nanoflowers from Plasmons and Excitons to Phonons*,
-Sabrya E. van Heijst, Mukai Masaki, E. Okunishi, H. Kurata ,Laurien Roest, Louis Arcolino Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.aaaaa](https://arxiv.org/abs/2009.00014).
+Sabrya E. van Heijst, Mukai Masaki, E. Okunishi, H. Kurata, Laurien I. Roest, Louis Arcolino Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.aaaaa](https://arxiv.org/abs/2009.00014).
 
 If you use **EELSfitter** in your own publication, we would be glad if you could let us know so that we could add your publication to this list.
 
