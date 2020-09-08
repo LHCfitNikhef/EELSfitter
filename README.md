@@ -1,4 +1,4 @@
-![Banner](Data/Banner.pdf)
+![Banner](Data/Banner.png)
 
 
 # EELSfitter
