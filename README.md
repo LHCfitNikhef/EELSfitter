@@ -14,7 +14,7 @@ The current version of **EELSfitter** includes, among others, the following feat
 
 - [Sonia Conesa-Boj](mailto:S.C.ConesaBoj@tudelft.nl) (TU Delft), [conesabojlab](https://conesabojlab.tudelft.nl/)
 - [Laurien Roest](mailto:L.I.Roest@student.tudelft.nl) (TU Delft)
-- [Juan Rojo](mailto:j.rojo@vu.nl) (Nikhef and VU Amsterdam), [juanrojo.com](www.juanrojo.com)
+- [Juan Rojo](mailto:j.rojo@vu.nl) (Nikhef and VU Amsterdam), [juanrojo.com](http://www.juanrojo.com)
 - [Isabel Postmes](mailto:isabelpostmes@gmail.com) (TU Delft)
 
 If you have any question about the code and its usage or would like to suggest additional new features, please do not hesitate to contact the developer's team.
