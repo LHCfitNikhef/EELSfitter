@@ -44,7 +44,7 @@ If you use **EELSfitter** in your own publication, we would be glad if you could
 
 Below we provide some information about the installation and usage of **EELSfitter**. The code developes a working Python v3.8 installation and relies on the [TensorFlow library](https://www.tensorflow.org/) v2.0.
 
-Usage [this publication](https://arxiv.org/abs/2009.00014). 
+A most comprehensive version of this user instruction can be found in the Appendix of [this publication](https://arxiv.org/abs/2009.00014). 
 
 ### Data
 In this folder, the raw spectrum files and the training results are stored.
