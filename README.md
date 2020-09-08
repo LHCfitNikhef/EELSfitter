@@ -42,18 +42,42 @@ If you use **EELSfitter** in your own publication, we would be glad if you could
 
 ## Installation and usage
 
-Below we provide some information about the installation and usage of **EELSfitter**. Further details are provided in Appendix A of [this publication](https://arxiv.org/abs/2009.00014). The code developes a working Python v3.8 installation and relies on the [TensorFlow library](https://www.tensorflow.org/) v2.0.
+Below we provide some information about the installation and usage of **EELSfitter**. The code developes a working Python v3.8 installation and relies on the [TensorFlow library](https://www.tensorflow.org/) v2.0.
 
-### 
+Usage [this publication](https://arxiv.org/abs/2009.00014). 
 
-`fitter.ipynb` contains both the data preparation for training and the NN model that 
-carries out the training.
+### Data
+In this folder, the raw spectrum files and the training results are stored.
 
-`functions.py` contains a couple of functions that are used, *e.g.* 
-for calculating means, errors and smoothing functions.
+### Models
+Place where the neural network paramers and optimal configurations are saved, to be restored later in order to make predictions on pre-trained nets (see **predicitons_pretrained_net.ipynb**).
 
-`load_data.py` imports the raw spectra and returns the intensities, calibrates with the maximum intensity
-at zero energy loss, and returns both the original and normalized intensities.
+### Functions.py
+File that contains a couple of functions that are used, *e.g.* for calculating means, errors and smoothing functions.
+
+### Load_data.py
+This file imports the raw spectra and returns the intensities, calibrates with the maximum intensity at zero energy loss, and returns both the original and normalized intensities. The output is two datasets, `df` and `df_vacuum` which contain the information on the in-sample and in-vacuum recorded spectra respectively. 
+For each of the spectra the minimum and maximum value of the recorded energy loss need to be set manually in `Eloss_min` and `Eloss_max`.
+
+### Fitter.ipynb
+This script is used to run the neural network training on the data that was uploaded using **load_data.py**. 
+It involves a number of pre-processing steps to determine the hyper-parameters $\Delta E_{\rm I}$ and $\Delta E_{\rm II}$ and tit automatically prepares and cuts the data before it is forwarded to the neural network to start the training.
+We refer to the Appendix in [this publication](https://arxiv.org/abs/2009.00014) for the fully comprehensive user instructions.
+
+The notebook is structured as follows:
+
+- Import libraries and spectral data from the **load_data.py** script.
+- Evaluate $\Delta E_{\rm I}$ from the intensity derivatives.
+- Evaluate $\Delta E_{\rm II}$ from the ratio of the vacuum intensities to the experimental uncertainty. 
+- Keep only the data points with $\Delta E \le \Delta E_{\rm I}$ and drop the points with higher energy losses.
+- Calculate experimental central values and uncertainties by means of EWD.
+- Add pseudo datapoints for $\Delta E \ge \Delta E_{\rm II}$
+
+
+
+
+
+
 
 `predictions.ipynb` can be used to evaluate the predictions after training. 
 
