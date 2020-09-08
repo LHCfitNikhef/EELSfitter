@@ -113,15 +113,3 @@ In the last part, the code creates a  `mean_rep` file that contains all the medi
 This script, similar to the one previously described, can be executed stand-alone without the need to train again the neural networks. This means that step III in the previous section is now replaced by creating the model predictions from pre-trained net parameters, stored in the `Models` folder. 
 This script can be executed provided that the model parameters corresponding to some previous training with the desired input settings are available in this folder.
 
-
-
-
-
-
-is similar to the Predictions.ipynb file, but here
-one can import the network parameters of pre-trained nets to create predictions on any input array. 
-
-The folders `Data`and `Models` contain the datasets, the results from training and the saved model 
-parameters respectively. 
-
-
