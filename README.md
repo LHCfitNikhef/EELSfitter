@@ -1,4 +1,4 @@
-
+[![DOI](https://zenodo.org/badge/288411650.svg)](https://zenodo.org/badge/latestdoi/288411650)
 
 # EELSfitter
 
