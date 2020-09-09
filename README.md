@@ -15,7 +15,7 @@ The current version of **EELSfitter** includes, among others, the following feat
 **EELSfitter** is developed and maintained by the following developers' team:
 
 - [Sonia Conesa-Boj](mailto:S.C.ConesaBoj@tudelft.nl) (TU Delft), [conesabojlab](https://conesabojlab.tudelft.nl/)
-- [Laurien Roest](mailto:L.I.Roest@student.tudelft.nl) (TU Delft)
+- [Laurien Roest](mailto:laurienroest@gmail.com) (TU Delft)
 - [Juan Rojo](mailto:j.rojo@vu.nl) (Nikhef and VU Amsterdam), [juanrojo.com](http://www.juanrojo.com)
 - [Isabel Postmes](mailto:isabelpostmes@gmail.com) (TU Delft)
 
