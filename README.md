@@ -1,4 +1,3 @@
-![Banner](Data/Banner.png)
 
 
 # EELSfitter
