@@ -10,7 +10,7 @@ import pandas as pd
 
 ###### Load spectra ###########################
 
-fname = 'data/'
+fname = 'data/Specimen_4'
     
 ZLP_y14 = np.loadtxt(fname + "(14)_m4d054eV_45d471eV.txt")
 ZLP_y15 = np.loadtxt(fname + "(15)_m4d054eV_45d471eV.txt")
