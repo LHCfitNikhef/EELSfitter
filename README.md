@@ -26,7 +26,7 @@ If you have any question about the code and its usage or would like to suggest a
 If you use **EELSfitter** in a scientific publication, please cite the original publication:
 
 - *Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning*, 
-Laurien I. Roest, Sabrya E. van Heijst, Luigi Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.aaaaa](https://arxiv.org/abs/2009.00014).
+Laurien I. Roest, Sabrya E. van Heijst, Luigi Maduro, Juan Rojo, and Sonia Conesa-Boj, [arXiv:2009.05050](https://arxiv.org/abs/2009.05050).
 
 as well as the [DOI:10.5281/zenodo.4020657](https://zenodo.org/record/4020657#.X1jcwWf7Res) associated to the code: [![DOI](https://zenodo.org/badge/288411650.svg)](https://zenodo.org/badge/latestdoi/288411650)
 
