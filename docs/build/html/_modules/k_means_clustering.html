@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>k_means_clustering &mdash; EELSfitter 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> EELSfitter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/datasets.html">Datasets</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramer-Kronig Analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Implementation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../implementation/training_strategies.html">Training Strategies</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../results/EELS_10.html">EELS 1.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../results/EELS_20.html">EELS 2.0</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/modules.html">Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSfitter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>k_means_clustering</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for k_means_clustering</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="c1">#CLUSTERING</span>
+
+<div class="viewcode-block" id="dist"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.dist">[docs]</a><span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">size</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">,</span> <span class="n">exp</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="o">/</span><span class="n">exp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">,</span> <span class="n">exp</span><span class="p">),</span> <span class="mi">1</span><span class="o">/</span><span class="n">exp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="power"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.power">[docs]</a><span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">,</span> <span class="n">exp</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="log"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.log">[docs]</a><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="exp"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.exp">[docs]</a><span class="k">def</span> <span class="nf">exp</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="cost_clusters"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.cost_clusters">[docs]</a><span class="k">def</span> <span class="nf">cost_clusters</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">clusters</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">cost_function</span> <span class="o">=</span> <span class="n">dist</span><span class="p">):</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">clusters</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">clusters</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">cluster</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">ri</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">cost</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cost_function</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">cluster</span><span class="p">)</span><span class="o">*</span><span class="n">ri</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cost</span></div>
+
+<div class="viewcode-block" id="relocate_clusters"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.relocate_clusters">[docs]</a><span class="k">def</span> <span class="nf">relocate_clusters</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="n">n_clusters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">):</span>
+        <span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">relocate_cluster</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">clusters</span></div>
+
+<div class="viewcode-block" id="relocate_cluster"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.relocate_cluster">[docs]</a><span class="k">def</span> <span class="nf">relocate_cluster</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="c1">#TODO: adjust to accept other costfunctions?</span>
+    <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">values</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="reassign_values"><a class="viewcode-back" href="../modules/k_means_clustering.html#k_means_clustering.reassign_values">[docs]</a><span class="k">def</span> <span class="nf">reassign_values</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">cost_function</span> <span class="o">=</span> <span class="n">dist</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">cost_function</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="n">r</span><span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>        
+    <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="k_means"><a class="viewcode-back" href="../modules/modules.html#k_means_clustering.k_means">[docs]</a><span class="k">def</span> <span class="nf">k_means</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">n_times</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The k means clustering algorithm. Unsupervised clustering into ``n_clusters`` clusters, by minimising</span>
+<span class="sd">    the distance to the cluster means.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    values : array_like</span>
+<span class="sd">        Array with values to be clustered.</span>
+<span class="sd">    n_clusters : int, optional</span>
+<span class="sd">        The desired number of clusters. The default is 3.</span>
+<span class="sd">    n_iterations : int, optional</span>
+<span class="sd">        number of iterations in the clustering algorithm. The default is 30.</span>
+<span class="sd">    n_times : int, optional</span>
+<span class="sd">        number of times the clustering algorithm is run. The final outcome that is returned is the one</span>
+<span class="sd">        with the lowest overall distance. The default is 5.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    min_clusters : array_like</span>
+<span class="sd">        values of the cluster means.</span>
+<span class="sd">    min_r : array_like</span>
+<span class="sd">        array that assigns each entry in `values` array to one of the clusters</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_values</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">values</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">vpc</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">n_values</span><span class="o">/</span><span class="n">n_clusters</span><span class="p">)</span>
+        <span class="n">halfvpc</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">vpc</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">values</span><span class="p">)[(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n_clusters</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span> <span class="nb">int</span><span class="p">)</span><span class="o">*</span><span class="n">vpc</span><span class="o">+</span><span class="n">halfvpc</span><span class="p">)]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ind_cluster</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">)</span><span class="o">*</span><span class="n">n_values</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">clusters</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">ind_cluster</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+    
+    
+    <span class="n">cost_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">old_clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_times</span><span class="p">):</span>
+        <span class="n">ind_cluster</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">)</span><span class="o">*</span><span class="n">n_values</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">clusters</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">ind_cluster</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iterations</span><span class="p">):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">reassign_values</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+            <span class="n">r_empty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">r_empty</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">r_inx</span> <span class="ow">in</span> <span class="n">r_empty</span><span class="p">:</span>
+                    <span class="n">change</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+                    <span class="n">r</span><span class="p">[:,</span> <span class="n">change</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">r</span><span class="p">[</span><span class="n">r_empty</span><span class="p">,</span> <span class="n">change</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">r_empty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">clusters</span> <span class="o">=</span> <span class="n">relocate_clusters</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+            <span class="n">costs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cost_clusters</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">clusters</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">cost_min</span> <span class="o">&gt;</span> <span class="n">costs</span><span class="p">:</span>
+                <span class="n">cost_min</span> <span class="o">=</span> <span class="n">costs</span>
+                <span class="n">min_clusters</span> <span class="o">=</span> <span class="n">clusters</span>
+                <span class="n">min_r</span> <span class="o">=</span> <span class="n">r</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">old_clusters</span> <span class="o">==</span> <span class="n">clusters</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="k">break</span>
+            <span class="n">old_clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">min_clusters</span><span class="p">,</span> <span class="n">min_r</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, A
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
