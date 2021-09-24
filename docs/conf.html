@@ -34,6 +34,7 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
@@ -99,7 +100,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules/modules.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EELSFitter.html">EELSFitter package</a></li>
 </ul>
 
             
@@ -176,7 +177,7 @@
 #
 import os
 import sys</p>
-<p>sys.path.insert(0, os.path.abspath(‘../../EELS_KK/code’))
+<p>sys.path.insert(0, os.path.abspath(‘../../EELS_KK/’))
 # import pathlib</p>
 <p># source_dir = pathlib.Path(‘../../EELS_KK/pyfiles’).parent</p>
 <p># – Project information —————————————————–</p>
@@ -202,11 +203,14 @@ extensions = [</p>
 “sphinx.ext.napoleon”,
 “sphinx.ext.todo”,
 “sphinx.ext.viewcode”,
-“sphinx.ext.autosummary”</p>
+“sphinx.ext.autosummary”,
+‘sphinxcontrib.bibtex’</p>
 </div></blockquote>
 <p>]</p>
 <p># Add any paths that contain templates here, relative to this directory.
 templates_path = [‘_templates’]</p>
+<p># Bibtex
+bibtex_bibfiles = [‘EELS_ML.bib’]</p>
 <p># Markdown configuration</p>
 <p># The suffix(es) of source filenames.
 # you can specify multiple suffix as a list of string:
@@ -249,6 +253,13 @@ html_theme = ‘sphinx_rtd_theme’</p>
 # relative to this directory. They are copied after the builtin static files,
 # so a file named “default.css” will overwrite the builtin “default.css”.
 html_static_path = [‘_static’]</p>
+<p># These paths are either relative to html_static_path
+# or fully qualified paths (eg. <a class="reference external" href="https://">https://</a>…)
+html_css_files = [</p>
+<blockquote>
+<div><p>‘css/custom.css’,</p>
+</div></blockquote>
+<p>]</p>
 <p># – Options for intersphinx extension —————————————</p>
 <p># Example configuration for intersphinx: refer to the Python standard library.
 # Thanks <a class="reference external" href="https://github.com/bskinn/sphobjinv">https://github.com/bskinn/sphobjinv</a>

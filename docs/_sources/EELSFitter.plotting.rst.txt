@@ -1,0 +1,23 @@
+EELSFitter.plotting package
+===========================
+
+Submodules
+----------
+
+EELSFitter.plotting.hyperparameters module
+------------------------------------------
+
+.. automodule:: EELSFitter.plotting.hyperparameters
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+EELSFitter.plotting.zlp module
+------------------------------
+
+.. automodule:: EELSFitter.plotting.zlp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+

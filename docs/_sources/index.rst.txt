@@ -44,7 +44,7 @@ EELSfiter is an open-source Python-based framework developed for the analysis an
    :caption: Code
    :hidden:
 
-   modules/modules.rst
+   EELSFitter.rst
 
 Indices and tables
 ==================
@@ -52,3 +52,5 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+

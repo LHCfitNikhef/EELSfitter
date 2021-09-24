@@ -14,9 +14,9 @@ the methods and functions.
 
 
 The ``SpectralImage`` class
-************************
+***************************
 
-.. autoclass:: spectral_image.SpectralImage
+.. automodule:: .core.spectral_image
     :members:
     :show-inheritance:
 
