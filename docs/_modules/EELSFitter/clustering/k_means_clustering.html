@@ -25,7 +25,9 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -80,27 +82,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Overview</span></p>
+              <p class="caption"><span class="caption-text">Theory</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/bandgap_analysis.html">Bandgap analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Theory</span></p>
+<p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramer-Kronig Analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Implementation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../implementation/training_strategies.html">Training Strategies</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Results</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_10.html">EELS 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_20.html">EELS 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/tutorial.html">Tutorials</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../EELSFitter.html">EELSFitter package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -217,14 +217,14 @@
     <span class="k">return</span> <span class="n">r</span>
 
 
-<div class="viewcode-block" id="k_means"><a class="viewcode-back" href="../../../EELSFitter.clustering.html#EELSFitter.clustering.k_means_clustering.k_means">[docs]</a><span class="k">def</span> <span class="nf">k_means</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">n_times</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="k_means"><a class="viewcode-back" href="../../../modules/EELSFitter.clustering.html#EELSFitter.clustering.k_means_clustering.k_means">[docs]</a><span class="k">def</span> <span class="nf">k_means</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">n_times</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The k means clustering algorithm. Unsupervised clustering into ``n_clusters`` clusters, by minimising</span>
 <span class="sd">    the distance to the cluster means.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    values : array_like</span>
+<span class="sd">    values : numpy.ndarray, shape=(M,)</span>
 <span class="sd">        Array with values to be clustered.</span>
 <span class="sd">    n_clusters : int, optional</span>
 <span class="sd">        The desired number of clusters. The default is 3.</span>
@@ -236,9 +236,9 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    min_clusters : array_like</span>
+<span class="sd">    min_clusters : numpy.ndarray, shape=(M,)</span>
 <span class="sd">        values of the cluster means.</span>
-<span class="sd">    min_r : array_like</span>
+<span class="sd">    min_r : numpy.ndarray, shape=(M,)</span>
 <span class="sd">        array that assigns each entry in `values` array to one of the clusters</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -288,7 +288,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, A
+        &copy; Copyright 2021, EELSfitter developer team
 
     </p>
   </div>

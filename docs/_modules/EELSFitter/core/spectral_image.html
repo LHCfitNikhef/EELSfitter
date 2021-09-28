@@ -25,7 +25,9 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -80,27 +82,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Overview</span></p>
+              <p class="caption"><span class="caption-text">Theory</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/bandgap_analysis.html">Bandgap analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Theory</span></p>
+<p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramer-Kronig Analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Implementation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../implementation/training_strategies.html">Training Strategies</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Results</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_10.html">EELS 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_20.html">EELS 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/tutorial.html">Tutorials</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../EELSFitter.html">EELSFitter package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -185,26 +185,25 @@
 <span class="kn">import</span> <span class="nn">re</span>
 
 <span class="kn">from</span> <span class="nn">..clustering.k_means_clustering</span> <span class="kn">import</span> <span class="n">k_means</span>
-<span class="kn">from</span> <span class="nn">.training</span> <span class="kn">import</span> <span class="n">MLP</span><span class="p">,</span> <span class="n">train_zlp_scaled</span><span class="p">,</span> <span class="n">smooth_clusters</span>
+<span class="kn">from</span> <span class="nn">.training</span> <span class="kn">import</span> <span class="n">MLP</span><span class="p">,</span> <span class="n">train_zlp_scaled</span>
+<span class="kn">from</span> <span class="nn">..plotting.training_perf</span> <span class="kn">import</span> <span class="n">plot_cost_dist</span>
 
 
 <span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<span class="c1">#TODO: consistent type reference for arrays</span>
-
-<div class="viewcode-block" id="SpectralImage"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage">[docs]</a><span class="k">class</span> <span class="nc">SpectralImage</span><span class="p">:</span>
+<div class="viewcode-block" id="SpectralImage"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage">[docs]</a><span class="k">class</span> <span class="nc">SpectralImage</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The spectral image class that provides several tools to analyse spectral images with the zero-loss peak</span>
 <span class="sd">    subtracted.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data: array_like</span>
-<span class="sd">        Array containing the 3-D spectral image. The axes correspond to the x-axis, y-axis and energy-loss.</span>
+<span class="sd">    data: numpy.ndarray, shape=(M,N,L)</span>
+<span class="sd">        Array containing the 3-D spectral image. The axes correspond to the x-axis (M), y-axis (N) and energy-loss (L).</span>
 <span class="sd">    deltadeltaE: float</span>
 <span class="sd">        bin width in energy loss spectrum</span>
-<span class="sd">    pixelsize: array_like, optional</span>
+<span class="sd">    pixelsize: numpy.ndarray, shape=(2,), optional</span>
 <span class="sd">        width of pixels</span>
 <span class="sd">    beam_energy: float, optional</span>
 <span class="sd">        Energy of electron beam in eV</span>
@@ -226,17 +225,17 @@
 <span class="sd">        average bulk scattering distribution for each pixel</span>
 <span class="sd">    IEELS_std</span>
 <span class="sd">        standard deviation of the bulk scattering distribution at each energy for each pixel</span>
-<span class="sd">    cluster_data: array_like</span>
+<span class="sd">    cluster_data: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        filled with 2D numpy arrays. If save_as_attribute set to True, the cluster data is also saved as attribute</span>
-<span class="sd">    deltaE: array_like</span>
+<span class="sd">    deltaE: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        shifted array of energy losses such that the zero point corresponds to the point of highest intensity.</span>
-<span class="sd">    x_axis: array_like</span>
+<span class="sd">    x_axis: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        x-axis of the spectral image</span>
-<span class="sd">    y_axis: array_like</span>
+<span class="sd">    y_axis: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        y-axis of the spectral image</span>
-<span class="sd">    clusters: array_like</span>
+<span class="sd">    clusters: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        cluster means of each cluster</span>
-<span class="sd">    clustered: array_like</span>
+<span class="sd">    clustered: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        A 2D array containing the index of the cluster to which each pixel belongs</span>
 
 <span class="sd">    Examples</span>
@@ -317,7 +316,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_sum_I</span> <span class="o">=</span> <span class="n">scale_var_log_sum_I</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
-<div class="viewcode-block" id="SpectralImage.save_image"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.save_image">[docs]</a>    <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.save_image"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.save_image">[docs]</a>    <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to save image, including all attributes, in pickle (.pkl) format. Image will be saved \</span>
 <span class="sd">        at indicated location and name in filename input.</span>
@@ -332,10 +331,10 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>  <span class="c1"># Overwrites any existing file.</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SpectralImage.save_compressed_image"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.save_compressed_image">[docs]</a>    <span class="k">def</span> <span class="nf">save_compressed_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.save_compressed_image"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.save_compressed_image">[docs]</a>    <span class="k">def</span> <span class="nf">save_compressed_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to save image, including all attributes, in compressed pickle (.pbz2) format. Image will \</span>
-<span class="sd">            be saved at location ``filename``. Advantage over :py:meth:`save_image() &lt;save_image&gt;` is that \</span>
+<span class="sd">            be saved at location ``filename``. Advantage over :py:meth:`save_image() &lt;EELSFitter.core.spectral_image.SpectralImage.save_image&gt;` is that \</span>
 <span class="sd">            the saved file has a reduced file size, disadvantage is that saving and reloading the image \</span>
 <span class="sd">            takes significantly longer.</span>
 
@@ -350,7 +349,7 @@
             <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.pbz2&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compressed_pickle</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SpectralImage.compressed_pickle"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.compressed_pickle">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SpectralImage.compressed_pickle"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.compressed_pickle">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="c1"># Pickle a file and then compress it into a file with extension </span>
     <span class="k">def</span> <span class="nf">compressed_pickle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -359,7 +358,7 @@
         <span class="k">with</span> <span class="n">bz2</span><span class="o">.</span><span class="n">BZ2File</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">cPickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SpectralImage.decompress_pickle"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.decompress_pickle">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SpectralImage.decompress_pickle"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.decompress_pickle">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">decompress_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Opens, decompresses and returns the pickle file at location ``file``.</span>
@@ -382,28 +381,29 @@
     <span class="c1"># %%PROPERTIES</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">l</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns length of :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object, i.e. num energy loss bins&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns length of :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object,</span>
+<span class="sd">        i.e. num energy loss bins&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">image_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns 2D-shape of :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns 2D-shape of :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns 3D-shape of :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns 3D-shape of :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">n_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the number of clusters in the :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Returns the number of clusters in the :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">n_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the number of spectra present in :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object</span>
+<span class="sd">        Returns the number of spectra present in :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -412,10 +412,10 @@
         <span class="n">nspectra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_shape</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">nspectra</span>
 
-<div class="viewcode-block" id="SpectralImage.load_data"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_data">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectralImage.load_data"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_data">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path_to_dmfile</span><span class="p">,</span> <span class="n">load_additional_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load the .dm4 spectral image and return a :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` instance.</span>
+<span class="sd">        Load the .dm4 spectral image and return a :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` instance.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -427,7 +427,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        SpectralImage</span>
-<span class="sd">            :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` instance of the dm4 file</span>
+<span class="sd">            :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` instance of the dm4 file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dmfile_tot</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">fileDM</span><span class="p">(</span><span class="n">path_to_dmfile</span><span class="p">)</span>
         <span class="n">additional_data</span> <span class="o">=</span> <span class="p">[]</span>
@@ -458,10 +458,10 @@
             <span class="n">image</span><span class="o">.</span><span class="n">additional_data</span> <span class="o">=</span> <span class="n">additional_data</span>
         <span class="k">return</span> <span class="n">image</span></div>
 
-<div class="viewcode-block" id="SpectralImage.load_spectral_image"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_spectral_image">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectralImage.load_spectral_image"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_spectral_image">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load_spectral_image</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path_to_pickle</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Loads :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` instance from a pickled file.</span>
+<span class="sd">        Loads :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` instance from a pickled file.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -478,7 +478,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        SpectralImage</span>
-<span class="sd">            :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object (i.e. including all attributes) loaded from pickle file.</span>
+<span class="sd">            :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object (i.e. including all attributes) loaded from pickle file.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">path_to_pickle</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s1">&#39;.pkl&#39;</span><span class="p">:</span>
@@ -489,7 +489,7 @@
             <span class="n">image</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pickle_im</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">image</span></div>
 
-<div class="viewcode-block" id="SpectralImage.load_compressed_Spectral_image"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_compressed_Spectral_image">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectralImage.load_compressed_Spectral_image"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_compressed_Spectral_image">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load_compressed_Spectral_image</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path_to_compressed_pickle</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads spectral image from a compressed pickled file. This will take longer than loading from non compressed pickle.</span>
@@ -509,7 +509,7 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        image : SpectralImage</span>
-<span class="sd">             :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` instance loaded from the compressed pickle file.</span>
+<span class="sd">             :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` instance loaded from the compressed pickle file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">path_to_compressed_pickle</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span> <span class="o">!=</span> <span class="s1">&#39;.pbz2&#39;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -520,7 +520,7 @@
         <span class="n">image</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">decompress_pickle</span><span class="p">(</span><span class="n">path_to_compressed_pickle</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">image</span></div>
 
-<div class="viewcode-block" id="SpectralImage.set_n"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.set_n">[docs]</a>    <span class="k">def</span> <span class="nf">set_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n_background</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.set_n"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.set_n">[docs]</a>    <span class="k">def</span> <span class="nf">set_n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n_background</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets value of refractive index for the image as attribute self.n. If unclusered, n will be an \</span>
 <span class="sd">            array of length one, otherwise it is an array of len n_clusters. If n_background is defined, \</span>
@@ -548,7 +548,7 @@
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span></div>
 
-<div class="viewcode-block" id="SpectralImage.determine_deltaE"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.determine_deltaE">[docs]</a>    <span class="k">def</span> <span class="nf">determine_deltaE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.determine_deltaE"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.determine_deltaE">[docs]</a>    <span class="k">def</span> <span class="nf">determine_deltaE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the energy losses of the spectral image, based on the bin width of the energy loss.</span>
 <span class="sd">        It shifts the ``self.deltaE`` attribute such that the zero point corresponds with the point of highest</span>
@@ -556,7 +556,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        deltaE: array_like</span>
+<span class="sd">        deltaE: numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Array of :math:`\Delta E` values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -564,7 +564,7 @@
         <span class="n">deltaE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">ind_max</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddeltaE</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">-</span> <span class="n">ind_max</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddeltaE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">deltaE</span></div>
 
-<div class="viewcode-block" id="SpectralImage.calc_axes"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_axes">[docs]</a>    <span class="k">def</span> <span class="nf">calc_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.calc_axes"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_axes">[docs]</a>    <span class="k">def</span> <span class="nf">calc_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines the  x_axis and y_axis of the spectral image. Stores them in ``self.x_axis`` and ``self.y_axis`` respectively.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -574,7 +574,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">y_axis</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixelsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixelsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SpectralImage.get_pixel_signal"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_pixel_signal">[docs]</a>    <span class="k">def</span> <span class="nf">get_pixel_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.get_pixel_signal"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_pixel_signal">[docs]</a>    <span class="k">def</span> <span class="nf">get_pixel_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves the spectrum at pixel (``i``, ``j``).</span>
 
@@ -589,7 +589,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        signal : array_like</span>
+<span class="sd">        signal : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Array with the requested signal from the requested pixel</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -615,7 +615,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no such signal&quot;</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="s2">&quot;, returned general EELS data.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SpectralImage.get_cluster_spectra"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_cluster_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">get_cluster_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s2">&quot;EELS&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.get_cluster_spectra"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_cluster_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">get_cluster_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s2">&quot;EELS&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a clustered spectral image.</span>
 
@@ -631,7 +631,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        cluster_data : array_like</span>
+<span class="sd">        cluster_data : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            An array with size equal to the number of clusters. Each entry is a 2D array that contains all the spectra within that cluster.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -656,7 +656,7 @@
 
     <span class="c1"># %%METHODS ON SIGNAL</span>
 
-<div class="viewcode-block" id="SpectralImage.cut"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cut">[docs]</a>    <span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">E2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">in_ex</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.cut"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cut">[docs]</a>    <span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">E2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">in_ex</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cuts the spectral image at ``E1`` and ``E2`` and keeps only the part in between.</span>
 
@@ -681,7 +681,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">select</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span><span class="p">[</span><span class="n">select</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SpectralImage.cut_image"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cut_image">[docs]</a>    <span class="k">def</span> <span class="nf">cut_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_width</span><span class="p">,</span> <span class="n">range_height</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.cut_image"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cut_image">[docs]</a>    <span class="k">def</span> <span class="nf">cut_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_width</span><span class="p">,</span> <span class="n">range_height</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cuts the spectral image</span>
 
@@ -696,7 +696,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">y_axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_axis</span><span class="p">[</span><span class="n">range_height</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">range_height</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span><span class="p">[</span><span class="n">range_width</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">range_width</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span></div>
 
-<div class="viewcode-block" id="SpectralImage.smooth"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.smooth">[docs]</a>    <span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_len</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="n">keep_original</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.smooth"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.smooth">[docs]</a>    <span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_len</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="n">keep_original</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Smooth the data using a window length ``window_len``.</span>
 <span class="sd">        </span>
@@ -730,7 +730,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">w</span> <span class="o">/</span> <span class="n">w</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">s</span><span class="p">)[:,</span> <span class="p">:,</span>
                         <span class="n">surplus_data</span><span class="p">:</span><span class="o">-</span><span class="n">surplus_data</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SpectralImage.deconvolute"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.deconvolute">[docs]</a>    <span class="k">def</span> <span class="nf">deconvolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">ZLP</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.deconvolute"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.deconvolute">[docs]</a>    <span class="k">def</span> <span class="nf">deconvolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">ZLP</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes the effect of plural scatterings from the spectrum at pixel (``i``, ``j``).</span>
 
@@ -788,7 +788,7 @@
 
         <span class="k">return</span> <span class="n">J1_E</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SpectralImage.pool"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.pool">[docs]</a>    <span class="k">def</span> <span class="nf">pool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_p</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.pool"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.pool">[docs]</a>    <span class="k">def</span> <span class="nf">pool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Pools the spectral image using a squared window of size ``n_p&#39;&#39;.</span>
 
@@ -814,7 +814,7 @@
     <span class="c1"># METHODS ON ZLP</span>
     <span class="c1"># CALCULATING ZLPs FROM PRETRAINDED MODELS</span>
 
-<div class="viewcode-block" id="SpectralImage.calc_zlps_matched"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_zlps_matched">[docs]</a>    <span class="k">def</span> <span class="nf">calc_zlps_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.calc_zlps_matched"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_zlps_matched">[docs]</a>    <span class="k">def</span> <span class="nf">calc_zlps_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the shape-(M, N) array of matched ZLP model predictions at pixel (``i``, ``j``) after training.</span>
 <span class="sd">        M and N correspond to the number of model predictions and :math:`\Delta E` s respectively.</span>
@@ -886,7 +886,7 @@
             <span class="n">ZLPs</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">matching</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">dE1</span><span class="p">)</span>  <span class="c1"># matching(energies, np.exp(mean_k), data)</span>
         <span class="k">return</span> <span class="n">ZLPs</span></div>
 
-<div class="viewcode-block" id="SpectralImage.calc_zlps"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_zlps">[docs]</a>    <span class="k">def</span> <span class="nf">calc_zlps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.calc_zlps"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_zlps">[docs]</a>    <span class="k">def</span> <span class="nf">calc_zlps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the shape-(M, N) array of ZLP model predictions at pixel (``i``, ``j``) after training, where</span>
 <span class="sd">        M and N correspond to the number of model predictions and :math:`\Delta E` s respectively.</span>
@@ -945,13 +945,13 @@
 
         <span class="k">return</span> <span class="n">predictions</span></div>
 
-<div class="viewcode-block" id="SpectralImage.train_zlp"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.train_zlp">[docs]</a>    <span class="k">def</span> <span class="nf">train_zlp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">conf_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.train_zlp"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.train_zlp">[docs]</a>    <span class="k">def</span> <span class="nf">train_zlp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">conf_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Train the ZLP on the spectral image.</span>
 
 <span class="sd">        The spectral image is clustered in ``n_clusters`` clusters, according to e.g. the integrated intensity or thickness.</span>
 <span class="sd">        A random spectrum is then taken from each cluster, which together defines one replica. The training is initiated</span>
-<span class="sd">        by calling :py:meth:`train_zlp_scaled() &lt;training.train_zlp_scaled&gt;`.</span>
+<span class="sd">        by calling :py:meth:`train_zlp_scaled() &lt;EELSFitter.core.training.train_zlp_scaled&gt;`.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -970,7 +970,7 @@
         <span class="n">training_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cluster_spectra</span><span class="p">(</span><span class="n">conf_interval</span><span class="o">=</span><span class="n">conf_interval</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">)</span>
         <span class="n">train_zlp_scaled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">training_data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SpectralImage.calc_zlp_ntot"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_zlp_ntot">[docs]</a>    <span class="k">def</span> <span class="nf">calc_zlp_ntot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ntot</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.calc_zlp_ntot"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_zlp_ntot">[docs]</a>    <span class="k">def</span> <span class="nf">calc_zlp_ntot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ntot</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the shape-(M, N) array of zlp model predictions at the scaled log integrated intensity ``ntot``.</span>
 <span class="sd">        M and N correspond to the number of model predictions and :math:`\Delta E` s respectively.</span>
@@ -997,66 +997,7 @@
 
         <span class="k">return</span> <span class="n">ZLPs</span></div>
 
-    <span class="k">def</span> <span class="nf">plot_zlp_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-        <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;family&#39;</span><span class="p">:</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">],</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
-        <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">dE1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dE1</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-        <span class="n">dE2</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">dE1</span> <span class="c1"># TODO: make more general</span>
-        <span class="n">cluster_means</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span>
-
-        <span class="n">n_clusters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dE1</span><span class="p">)</span>
-        <span class="n">ncols</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="n">nrows</span> <span class="o">=</span> <span class="n">n_clusters</span> <span class="o">//</span> <span class="n">ncols</span> <span class="k">if</span> <span class="n">n_clusters</span> <span class="o">%</span> <span class="n">ncols</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">n_clusters</span> <span class="o">//</span> <span class="n">ncols</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">wl1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">/</span> <span class="mi">20</span><span class="p">)</span>
-
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">ncols</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="n">nrows</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">cluster_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">cluster_idx</span><span class="p">)</span>
-            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">,</span> <span class="n">cluster_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-
-            <span class="n">raw_spectra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cluster_spectra</span><span class="p">(</span><span class="n">conf_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">)</span>
-            <span class="n">spectra_smooth</span> <span class="o">=</span> <span class="n">smooth_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_spectra</span><span class="p">,</span> <span class="n">wl1</span><span class="p">)</span>
-
-            <span class="n">spectra_med</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">spectra_smooth</span><span class="p">[</span><span class="n">cluster_idx</span><span class="p">],</span> <span class="mi">50</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">spectra_cl_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">spectra_smooth</span><span class="p">[</span><span class="n">cluster_idx</span><span class="p">],</span> <span class="mi">84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">spectra_cl_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">spectra_smooth</span><span class="p">[</span><span class="n">cluster_idx</span><span class="p">],</span> <span class="mi">16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-            <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span><span class="p">,</span> <span class="n">spectra_cl_low</span><span class="p">,</span> <span class="n">spectra_cl_high</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm</span><span class="si">{Signal}</span><span class="s1">$&#39;</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span><span class="p">,</span> <span class="n">spectra_med</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">dE1</span><span class="p">[</span><span class="n">cluster_idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">dE2</span><span class="p">[</span><span class="n">cluster_idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C3&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-
-            <span class="n">cluster_mean</span> <span class="o">=</span> <span class="n">cluster_means</span><span class="p">[</span><span class="n">cluster_idx</span><span class="p">]</span>
-            <span class="n">scaled_int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_sum_I</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">cluster_mean</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_sum_I</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">zlp_cluster_mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_zlp_ntot</span><span class="p">(</span><span class="n">scaled_int</span><span class="p">)</span>
-            <span class="n">zlp_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">zlp_cluster_mean</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">zlp_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">zlp_cluster_mean</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">zlp_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">zlp_cluster_mean</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">label_zlp</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm</span><span class="si">{ZLP}</span><span class="s1">$&#39;</span>
-
-            <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span><span class="p">,</span> <span class="n">zlp_low</span><span class="p">,</span> <span class="n">zlp_high</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span><span class="p">,</span> <span class="n">zlp_median</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_zlp</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\rm{\log N_{\mathrm</span><span class="si">{tot}</span><span class="s1">}=</span><span class="si">%.2f</span><span class="s1">}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">scaled_int</span><span class="p">),</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">transform</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{\;Cluster\;</span><span class="si">%d</span><span class="s1">}$&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cluster_idx</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dE2</span><span class="p">[</span><span class="n">cluster_idx</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\rm{Energy\;loss\;[eV]}$&quot;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$I_{\rm</span><span class="si">{EELS}</span><span class="s2">}\;\rm{[a.u.]}$&quot;</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-
-            <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-
-        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;zlp_signal.pdf&#39;</span><span class="p">))</span>
-
-
-<div class="viewcode-block" id="SpectralImage.load_zlp_models"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_zlp_models">[docs]</a>    <span class="k">def</span> <span class="nf">load_zlp_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_to_models</span><span class="p">,</span> <span class="n">plot_chi2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.load_zlp_models"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_zlp_models">[docs]</a>    <span class="k">def</span> <span class="nf">load_zlp_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_to_models</span><span class="p">,</span> <span class="n">plot_chi2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads the trained ZLP models and stores them in ``self.ZLP_models``. Models that have a :math:`\chi^2 &gt; \chi^2_{\mathrm{mean}} + 5\sigma` are</span>
 <span class="sd">        discarded, where :math:`\sigma` denotes the 68% CI.</span>
@@ -1155,18 +1096,10 @@
         
         <span class="n">nn_rep_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">cost_trains</span> <span class="o">&lt;</span> <span class="n">threshold_costs_trains</span><span class="p">)</span>
         <span class="n">cost_trains</span> <span class="o">=</span> <span class="n">cost_trains</span><span class="p">[</span><span class="n">cost_trains</span> <span class="o">&lt;</span> <span class="n">threshold_costs_trains</span><span class="p">]</span>
-        
+
         <span class="c1"># plot the chi2 distributions</span>
         <span class="k">if</span> <span class="n">plot_chi2</span><span class="p">:</span>
-            <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;family&#39;</span><span class="p">:</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">],</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">})</span>
-            <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">cost_trains</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm</span><span class="si">{Training}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span> <span class="n">cost_tests_std</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">cost_tests</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm</span><span class="si">{Validation}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span> <span class="n">cost_tests_std</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\rm{WS_2\;nanoflower-Cost\;function}$&#39;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\chi^2$&#39;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">))</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_cost_dist</span><span class="p">(</span><span class="n">cost_trains</span><span class="p">,</span> <span class="n">cost_tests</span><span class="p">,</span> <span class="n">cost_tests_std</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;chi2_dist.pdf&#39;</span><span class="p">))</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;chi2 plot saved at </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_path</span><span class="p">))</span>
 
@@ -1176,13 +1109,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ZLP_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
 
     <span class="c1"># METHODS ON DIELECTRIC FUNCTIONS</span>
-<div class="viewcode-block" id="SpectralImage.calc_thickness"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_thickness">[docs]</a>    <span class="k">def</span> <span class="nf">calc_thickness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spect</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">N_ZLP</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.calc_thickness"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_thickness">[docs]</a>    <span class="k">def</span> <span class="nf">calc_thickness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spect</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">N_ZLP</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates thickness from sample data, using Egerton [1]_</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        spect : array_like</span>
+<span class="sd">        spect : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            spectral image</span>
 <span class="sd">        n : float</span>
 <span class="sd">            refraction index</span>
@@ -1197,7 +1130,7 @@
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
 <span class="sd">        Surface scatterings are not corrected for. If you wish to correct</span>
-<span class="sd">        for surface scatterings, please extract the thickness ``t`` from :py:meth:`kramers_kronig_hs() &lt;kramers_kronig_hs&gt;`.</span>
+<span class="sd">        for surface scatterings, please extract the thickness ``t`` from :py:meth:`kramers_kronig_hs() &lt;EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_hs&gt;`.</span>
 
 
 <span class="sd">        .. [1] Ray Egerton, &quot;Electron Energy-Loss Spectroscopy in the Electron</span>
@@ -1226,113 +1159,65 @@
 
         <span class="k">return</span> <span class="n">te</span></div>
 
-<div class="viewcode-block" id="SpectralImage.kramers_kronig_hs"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_hs">[docs]</a>    <span class="k">def</span> <span class="nf">kramers_kronig_hs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">I_EELS</span><span class="p">,</span>
+<div class="viewcode-block" id="SpectralImage.kramers_kronig_hs"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_hs">[docs]</a>    <span class="k">def</span> <span class="nf">kramers_kronig_hs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">I_EELS</span><span class="p">,</span>
                           <span class="n">N_ZLP</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                           <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">delta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">correct_S_s</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="c1">#TODO: is this copied directly from the hs documentation: if so, this would be plagiarism</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the complex dielectric function from the single scattering</span>
+<span class="sd">        distribution (SSD) ``I_EELS`` following the Kramers-Kronig relations. This</span>
+<span class="sd">        is inspired by Hyperspy&#39;s :py:meth:`kramers_kronig_analysis &lt;http://hyperspy.org/hyperspy-doc/v0.8/api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.kramers_kronig_analysis&gt;`.</span>
 
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate the complex</span>
-<span class="sd">        dielectric function from a single scattering distribution (SSD) using</span>
-<span class="sd">        the Kramers-Kronig relations.</span>
-<span class="sd">    </span>
-<span class="sd">        It uses the FFT method as in [1]_.  The SSD is an</span>
-<span class="sd">        EELSSpectrum instance containing SSD low-loss EELS with no zero-loss</span>
-<span class="sd">        peak. The internal loop is devised to approximately subtract the</span>
-<span class="sd">        surface plasmon contribution supposing an unoxidized planar surface and</span>
-<span class="sd">        neglecting coupling between the surfaces. This method does not account</span>
-<span class="sd">        for retardation effects, instrumental broading and surface plasmon</span>
-<span class="sd">        excitation in particles.</span>
-<span class="sd">    </span>
-<span class="sd">        Note that either refractive index or thickness are required.</span>
-<span class="sd">        If both are None or if both are provided an exception is raised.</span>
-<span class="sd">    </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        zlp: {None, number, Signal1D}</span>
-<span class="sd">            ZLP intensity. It is optional (can be None) if `t` is None and `n`</span>
-<span class="sd">            is not None and the thickness estimation is not required. If `t`</span>
-<span class="sd">            is not None, the ZLP is required to perform the normalization and</span>
-<span class="sd">            if `t` is not None, the ZLP is required to calculate the thickness.</span>
-<span class="sd">            If the ZLP is the same for all spectra, the integral of the ZLP</span>
-<span class="sd">            can be provided as a number. Otherwise, if the ZLP intensity is not</span>
-<span class="sd">            the same for all spectra, it can be provided as i) a Signal1D</span>
-<span class="sd">            of the same dimensions as the current signal containing the ZLP</span>
-<span class="sd">            spectra for each location ii) a BaseSignal of signal dimension 0</span>
-<span class="sd">            and navigation_dimension equal to the current signal containing the</span>
-<span class="sd">            integrated ZLP intensity.</span>
+<span class="sd">        I_EELS: numpy.ndarray, shape=(M,)</span>
+<span class="sd">            SSD of length energy-loss (M)</span>
+<span class="sd">        N_ZLP: float</span>
+<span class="sd">            Total integrated intensity of the ZLP</span>
 <span class="sd">        iterations: int</span>
 <span class="sd">            Number of the iterations for the internal loop to remove the</span>
 <span class="sd">            surface plasmon contribution. If 1 the surface plasmon contribution</span>
 <span class="sd">            is not estimated and subtracted (the default is 1).</span>
-<span class="sd">        n: {None, float}</span>
+<span class="sd">        n: float</span>
 <span class="sd">            The medium refractive index. Used for normalization of the</span>
 <span class="sd">            SSD to obtain the energy loss function. If given the thickness</span>
 <span class="sd">            is estimated and returned. It is only required when `t` is None.</span>
-<span class="sd">        t: {None, number, Signal1D}</span>
-<span class="sd">            The sample thickness in nm. Used for normalization of the</span>
-<span class="sd">            to obtain the energy loss function. It is only required when</span>
-<span class="sd">            `n` is None. If the thickness is the same for all spectra it can be</span>
-<span class="sd">            `n` is None. If the thickness is the same for all spectra it can be</span>
-<span class="sd">            given by a number. Otherwise, it can be provided as a BaseSignal</span>
-<span class="sd">            with signal dimension 0 and navigation_dimension equal to the</span>
-<span class="sd">            current signal.</span>
+<span class="sd">        t: float</span>
+<span class="sd">            The sample thickness in nm.</span>
 <span class="sd">        delta : float</span>
 <span class="sd">            A small number (0.1-0.5 eV) added to the energy axis in</span>
 <span class="sd">            specific steps of the calculation the surface loss correction to</span>
 <span class="sd">            improve stability.</span>
-<span class="sd">        full_output : bool</span>
-<span class="sd">            If True, return a dictionary that contains the estimated</span>
-<span class="sd">            thickness if `t` is None and the estimated surface plasmon</span>
-<span class="sd">            excitation and the spectrum corrected from surface plasmon</span>
-<span class="sd">            excitations if `iterations` &gt; 1.</span>
-<span class="sd">    </span>
+<span class="sd">        correct_S_s: bool, optional</span>
+<span class="sd">            Whether or not to correct for surface scatterings. Set to `False` by default</span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        eps: DielectricFunction instance</span>
-<span class="sd">            The complex dielectric function results,</span>
-<span class="sd">    </span>
+<span class="sd">        eps: numpy.ndarray</span>
+<span class="sd">            The complex dielectric function,</span>
+
 <span class="sd">                .. math::</span>
 <span class="sd">                    \epsilon = \epsilon_1 + i*\epsilon_2,</span>
-<span class="sd">    </span>
-<span class="sd">            contained in an DielectricFunction instance.</span>
-<span class="sd">        output: Dictionary (optional)</span>
-<span class="sd">            A dictionary of optional outputs with the following keys:</span>
-<span class="sd">    </span>
-<span class="sd">            ``thickness``</span>
-<span class="sd">                The estimated  thickness in nm calculated by normalization of</span>
-<span class="sd">                the SSD (only when `t` is None)</span>
-<span class="sd">    </span>
-<span class="sd">            ``surface plasmon estimation``</span>
-<span class="sd">               The estimated surface plasmon excitation (only if</span>
-<span class="sd">               `iterations` &gt; 1.)</span>
-<span class="sd">    </span>
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        ValuerError</span>
-<span class="sd">            If both `n` and `t` are undefined (None).</span>
-<span class="sd">        AttribureError</span>
-<span class="sd">            If the beam_energy or the collection semi-angle are not defined in</span>
-<span class="sd">            metadata.</span>
-<span class="sd">    </span>
+
+<span class="sd">        te: float</span>
+<span class="sd">            local thickness</span>
+<span class="sd">        Srfint: numpy.ndarray</span>
+<span class="sd">            Surface losses correction</span>
+
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        This method is based in Egerton&#39;s Matlab code [1]_ with some</span>
-<span class="sd">        minor differences:</span>
-<span class="sd">    </span>
-<span class="sd">        * The wrap-around problem when computing the ffts is workarounded by</span>
-<span class="sd">          padding the signal instead of substracting the reflected tail.</span>
+<span class="sd">        This method is based on Egerton&#39;s Matlab code [1]_, as also stated in the `hyperspy documentation &lt;http://hyperspy.org/hyperspy-doc/v0.8/api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.kramers_kronig_analysis&gt;`_.</span>
 
-<span class="sd">        References</span>
+<span class="sd">        References`</span>
 <span class="sd">        ----------</span>
-<span class="sd">    </span>
+
 <span class="sd">        .. [1] Ray Egerton, &quot;Electron Energy-Loss Spectroscopy in the Electron</span>
 <span class="sd">           Microscope&quot;, Springer-Verlag, 2011.</span>
-<span class="sd">    </span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is a test&quot;</span><span class="p">)</span>
 
         <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># Constants and units</span>
@@ -1355,11 +1240,7 @@
         <span class="k">for</span> <span class="n">io</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
             <span class="c1"># Calculation of the ELF by normalization of the SSD</span>
             <span class="c1"># We start by the &quot;angular corrections&quot;</span>
-            <span class="c1">#print(y)</span>
             <span class="n">Im</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">beta</span> <span class="o">*</span> <span class="n">tgt</span> <span class="o">/</span> <span class="n">eaxis</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ddeltaE</span>  <span class="c1"># axis.scale</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Im = &quot;</span><span class="p">,</span> <span class="n">Im</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y = &quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eaxis = &quot;</span><span class="p">,</span> <span class="n">eaxis</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The thickness and the refractive index are &quot;</span>
                                  <span class="s2">&quot;not defined. Please provide one of them.&quot;</span><span class="p">)</span>
@@ -1374,8 +1255,6 @@
 
             <span class="n">Im</span> <span class="o">=</span> <span class="n">Im</span> <span class="o">/</span> <span class="n">K</span>
 
-
-
             <span class="c1"># Kramers Kronig Transform:</span>
             <span class="c1"># We calculate KKT(Im(-1/epsilon))=1+Re(1/epsilon) with FFT</span>
             <span class="c1"># Follows: D W Johnson 1975 J. Phys. A: Math. Gen. 8 490</span>
@@ -1383,13 +1262,12 @@
             <span class="c1"># make it double the closest upper value to workaround the</span>
             <span class="c1"># wrap-around problem.</span>
             <span class="n">esize</span> <span class="o">=</span> <span class="n">next_fast_len</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">l</span><span class="p">)</span>  <span class="c1"># 2**math.floor(math.log2(l)+1)*4</span>
-            <span class="n">q</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">Im</span><span class="p">,</span> <span class="n">esize</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span> <span class="o">/</span> <span class="n">esize</span>  <span class="c1"># TODO : min twee?????</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">Im</span><span class="p">,</span> <span class="n">esize</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span> <span class="o">/</span> <span class="n">esize</span>
 
             <span class="n">q</span><span class="p">[:</span><span class="n">l</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
             <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
             <span class="c1"># Final touch, we have Re(1/eps)</span>
-            <span class="n">Re</span> <span class="o">=</span> <span class="n">q</span><span class="p">[:</span><span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># TODO: plus 1???</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">Re</span><span class="p">)</span>
+            <span class="n">Re</span> <span class="o">=</span> <span class="n">q</span><span class="p">[:</span><span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="c1"># Egerton does this to correct the wrap-around problem, but in our</span>
             <span class="c1"># case this is not necessary because we compute the fft on an</span>
             <span class="c1"># extended and padded spectrum to avoid this problem.</span>
@@ -1406,7 +1284,7 @@
             <span class="n">e1</span> <span class="o">=</span> <span class="n">Re</span> <span class="o">/</span> <span class="p">(</span><span class="n">Re</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">Im</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">e2</span> <span class="o">=</span> <span class="n">Im</span> <span class="o">/</span> <span class="p">(</span><span class="n">Re</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">Im</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">iterations</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">N_ZLP</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># TODO: loop weghalen.</span>
+            <span class="k">if</span> <span class="n">iterations</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">N_ZLP</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># Surface losses correction:</span>
                 <span class="c1">#  Calculates the surface ELF from a vaccumm border effect</span>
                 <span class="c1">#  A simulated surface plasmon is subtracted from the ELF</span>
@@ -1432,7 +1310,7 @@
 
         <span class="k">return</span> <span class="n">eps</span><span class="p">,</span> <span class="n">te</span><span class="p">,</span> <span class="n">Srfint</span></div>
 
-<div class="viewcode-block" id="SpectralImage.KK_pixel"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.KK_pixel">[docs]</a>    <span class="k">def</span> <span class="nf">KK_pixel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.KK_pixel"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.KK_pixel">[docs]</a>    <span class="k">def</span> <span class="nf">KK_pixel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a Kramer-Krönig analysis on pixel (``i``, ``j``).</span>
 
@@ -1445,7 +1323,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        dielectric_functions : array_like</span>
+<span class="sd">        dielectric_functions : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Collection dielectric-functions replicas at pixel (``i``, ``j``).</span>
 <span class="sd">        ts : float</span>
 <span class="sd">            Thickness.</span>
@@ -1499,7 +1377,7 @@
 
         <span class="k">return</span> <span class="p">[</span><span class="n">ts_OG</span><span class="p">,</span> <span class="n">IEELSs_OG</span><span class="p">,</span> <span class="n">max_OG</span><span class="p">],</span> <span class="p">[</span><span class="n">dielectric_functions</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">S_ss</span><span class="p">,</span> <span class="n">IEELSs</span><span class="p">,</span> <span class="n">max_ieels</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SpectralImage.im_dielectric_function"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.im_dielectric_function">[docs]</a>    <span class="k">def</span> <span class="nf">im_dielectric_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track_process</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;KK_analysis&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.im_dielectric_function"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.im_dielectric_function">[docs]</a>    <span class="k">def</span> <span class="nf">im_dielectric_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track_process</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;KK_analysis&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes the dielectric function by performing a Kramer-Krönig analysis at each pixel.</span>
 
@@ -1548,7 +1426,7 @@
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;thickness_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">save_index</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.npy&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thickness_avg</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SpectralImage.cluster"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cluster">[docs]</a>    <span class="k">def</span> <span class="nf">cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">based_on</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.cluster"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cluster">[docs]</a>    <span class="k">def</span> <span class="nf">cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">based_on</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clusters the spectral image into clusters according to the (log) integrated intensity at each</span>
 <span class="sd">        pixel. Cluster means are stored in the attribute ``self.clusters`` and the index to which each cluster belongs is</span>
@@ -1562,7 +1440,7 @@
 <span class="sd">            One can cluster either on the sum of the intensities (pass ````sum````), the log of the sum (pass ````log````) or the thickness (pass ````thickness````).</span>
 <span class="sd">            The default is ````log````.</span>
 <span class="sd">        **kwargs : keyword arguments</span>
-<span class="sd">            additional keyword arguments to pass to :py:meth:`k_means_clustering.k_means() &lt;k_means_clustering.k_means()&gt;`.</span>
+<span class="sd">            additional keyword arguments to pass to :py:meth:`k_means_clustering.k_means() &lt;EELSFitter.clustering.k_means_clustering.k_means()&gt;`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">based_on</span> <span class="o">==</span> <span class="s2">&quot;sum&quot;</span><span class="p">:</span>
@@ -1586,14 +1464,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">clustered</span> <span class="o">+=</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">in_cluster_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_shape</span><span class="p">))</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clustered</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clustered</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SpectralImage.cluster_on_cluster_values"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cluster_on_cluster_values">[docs]</a>    <span class="k">def</span> <span class="nf">cluster_on_cluster_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster_values</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.cluster_on_cluster_values"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cluster_on_cluster_values">[docs]</a>    <span class="k">def</span> <span class="nf">cluster_on_cluster_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster_values</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If the image has been clustered before and the the cluster means are already known,</span>
 <span class="sd">        one can use this function to reconstruct the original clustering of the image.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        cluster_values: array_like</span>
+<span class="sd">        cluster_values: numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Array with the cluster means</span>
 
 <span class="sd">        Notes</span>
@@ -1611,155 +1489,11 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s2">&quot;it seems like the clustered values of dE1 are not clustered on this image/on log or sum. Please check clustering.&quot;</span><span class="p">)</span></div>
 
-    <span class="c1"># PLOTTING FUNCTIONS</span>
-<div class="viewcode-block" id="SpectralImage.plot_heatmap"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.plot_heatmap">[docs]</a>    <span class="k">def</span> <span class="nf">plot_heatmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s1">&#39;[nm]&#39;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s1">&#39;[nm]&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> 
-                     <span class="n">discrete_colormap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sig_cbar</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color_bin_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">equal_axis</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-                     <span class="n">sig_ticks</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-                     <span class="n">save_as</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Plots a heatmap for given data input.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        data : array</span>
-<span class="sd">            Input data for heatmap, but be 2 dimensional.</span>
-<span class="sd">        title : str, optional</span>
-<span class="sd">            Set the title of the heatmap. The default is None.</span>
-<span class="sd">        xlab : str, optional</span>
-<span class="sd">            Set the label of the x-axis. Nanometer ([nm]) is assumed as standard scale. The default is &#39;[nm]&#39;.</span>
-<span class="sd">        ylab : str, optional</span>
-<span class="sd">            Set the label of the y-axis. Nanometer ([nm]) is assumed as standard scale. The default is &#39;[nm]&#39;.</span>
-<span class="sd">        cmap : str, optional</span>
-<span class="sd">            Set the colormap of the heatmap. The default is &#39;coolwarm&#39;.</span>
-<span class="sd">        discrete_colormap : bool, optional</span>
-<span class="sd">            Enables the heatmap values to be discretised. Best used in conjuction with color_bin_size. The default is False.</span>
-<span class="sd">        sig_cbar : int, optional</span>
-<span class="sd">            Set the amount of significant numbers displayed in the colorbar. The default is 3.</span>
-<span class="sd">        color_bin_size : float, optional</span>
-<span class="sd">            Set the size of the bins used for discretisation. Best used in conjuction discrete_colormap. The default is None.</span>
-<span class="sd">        equal_axis : bool, optional</span>
-<span class="sd">            Enables the pixels to look square or not. The default is True.</span>
-<span class="sd">        sig_ticks : int, optional</span>
-<span class="sd">            Set the amount of significant numbers displayed in the ticks. The default is 2.</span>
-<span class="sd">        npix_xtick : float, optional</span>
-<span class="sd">            Display a tick per n pixels in the x-axis. Note that this value can be a float. The default is 10.</span>
-<span class="sd">        npix_ytick : float, optional</span>
-<span class="sd">            Display a tick per n pixels in the y-axis. Note that this value can be a float. The default is 10.</span>
-<span class="sd">        scale_ticks : float, optional</span>
-<span class="sd">            Change the scaling of the numbers displayed in the ticks. Nanometer ([nm]) is assumed as standard scale adjust scaling from there. The default is 1.</span>
-<span class="sd">        tick_int : bool, optional</span>
-<span class="sd">            Set whether you only want the ticks to display as integers instead of floats. The default is False.</span>
-<span class="sd">        save_as : str, optional</span>
-<span class="sd">            Set the location and name for the heatmap to be saved to. The default is False.</span>
-<span class="sd">        **kwargs : dictionary</span>
-<span class="sd">            Additional keyword arguments.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># TODO: invert colours</span>
-        
-        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-            
-        <span class="k">if</span> <span class="s1">&#39;mask&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;mask&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Mask all True: no values to plot.&quot;</span><span class="p">)</span>
-                <span class="k">return</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
-            
-        <span class="k">if</span> <span class="n">equal_axis</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
-
-            <span class="n">unique_data_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">])</span>
-            <span class="k">if</span> <span class="s1">&#39;vmax&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">[</span><span class="n">unique_data_points</span> <span class="o">&gt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">unique_data_points</span> <span class="o">=</span> <span class="n">unique_data_points</span><span class="p">[</span><span class="n">unique_data_points</span> <span class="o">&lt;=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]]</span>
-
-            <span class="k">if</span> <span class="s1">&#39;vmin&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">[</span><span class="n">unique_data_points</span> <span class="o">&lt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">unique_data_points</span> <span class="o">=</span> <span class="n">unique_data_points</span><span class="p">[</span><span class="n">unique_data_points</span> <span class="o">&gt;=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]]</span>
-
-            <span class="k">if</span> <span class="n">color_bin_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">color_bin_size</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">color_bin_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">unique_data_points</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="mi">30</span><span class="p">)</span>
-
-            <span class="n">n_colors</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">))</span><span class="o">/</span><span class="n">color_bin_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">cmap</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="n">n_colors</span><span class="p">)</span>
-            <span class="n">spacing</span> <span class="o">=</span> <span class="n">color_bin_size</span> <span class="o">/</span> <span class="mi">2</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span> <span class="o">+</span> <span class="n">spacing</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span> <span class="o">-</span> <span class="n">spacing</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixelsize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">xticks</span><span class="p">,</span> <span class="n">yticks</span><span class="p">,</span> <span class="n">xticks_labels</span><span class="p">,</span> <span class="n">yticks_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">(</span><span class="n">sig_ticks</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">tick_int</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">xticks</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">yticks</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">xticks_labels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">yticks_labels</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlab</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylab</span><span class="p">)</span>
-        
-        <span class="n">colorbar</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">colorbar</span>
-        <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>    
-            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
-                <span class="n">colorbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">colorbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]))</span>
-                <span class="n">cbar_ticks_labels</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">tick</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]):</span>
-                    <span class="k">if</span> <span class="n">tick</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-                        <span class="n">cbar_ticks_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">round_scientific</span><span class="p">(</span><span class="n">tick</span><span class="p">,</span> <span class="n">sig_cbar</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">tick</span><span class="p">)))))))</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">cbar_ticks_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">round_scientific</span><span class="p">(</span><span class="n">tick</span><span class="p">,</span> <span class="n">sig_cbar</span><span class="p">))</span>
-                <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_ticks_labels</span><span class="p">)</span>
-    
-        <span class="k">if</span> <span class="s1">&#39;vmin&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]:</span>
-                <span class="n">cbar_ticks</span> <span class="o">=</span> <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()</span>
-                <span class="n">loc</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
-                    <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">spacing</span><span class="p">))</span>
-                <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\leq$&#39;</span> <span class="o">+</span> <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
-                <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_ticks</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="s1">&#39;vmax&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]:</span>
-                <span class="n">cbar_ticks</span> <span class="o">=</span> <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()</span>
-                <span class="n">cbar_ticks_values</span> <span class="o">=</span> <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span>
-                <span class="n">loc</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-                <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
-                    <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">cbar_ticks_values</span> <span class="o">&lt;=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">spacing</span><span class="p">))</span>
-                <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\geq$&#39;</span> <span class="o">+</span> <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
-                <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_ticks</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">save_as</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">save_as</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">save_as</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-            <span class="k">if</span> <span class="s1">&#39;mask&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="n">save_as</span> <span class="o">+=</span> <span class="s1">&#39;_masked&#39;</span>
-            <span class="n">save_as</span> <span class="o">+=</span> <span class="s1">&#39;.pdf&#39;</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_as</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
- 
-    
-<div class="viewcode-block" id="SpectralImage.get_ticks"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_ticks">[docs]</a>    <span class="k">def</span> <span class="nf">get_ticks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="SpectralImage.get_ticks"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_ticks">[docs]</a>    <span class="k">def</span> <span class="nf">get_ticks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the proper tick labels and tick positions for the heatmap plots.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        sig_ticks : int, optional</span>
@@ -1772,21 +1506,21 @@
 <span class="sd">            Change the scaling of the numbers displayed in the ticks. Microns ([\u03BCm]) are assumed as standard scale, adjust scaling from there. The default is 1.</span>
 <span class="sd">        tick_int : bool, optional</span>
 <span class="sd">            Set whether you only want the ticks to display as integers instead of floats. The default is False.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        xticks : array_like</span>
+<span class="sd">        xticks : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Array of the xticks positions.</span>
-<span class="sd">        yticks : array_like</span>
+<span class="sd">        yticks : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Array of the yticks positions.</span>
-<span class="sd">        xticks_labels : array_like</span>
+<span class="sd">        xticks_labels : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Array with strings of the xtick labels.</span>
-<span class="sd">        yticks_labels : array_like</span>
+<span class="sd">        yticks_labels : numpy.ndarray, shape=(M,)</span>
 <span class="sd">            Array with strings of the ytick labels.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="n">xticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">npix_xtick</span><span class="p">)</span>
-        <span class="n">yticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">npix_ytick</span><span class="p">)</span> 
+        <span class="n">yticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">npix_ytick</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">tick_int</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">xticks_labels</span> <span class="o">=</span> <span class="p">(</span><span class="n">xticks</span> <span class="o">*</span> <span class="n">round_scientific</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixelsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
             <span class="n">yticks_labels</span> <span class="o">=</span> <span class="p">(</span><span class="n">yticks</span> <span class="o">*</span> <span class="n">round_scientific</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixelsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -1811,7 +1545,7 @@
             <span class="k">return</span> <span class="n">key</span>
 
     <span class="c1"># STATIC METHODS</span>
-<div class="viewcode-block" id="SpectralImage.get_prefix"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_prefix">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SpectralImage.get_prefix"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_prefix">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_prefix</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">SIunit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numeric</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method to convert units to their associated SI values.</span>
@@ -1845,7 +1579,6 @@
                 <span class="k">if</span> <span class="n">numeric</span><span class="p">:</span>
                     <span class="k">return</span> <span class="mi">1</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># TODO: is this correct? JTH 01/07</span>
                     <span class="n">prefix</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">return</span> <span class="n">prefix</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1909,7 +1642,18 @@
 <span class="c1"># GENERAL DATA MODIFICATION FUNCTIONS  </span>
 
 <span class="k">def</span> <span class="nf">CFT</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="c1">#TODO: write docstring</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x: numpy.ndarray, shape=(M,)</span>
+<span class="sd">    y: numpy.ndarray, shape=(M,)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    F_k: numpy.ndarray, shape=(M,)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">N_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1922,7 +1666,18 @@
 
 
 <span class="k">def</span> <span class="nf">iCFT</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Y_k</span><span class="p">):</span>
-    <span class="c1">#TODO: write docstring</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x: numpy.ndarray, shape=(M,)</span>
+<span class="sd">    Y_k: numpy.ndarray, shape=(M,)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    f_n: numpy.ndarray, shape=(M,)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">N_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1932,46 +1687,6 @@
     <span class="n">cont_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">N_0</span> <span class="o">*</span> <span class="n">k</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
     <span class="n">f_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">cont_factor</span> <span class="o">*</span> <span class="n">Y_k</span><span class="p">)</span> <span class="o">/</span> <span class="n">delta_x</span>
     <span class="k">return</span> <span class="n">f_n</span>
-
-
-<span class="k">def</span> <span class="nf">smooth_1D</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_len</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Smooth the data using a window with requested size.</span>
-
-<span class="sd">    This method is based on the convolution of a scaled window with the signal.</span>
-<span class="sd">    The signal is prepared by introducing reflected copies of the signal </span>
-<span class="sd">    (with the window size) in both ends so that transient parts are minimized</span>
-<span class="sd">    in the begining and end part of the output signal.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    data: numpy.ndarray, shape=(M,)</span>
-<span class="sd">        Input signal of length M</span>
-<span class="sd">    window_len: int, optional</span>
-<span class="sd">        The dimension of the smoothing window. Must be an odd integer.</span>
-<span class="sd">        Set to 50 by default.</span>
-<span class="sd">    window: str, optional</span>
-<span class="sd">        The type of window from ``flat``, ``hanning``, ``hamming``, ``bartlett``, ``blackman``.</span>
-<span class="sd">        ``flat`` produces a moving average smoothing.</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    output: numpy.ndarray, shape=(M,)</span>
-<span class="sd">        The smoothed signal</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">window_len</span> <span class="o">+=</span> <span class="p">(</span><span class="n">window_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">window_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="n">window_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-
-    <span class="k">if</span> <span class="n">window</span> <span class="o">==</span> <span class="s1">&#39;flat&#39;</span><span class="p">:</span>  <span class="c1"># moving average</span>
-        <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">window_len</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">w</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;np.&#39;</span> <span class="o">+</span> <span class="n">window</span> <span class="o">+</span> <span class="s1">&#39;(window_len)&#39;</span><span class="p">)</span>
-
-    <span class="n">surplus_data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">window_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">w</span> <span class="o">/</span> <span class="n">w</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">s</span><span class="p">)[</span>
-           <span class="n">surplus_data</span><span class="p">:</span><span class="o">-</span><span class="n">surplus_data</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">data</span>
-
 
 <span class="c1"># MODELING CLASSES AND FUNCTIONS</span>
 <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">ab</span><span class="p">):</span>
@@ -2067,7 +1782,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, A
+        &copy; Copyright 2021, EELSfitter developer team
 
     </p>
   </div>

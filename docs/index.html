@@ -25,7 +25,9 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -37,7 +39,7 @@
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Features" href="overview/features.html" /> 
+    <link rel="next" title="Pooling and clustering" href="theory/clustering_pooling.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -81,27 +83,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Overview</span></p>
+              <p class="caption"><span class="caption-text">Theory</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview/features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overview/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/bandgap_analysis.html">Bandgap analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Theory</span></p>
+<p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="theory/kk_analysis.html">Kramer-Kronig Analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Implementation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="implementation/training_strategies.html">Training Strategies</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Results</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="results/EELS_10.html">EELS 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results/EELS_20.html">EELS 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/tutorial.html">Tutorials</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="EELSFitter.html">EELSFitter package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -166,9 +166,58 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-eelsfitter-website">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<a class="reference internal image-reference" href="_images/nikhef_logo.png"><img alt="Nikhef logo" src="_images/nikhef_logo.png" style="width: 18%;" /></a>
+<a class="reference internal image-reference" href="_images/kavli_logo.png"><img alt="Kavli logo" src="_images/kavli_logo.png" style="width: 18%;" /></a>
+<a class="reference internal image-reference" href="_images/delft_logo.jpg"><img alt="TU Delft logo" src="_images/delft_logo.jpg" style="width: 18%;" /></a>
+<a class="reference internal image-reference" href="_images/vu_logo.png"><img alt="VU logo" src="_images/vu_logo.png" style="width: 18%;" /></a>
+<a class="reference internal image-reference" href="_images/qn_logo.png"><img alt="QN logo" src="_images/qn_logo.png" style="width: 18%;" /></a>
+<div class="section" id="welcome-to-eelsfitter-website">
 <h1>Welcome to EELSfitter website!<a class="headerlink" href="#welcome-to-eelsfitter-website" title="Permalink to this headline">¶</a></h1>
 <p>EELSfiter is an open-source Python-based framework developed for the analysis and interpretation of Electron Energy Loss Spectroscopy (EELS) measurements in Transmission Electron Microscopy (TEM). EELSfitter is based on the machine learning techniques developed by the NNPDF Collaboration in the context of applications in high energy physics, in particular feed-forward neural networks for unbiased regression in multidimensional problems.</p>
+<div class="section" id="project-description">
+<h2>Project description<a class="headerlink" href="#project-description" title="Permalink to this headline">¶</a></h2>
+<p>EELSfitter has been used in the following <strong>scientific publications</strong>:</p>
+<ul class="simple">
+<li><p><em>Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</em>, Roest, Laurien I. and van Heijst, Sabrya E. and Maduro, Luigi and Rojo, Juan and Conesa-Boj, Sonia <span id="id1">[<a class="reference internal" href="bibliography.html#id141">Roest <em>et al.</em>, 2021</a>]</span>.</p></li>
+<li><p><em>Spatially-resolved bandgap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</em>, Brokkelkamp, Abel, and ter Hoeve, Jaco, and Postmes, Isabel, and van Heijst, Sabrya E. and Maduro, Luigi, and Davydov, Albert, and Krylyuk, Sergiy, and Rojo, Juan and Conesa-Boj, Sonia, <em>in preparation</em>.</p></li>
+</ul>
+<p>The code from the these publications is available in the <a class="reference internal" href="modules/EELSFitter.html#code"><span class="std std-ref">Code</span></a> section.</p>
+</div>
+<div class="section" id="team-description">
+<h2>Team description<a class="headerlink" href="#team-description" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>EELSfitter collaboration</strong> is currently composed by the following members:</p>
+<ul class="simple">
+<li><p>Abel Brokkelkamp, <em>Kavli Institiute of Nanoscience, Delft University of Technology</em></p></li>
+<li><p>Jaco ter Hoeve, <em>VU Amsterdam and Nikhef Theory Group</em></p></li>
+<li><p>Isabel Postmes, <em>Kavli Institiute of Nanoscience, Delft University of Technology</em></p></li>
+<li><p>Luigi Maduro, <em>Kavli Institiute of Nanoscience, Delft University of Technology</em></p></li>
+<li><p>Juan Rojo, <em>VU Amsterdam and Nikhef Theory Group</em></p></li>
+<li><p>Sonia Conesa Boj, <em>Kavli Institiute of Nanoscience, Delft University of Technology</em></p></li>
+</ul>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -177,7 +226,6 @@
 </div>
 <div class="toctree-wrapper compound">
 </div>
-<div class="toctree-wrapper compound">
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -197,7 +245,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="overview/features.html" class="btn btn-neutral float-right" title="Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="theory/clustering_pooling.html" class="btn btn-neutral float-right" title="Pooling and clustering" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -207,7 +255,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, A
+        &copy; Copyright 2021, EELSfitter developer team
 
     </p>
   </div>

@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pooling and clustering &mdash; EELSfitter 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NN training" href="nn_training.html" />
+    <link rel="prev" title="Welcome to EELSfitter website!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> EELSfitter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Theory</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bandgap_analysis.html">Bandgap analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/tutorial.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSfitter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Pooling and clustering</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/theory/clustering_pooling.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="pooling-and-clustering">
+<h1>Pooling and clustering<a class="headerlink" href="#pooling-and-clustering" title="Permalink to this headline">¶</a></h1>
+<p>Let us consider a two-dimensional region of the analysed specimen with
+dimensions <span class="math notranslate nohighlight">\(L_x\times L_y\)</span> where EEL spectra are recorded for <span class="math notranslate nohighlight">\(n_p=n_x \times n_y\)</span> pixels.
+Then the information contained within an EELS-SI may be expressed as</p>
+<div class="math notranslate nohighlight" id="equation-eq-eelsmaster-image-app">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-eelsmaster-image-app" title="Permalink to this equation">¶</a></span>\[I^{(i,j)}_{\rm EELS}(E_\ell) \,,
+\quad i=1,\ldots, n_x\,,
+\quad j=1,\ldots, n_y\,,
+\quad  \ell=1,\ldots, n_E \, ,\]</div>
+<p>With each spectra constructed as</p>
+<div class="math notranslate nohighlight" id="equation-eq-eelsmaster-image">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-eelsmaster-image" title="Permalink to this equation">¶</a></span>\[I^{(i,j)}_{\rm EELS}(E_\ell) =
+I^{(i,j)}_{\rm ZLP}(E_\ell) +
+I^{(i,j)}_{\rm inel}(E_\ell) \, ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(I^{(i,j)}_{\rm EELS}(E_\ell)\)</span> indicates the recorded total
+electron energy loss intensity for an energy loss <span class="math notranslate nohighlight">\(E_\ell\)</span> for a location
+in the specimen (pixel) labelled by <span class="math notranslate nohighlight">\((i,j)\)</span>, and <span class="math notranslate nohighlight">\(n_E\)</span> is the number of
+bins that compose each spectrum. <span class="math notranslate nohighlight">\(I^{(i,j)}_{\rm ZLP}(E_\ell)\)</span> indicates the ZLP contributions and <span class="math notranslate nohighlight">\(I^{(i,j)}_{\rm inel}(E_\ell)\)</span> the inelastic scattering contribution. The spatial resolution of the EELS-SI in
+the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions is usually taken to be the same, implying that</p>
+<div class="math notranslate nohighlight">
+\[\Delta x = \Delta y \simeq \frac{L_x}{n_x} = \frac{L_y}{n_y} \, .\]</div>
+<p>For the specimens analysed in this work we have <span class="math notranslate nohighlight">\(n_p=\mathcal{O}(10^4)\)</span>
+spectra corresponding to a spatial resolution of <span class="math notranslate nohighlight">\(\Delta x \simeq 10\)</span> nm.
+On the one hand, a higher spatial resolution is important to allow the
+identification and characterisation of localised features within a nanomaterial,
+such as structural defects, phase boundaries, surfaces or edges. On the
+other hand, if the resolution <span class="math notranslate nohighlight">\(\Delta x\)</span> becomes too small the individual
+spectra become noisy due to limited statistics. Hence, the optimal spatial
+resolution can be determined from a compromise between these two considerations.</p>
+<p>In general it is not known what the optimal spatial resolution should be
+prior to the EELS-TEM inspection and analysis of a specimen. Therefore,
+it is convenient to record the spectral image with a high spatial resolution
+and then, if required, combine subsequently the information on neighbouring
+pixels by means of a procedure known as pooling or sliding-window averaging.
+The idea underlying pooling is that one carries out the following replacement
+for the entries of the EELS spectral image listed in Eq. <a class="reference internal" href="#equation-eq-eelsmaster-image-app">(1)</a>:</p>
+<div class="math notranslate nohighlight">
+\[I^{(i,j)}_{\rm EELS}(E_\ell)\quad \to
+I^{(i,j)}_{\rm EELS}(E_\ell)\Big|_{\rm pooled} =\frac{1}{N^{(i,j)}_{\rm pool}}\sum_{|i'-i|\le d}
+\sum_{|j'-j|\le d}\left( \omega_{|i'-i|,|j'-j|} \times
+I^{(i',j')}_{\rm EELS}(E_\ell)\right) \, ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> indicates the pooling range, <span class="math notranslate nohighlight">\(\omega_{|i'-i|,|j'-j|}\)</span> is a weight factor,
+and the pooling normalisation is determined by the sum of the relevant weights,</p>
+<div class="math notranslate nohighlight">
+\[N^{(i,j)}_{\rm pool} = \sum_{|i'-i|\le d} \sum_{|j'-j|\le d} \omega_{|i'-i|,|j'-j|} \, .\]</div>
+<p>By increasing the pooling range <span class="math notranslate nohighlight">\(d\)</span>, one combines the local information
+from a higher number of spectra and thus reduces statistical fluctuations,
+at the price of some loss on the spatial resolution of the measurement. For
+instance, <span class="math notranslate nohighlight">\(d=3/2\)</span> averages the information contained on a <span class="math notranslate nohighlight">\(3\times 3\)</span> square
+centered on the pixel <span class="math notranslate nohighlight">\((i,j)\)</span>. Given that there is no unique choice for the
+pooling parameters, one has to verify that the interpretation of the information
+contained on the spectral images does not depend sensitively on their value.
+In this work, we consider uniform weights, <span class="math notranslate nohighlight">\(\omega_{|i'-i|,|j'-j|}=1\)</span>, but
+other options such as Gaussian weights</p>
+<div class="math notranslate nohighlight">
+\[\omega_{|i'-i|,|j'-j|} = \exp\left( - \frac{(i-i')^2}{2d^2} - \frac{(j-j')^2}{2d^2}  \right) \, ,\]</div>
+<p>with <span class="math notranslate nohighlight">\(\sigma^2=d^2\)</span> as variance are straightforward to implement in
+{scsmall EELSfitter}. The outcome of this procedure is  a  a modified
+spectral map with the same structure as Eq. <a class="reference internal" href="#equation-eq-eelsmaster-image-app">(1)</a>
+but now with pooled entries. In this work we typically use <span class="math notranslate nohighlight">\(d=3\)</span> to tame
+statistical fluctuations on the recorded spectra.</p>
+<p>As indicated by Eq. <a class="reference internal" href="#equation-eq-eelsmaster-image">(2)</a>, the total EELS intensity
+recorded for each pixel of the SI receives contributions from both
+inelastic scatterings and from the ZLP, where the latter must be subtracted
+before one can carry out the theoretical interpretation of the low-loss
+region measurements. Given that the ZLP arises from elastic scatterings
+with the atoms of the specimen, and that the likelihood of these scatterings
+increases with the thickness, its contribution will depend sensitively
+with the local thickness of the specimen. Hence, before one trains the
+deep-learning model of the ZLP it is necessary to first group individual
+spectra as a function of their thickness. In this work this is achieved
+by means of unsupervised machine learning, specifically with the <span class="math notranslate nohighlight">\(K\)</span>-means
+clustering algorithm. Since the actual calculation of the thickness has as
+prerequisite the ZLP determination, see Eq. <a class="reference internal" href="kk_analysis.html#equation-eq-thickness-calculation">(14)</a>,
+it is suitable to use instead the total integrated intensity as a proxy for
+the local thickness for the clustering procedure. That is, we cluster spectra
+as a function of</p>
+<div class="math notranslate nohighlight" id="equation-eq-total-integrated-intensity">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-total-integrated-intensity" title="Permalink to this equation">¶</a></span>\[N^{(i,j)}_{\rm tot} \equiv \int_{-\infty}^{\infty} dE\,
+I_{\rm EELS}^{(i,j)}(E) = \int_{-\infty}^{\infty} dE\,\left(
+I^{(i,j)}_{\rm ZLP}(E) +
+I^{(i,j)}_{\rm inel}(E) \right) = N^{(i,j)}_0 + N^{(i,j)}_{\rm inel} \, ,\]</div>
+<p>which coincides with the sum of the ZLP and inelastic scattering normalisation
+factors. Eq. <a class="reference internal" href="#equation-eq-total-integrated-intensity">(3)</a> is inversely proportional
+to the local thickness <span class="math notranslate nohighlight">\(t\)</span> and therefore represents a suitable replacement
+in the clustering algorithm. In practice, the integration in Eq. <a class="reference internal" href="#equation-eq-total-integrated-intensity">(3)</a>
+is restricted to the measured region in energy loss.</p>
+<p>The starting point of <span class="math notranslate nohighlight">\(K\)</span>-means clustering is a dataset composed by
+<span class="math notranslate nohighlight">\(n_p=n_x\times n_y\)</span> points,</p>
+<div class="math notranslate nohighlight">
+\[\ln\left( N^{(r)}_{\rm tot}\right) \,,\quad r=1,\ldots , n_p\,, \qquad r=i+(n_y-1)j \, ,\]</div>
+<p>which we want to group into <span class="math notranslate nohighlight">\(K\)</span> separate clusters <span class="math notranslate nohighlight">\(T_k\)</span>, whose means are
+given by</p>
+<div class="math notranslate nohighlight">
+\[\ln \left( \widetilde{N}^{(k)}\right) \,,\quad k=1,\ldots, K\,.\]</div>
+<p>The cluster means represent the main features of the <span class="math notranslate nohighlight">\(k\)</span>-th cluster to
+which the data points will be assigned in the  procedure. Clustering on
+the logarithm of <span class="math notranslate nohighlight">\(N^{(r)}_{\rm tot}\)</span> rather than on its absolute value
+is found to be more efficient, given that depending on the specimen location
+the integrated intensity will vary by orders of magnitude.</p>
+<div class="figure align-default" id="id3">
+<img alt="../_images/InSe_Clustered.png" src="../_images/InSe_Clustered.png" />
+<p class="caption"><span class="caption-text">small The outcome of the <span class="math notranslate nohighlight">\(K\)</span>-means clustering procedure applied to the
+InSe specimen, where each color represents one of the <span class="math notranslate nohighlight">\(K=10\)</span> thickness
+clusters. It can be compared with the thickness map of Fig. :ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>fig:Fig2`(d).</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<div class="legend">
+</div>
+</div>
+<p>In <span class="math notranslate nohighlight">\(K\)</span>-means clustering, the determination of the cluster means and data
+point assignments follows from the minimisation of a cost function. This
+is defined in terms of a distance in specimen thickness space, given by</p>
+<div class="math notranslate nohighlight" id="equation-eq-kmeans-clustering">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-kmeans-clustering" title="Permalink to this equation">¶</a></span>\[C_{\rm Kmeans}\left( {\boldsymbol N}_{\rm tot}, {\boldsymbol T}\right)
+= \sum_{r=1}^{n_p}\sum_{k=1}^{K} d_{rk}\left|  \ln\left(
+\frac{\widetilde{N}^{(k)}}{N^{(r)}_{\rm tot}}\right)
+\right|^p \, ,\]</div>
+<p>with <span class="math notranslate nohighlight">\(d_{rk}\)</span> being a binary assignment variable, equal to 1 if <span class="math notranslate nohighlight">\(r\)</span>
+belongs to cluster <span class="math notranslate nohighlight">\(k\)</span> (<span class="math notranslate nohighlight">\(d_{rk}=1\)</span> for <span class="math notranslate nohighlight">\(r\in T_k\)</span>) and zero otherwise,
+and with the exponent satisfying <span class="math notranslate nohighlight">\(p&gt; 0\)</span>. Here we adopt <span class="math notranslate nohighlight">\(p=1/2\)</span>, which
+reduces the weight of eventual outliers in the calculation of the cluster
+means, and we verify that results are stable if <span class="math notranslate nohighlight">\(p=1\)</span> is used instead.
+Furthermore, since clustering is exclusive, one needs to impose the following
+sum rule</p>
+<div class="math notranslate nohighlight">
+\[\sum_{k=1}^K d_{rk}=1 \, ,\quad \forall\,r \, .\]</div>
+<p>The minimisation of Eq. <a class="reference internal" href="#equation-eq-kmeans-clustering">(4)</a> results in a cluster
+assignment such that the internal variance is minimised and is carried out
+by means of a semi-analytical  algorithm. This algorithm is iterated until
+a convergence criterion is achieved, e.g. when the change in the cost function
+between two iterations is below some threshold. Note that, as opposed to
+supervised learning, here is it not possible to overfit and eventually one
+is guaranteed to find the solution that leads to the absolute minimum of the
+cost function. The end result of the clustering process is that now we can
+label the information contained in the (pooled) spectral image
+(for <span class="math notranslate nohighlight">\(r=i+(n_y-1)j\)</span>) as follows</p>
+<div class="math notranslate nohighlight" id="equation-eq-cases-intensity">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-cases-intensity" title="Permalink to this equation">¶</a></span>\[\begin{split}I^{(i,j)}_{{\rm EELS},k}(E_\ell) = \begin{cases}
+I^{(r)}_{\rm EELS}(E_\ell)\quad {\rm if} \quad r\in T_k  \\ 0 \quad {\rm otherwise}
+\end{cases} \,, \quad k=1,\dots, K\, .\end{split}\]</div>
+<p>This cluster assignment makes possible training  the ZLP deep-learning
+model across the complete specimen recorded in the SI accounting for the
+(potentially large) variations in the local thickness.</p>
+<p>The number of clusters <span class="math notranslate nohighlight">\(K\)</span> is a free parameter that needs to be fixed
+taking into consideration how rapidly the local thickness varies within
+a given specimen. We note that <span class="math notranslate nohighlight">\(K\)</span> cannot be too high, else it will not
+be possible to sample a sufficiently large number of representative spectra
+from each cluster to construct the prior probability distributions, as
+required for the Monte Carlo method used in this work. We find that <span class="math notranslate nohighlight">\(K=10\)</span>
+for the InSe and <span class="math notranslate nohighlight">\(K=5\)</span> for the <span class="math notranslate nohighlight">\(WS_2\)</span> specimens are suitable choices.
+Fig. <span class="xref std std-ref">InSe_Clustered</span> displays the outcome of the <span class="math notranslate nohighlight">\(K\)</span>-means
+clustering procedure applied to the InSe specimen, where each color
+represents one of the <span class="math notranslate nohighlight">\(K=10\)</span> thickness clusters. It can be compared with
+the corresponding thickness map in Fig. <span class="xref std std-ref">fig:Fig2`(d); the qualitative
+agreement further confirms that the total integrated intensity in each
+pixel :math:`N_{rm tot}^{(i,j)}</span> represents a suitable proxy for the local
+specimen thickness.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nn_training.html" class="btn btn-neutral float-right" title="NN training" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to EELSfitter website!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, EELSfitter developer team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

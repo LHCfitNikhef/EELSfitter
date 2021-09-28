@@ -25,7 +25,9 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -80,27 +82,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Overview</span></p>
+              <p class="caption"><span class="caption-text">Theory</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview/features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overview/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory/bandgap_analysis.html">Bandgap analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Theory</span></p>
+<p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="theory/kk_analysis.html">Kramer-Kronig Analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Implementation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="implementation/training_strategies.html">Training Strategies</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Results</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="results/EELS_10.html">EELS 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results/EELS_20.html">EELS 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/tutorial.html">Tutorials</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="EELSFitter.html">EELSFitter package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -165,7 +165,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p># Configuration file for the Sphinx documentation builder.
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<p># Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
@@ -182,8 +206,8 @@ import sys</p>
 <p># source_dir = pathlib.Path(‘../../EELS_KK/pyfiles’).parent</p>
 <p># – Project information —————————————————–</p>
 <p>project = ‘EELSfitter’
-copyright = ‘2021, A’
-author = ‘A’</p>
+copyright = ‘2021, EELSfitter developer team’
+author = ‘EELSfitter developer team’</p>
 <p># The full version, including alpha/beta/rc tags
 release = ‘0.0.1’</p>
 <p># – General configuration —————————————————</p>
@@ -204,13 +228,15 @@ extensions = [</p>
 “sphinx.ext.todo”,
 “sphinx.ext.viewcode”,
 “sphinx.ext.autosummary”,
-‘sphinxcontrib.bibtex’</p>
+“sphinxcontrib.bibtex”,
+“nbsphinx”,]</p>
 </div></blockquote>
-<p>]</p>
 <p># Add any paths that contain templates here, relative to this directory.
 templates_path = [‘_templates’]</p>
 <p># Bibtex
-bibtex_bibfiles = [‘EELS_ML.bib’]</p>
+bibtex_bibfiles = [‘EELS_ML.bib’]
+bibtex_default_style = ‘unsrt’
+bibtex_reference_style = ‘author_year’</p>
 <p># Markdown configuration</p>
 <p># The suffix(es) of source filenames.
 # you can specify multiple suffix as a list of string:
@@ -218,9 +244,8 @@ source_suffix = {</p>
 <blockquote>
 <div><p>“.rst”: “restructuredtext”,
 “.txt”: “restructuredtext”,
-“.py”: “restructuredtext”,</p>
+“.py”: “restructuredtext”}</p>
 </div></blockquote>
-<p>}</p>
 <p>autosectionlabel_prefix_document = True
 # autosectionlabel_maxdepth = 10
 # Allow to embed rst syntax in markdown files.
@@ -255,11 +280,7 @@ html_theme = ‘sphinx_rtd_theme’</p>
 html_static_path = [‘_static’]</p>
 <p># These paths are either relative to html_static_path
 # or fully qualified paths (eg. <a class="reference external" href="https://">https://</a>…)
-html_css_files = [</p>
-<blockquote>
-<div><p>‘css/custom.css’,</p>
-</div></blockquote>
-<p>]</p>
+html_css_files = [‘css/custom.css’]</p>
 <p># – Options for intersphinx extension —————————————</p>
 <p># Example configuration for intersphinx: refer to the Python standard library.
 # Thanks <a class="reference external" href="https://github.com/bskinn/sphobjinv">https://github.com/bskinn/sphobjinv</a>
@@ -271,9 +292,8 @@ intersphinx_mapping = {</p>
 “pytorch”: (“<a class="reference external" href="https://pytorch.org/docs/stable/">https://pytorch.org/docs/stable/</a>”, None),
 “pandas”: (“<a class="reference external" href="https://pandas.pydata.org/docs/">https://pandas.pydata.org/docs/</a>”, None),
 “seaborn”: (“<a class="reference external" href="https://seaborn.pydata.org/">https://seaborn.pydata.org/</a>”, None),
-“matplotlib”: (“<a class="reference external" href="https://matplotlib.org/">https://matplotlib.org/</a>”, None),</p>
+“matplotlib”: (“<a class="reference external" href="https://matplotlib.org/">https://matplotlib.org/</a>”, None)}</p>
 </div></blockquote>
-<p>}</p>
 <p># – Options for todo extension ———————————————-</p>
 <p># If true, <cite>todo</cite> and <cite>todoList</cite> produce output, else they produce nothing.
 todo_include_todos = True</p>
@@ -289,7 +309,7 @@ todo_include_todos = True</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, A
+        &copy; Copyright 2021, EELSfitter developer team
 
     </p>
   </div>

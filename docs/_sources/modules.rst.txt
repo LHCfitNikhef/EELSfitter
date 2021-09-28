@@ -1,7 +1,0 @@
-EELSFitter
-==========
-
-.. toctree::
-   :maxdepth: 4
-
-   EELSFitter

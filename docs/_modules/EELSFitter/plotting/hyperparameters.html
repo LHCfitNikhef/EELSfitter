@@ -25,7 +25,9 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -80,27 +82,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Overview</span></p>
+              <p class="caption"><span class="caption-text">Theory</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/bandgap_analysis.html">Bandgap analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Theory</span></p>
+<p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramer-Kronig Analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Implementation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../implementation/training_strategies.html">Training Strategies</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Results</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_10.html">EELS 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_20.html">EELS 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/tutorial.html">Tutorials</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../EELSFitter.html">EELSFitter package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -169,7 +169,7 @@
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
 
 
-<div class="viewcode-block" id="plot_dE1"><a class="viewcode-back" href="../../../EELSFitter.plotting.html#EELSFitter.plotting.hyperparameters.plot_dE1">[docs]</a><span class="k">def</span> <span class="nf">plot_dE1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">min_clusters</span><span class="p">,</span> <span class="n">de1_prob</span><span class="p">,</span> <span class="n">de1_shift</span><span class="p">,</span> <span class="n">prob</span><span class="p">):</span>
+<div class="viewcode-block" id="plot_dE1"><a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.hyperparameters.plot_dE1">[docs]</a><span class="k">def</span> <span class="nf">plot_dE1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">min_clusters</span><span class="p">,</span> <span class="n">de1_prob</span><span class="p">,</span> <span class="n">de1_shift</span><span class="p">,</span> <span class="n">prob</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Produces two plots of the locations of `dE1`:</span>
 
@@ -179,7 +179,7 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    image: SpectralImage</span>
-<span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object</span>
+<span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object</span>
 <span class="sd">    y_smooth_clusters: array_like</span>
 <span class="sd">        An array that contains an array for each cluster, which subsequently contains the smoothed spectrum at each</span>
 <span class="sd">        pixel within the cluster.</span>
@@ -331,7 +331,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, A
+        &copy; Copyright 2021, EELSfitter developer team
 
     </p>
   </div>

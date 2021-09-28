@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Kramer-Kronig Analysis &mdash; EELSfitter 0.0.1 documentation</title>
+  <title>Kramers-Kronig analysis of EEL spectra &mdash; EELSfitter 0.0.1 documentation</title>
   
 
   
@@ -25,7 +25,9 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -37,8 +39,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Training Strategies" href="../implementation/training_strategies.html" />
-    <link rel="prev" title="Datasets" href="../overview/datasets.html" /> 
+    <link rel="next" title="Bandgap analysis" href="bandgap_analysis.html" />
+    <link rel="prev" title="NN training" href="nn_training.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -82,38 +84,33 @@
               
             
             
-              <p class="caption"><span class="caption-text">Overview</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../overview/features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../overview/datasets.html">Datasets</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Theory</span></p>
+              <p class="caption"><span class="caption-text">Theory</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Kramer-Kronig Analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#theoretical-interpretation-of-eel-spectra">Theoretical interpretation of EEL spectra</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#the-single-scattering-distribution">The single-scattering distribution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ssd-deconvolution">SSD deconvolution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#discrete-fourier-transforms">Discrete Fourier transforms</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#thickness-calculation">Thickness calculation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-dielectric-function-from-kramers-kronig-analysis">The dielectric function from Kramers-Kronig analysis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#the-role-of-surface-scatterings">The role of surface scatterings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nn_training.html">NN training</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Kramers-Kronig analysis of EEL spectra</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-single-scattering-distribution">The single-scattering distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ssd-deconvolution">SSD deconvolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discrete-fourier-transforms">Discrete Fourier transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thickness-calculation">Thickness calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-dielectric-function-from-kramers-kronig-analysis">The dielectric function from Kramers-Kronig analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-role-of-surface-scatterings">The role of surface scatterings</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bandgap_analysis.html">Bandgap analysis</a></li>
 </ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Implementation</span></p>
+<p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../implementation/training_strategies.html">Training Strategies</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Results</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../results/EELS_10.html">EELS 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../results/EELS_20.html">EELS 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/tutorial.html">Tutorials</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../EELSFitter.html">EELSFitter package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -159,7 +156,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Kramer-Kronig Analysis</li>
+      <li>Kramers-Kronig analysis of EEL spectra</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -178,13 +175,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="kramer-kronig-analysis">
-<h1>Kramer-Kronig Analysis<a class="headerlink" href="#kramer-kronig-analysis" title="Permalink to this headline">¶</a></h1>
-<p>The following text is adapted from …new ML paper…</p>
-<div class="section" id="theoretical-interpretation-of-eel-spectra">
-<h2>Theoretical interpretation of EEL spectra<a class="headerlink" href="#theoretical-interpretation-of-eel-spectra" title="Permalink to this headline">¶</a></h2>
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="kramers-kronig-analysis-of-eel-spectra">
+<h1>Kramers-Kronig analysis of EEL spectra<a class="headerlink" href="#kramers-kronig-analysis-of-eel-spectra" title="Permalink to this headline">¶</a></h1>
 <p>Here we provide an overview of the theoretical formalism adopted in this
-work <a href="#id1"><span class="problematic" id="id2">:footcite:t:`Egerton:2007`</span></a> to evaluate the single-scattering distribution, local
+work <span id="id1">[<a class="reference internal" href="../bibliography.html#id2">Egerton, 2007</a>]</span> to evaluate the single-scattering distribution, local
 thickness, bandgap energy and type and complex dielectric function from  EELS spectra.</p>
 <p>Electron energy loss spectra  measured experimentally are composed by three contributions:
 the one from inelastic single scatterings off the electrons in the specimen,
@@ -195,9 +213,9 @@ arising from both elastic scatterings and from instrumental broadening.</p>
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-eelsmaster" title="Permalink to this equation">¶</a></span>\[I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) =
 I_{\rm ZLP}(E) + \sum_{n=1}^\infty I^{(n)}_{\rm inel}(E) \, ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(E\)</span> is the energy loss experienced by the electrons
-upon traversing the specimen <a class="footnote-reference brackets" href="#f1" id="id3">1</a>,</p>
+upon traversing the specimen <a class="footnote-reference brackets" href="#f1" id="id2">1</a>,</p>
 <dl class="footnote brackets">
-<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
 <dd><p>Here <span class="math notranslate nohighlight">\(E\)</span> indicates the energy lost by EELS electrons, with <span class="math notranslate nohighlight">\(E\)</span> for elastic scatterings.</p>
 </dd>
 </dl>
@@ -215,16 +233,16 @@ the zero-loss peak.</p>
 and can be reliably subtracted from <span class="math notranslate nohighlight">\(I_{\rm EELS}(E)\)</span> in order to isolate
 the inelastic scattering contribution <span class="math notranslate nohighlight">\(I_{\rm inel}(E)\)</span>.</p>
 <p>In this work, the ZLP subtraction is achieved using a machine learning method
-developed in <a href="#id4"><span class="problematic" id="id5">:footcite:t:`Roest:2020kqy`</span></a> and extended  to spectral images as described
+developed in <span id="id3">[<a class="reference internal" href="../bibliography.html#id141">Roest <em>et al.</em>, 2021</a>]</span> and extended  to spectral images as described
 in Sect.~ref{sec:methodology}.</p>
 <div class="section" id="the-single-scattering-distribution">
-<h3>The single-scattering distribution<a class="headerlink" href="#the-single-scattering-distribution" title="Permalink to this headline">¶</a></h3>
+<h2>The single-scattering distribution<a class="headerlink" href="#the-single-scattering-distribution" title="Permalink to this headline">¶</a></h2>
 <p>If one denotes by <span class="math notranslate nohighlight">\(t\)</span> the local thickness of the specimen and by <span class="math notranslate nohighlight">\(\lambda\)</span> the
 mean free path of the electrons, then assuming that inelastic scatterings are
 uncorrelated it follows that the integral over the <span class="math notranslate nohighlight">\(n\)</span>-scatterings distribution
-<span class="math notranslate nohighlight">\(I^{(n)}_{\rm inel}\)</span> follow a Poisson distribution <a class="footnote-reference brackets" href="#f2" id="id6">2</a></p>
+<span class="math notranslate nohighlight">\(I^{(n)}_{\rm inel}\)</span> follow a Poisson distribution <a class="footnote-reference brackets" href="#f2" id="id4">2</a></p>
 <dl class="footnote brackets">
-<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id6">2</a></span></dt>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
 <dd><p>The following derivation assumes that the specimen is not too thin, that is, <span class="math notranslate nohighlight">\(t \gtrsim \lambda\)</span>.</p>
 </dd>
 </dl>
@@ -285,7 +303,7 @@ are known, then one can use Eq. <a class="reference internal" href="#equation-eq
 the measured spectra by means of a deconvolution procedure.</p>
 </div>
 <div class="section" id="ssd-deconvolution">
-<h3>SSD deconvolution<a class="headerlink" href="#ssd-deconvolution" title="Permalink to this headline">¶</a></h3>
+<h2>SSD deconvolution<a class="headerlink" href="#ssd-deconvolution" title="Permalink to this headline">¶</a></h2>
 <p>The structure of Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(6)</a> suggests that transforming to Fourier
 space will lead to an algebraic equation which can then be solved for the SSD.</p>
 <p>Here we define the Fourier transform <span class="math notranslate nohighlight">\(\widetilde{f}(\nu)\)</span> of a function <span class="math notranslate nohighlight">\(f(E)\)</span> as follows</p>
@@ -318,7 +336,7 @@ for the single scattering distribution as a function of the electron energy loss
 Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(1)</a>, with the corresponding ZLP.</p>
 </div>
 <div class="section" id="discrete-fourier-transforms">
-<h3>Discrete Fourier transforms<a class="headerlink" href="#discrete-fourier-transforms" title="Permalink to this headline">¶</a></h3>
+<h2>Discrete Fourier transforms<a class="headerlink" href="#discrete-fourier-transforms" title="Permalink to this headline">¶</a></h2>
 <p>In this work, Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(10)</a> is evaluated numerically by
 approximating the continuous transform Eq. <a class="reference internal" href="#equation-eq-continuous-fourier-transform">(7)</a>
 by its discrete Fourier transform equivalent.</p>
@@ -348,7 +366,7 @@ where <span class="math notranslate nohighlight">\(\Delta x \Delta \nu = N^{-1}\
 very close to the exact one.</p>
 </div>
 <div class="section" id="thickness-calculation">
-<h3>Thickness calculation<a class="headerlink" href="#thickness-calculation" title="Permalink to this headline">¶</a></h3>
+<h2>Thickness calculation<a class="headerlink" href="#thickness-calculation" title="Permalink to this headline">¶</a></h2>
 <p>Once the SSD has been determined by means of the deconvolution procedure summarised
 by Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(10)</a>, it can be used as input in order to
 evaluate the local sample thickness <span class="math notranslate nohighlight">\(t\)</span> from the experimentally measured spectra.</p>
@@ -367,9 +385,9 @@ and <span class="math notranslate nohighlight">\(\theta_E\)</span> is the charac
 <div class="math notranslate nohighlight" id="equation-eq-characteristic-angle">
 <span class="eqno">(15)<a class="headerlink" href="#equation-eq-characteristic-angle" title="Permalink to this equation">¶</a></span>\[\theta_E = \frac{E}{\gamma m_0v^2} = \frac{E}{\left( E_0 + m_0c^2\right) (v/c)^2}\]</div>
 <p>with <span class="math notranslate nohighlight">\(\gamma\)</span> being the usual relativistic dilation factor, <span class="math notranslate nohighlight">\(\gamma=\left( 1-v^2/c^2\right)^{-1/2}\)</span>,
-and <span class="math notranslate nohighlight">\(\beta\)</span> the collection semi-angle of the microscope. <a class="footnote-reference brackets" href="#f3" id="id7">3</a></p>
+and <span class="math notranslate nohighlight">\(\beta\)</span> the collection semi-angle of the microscope. <a class="footnote-reference brackets" href="#f3" id="id5">3</a></p>
 <dl class="footnote brackets">
-<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
 <dd><p>Which should not be confused with the normalised velocity often used in relativity, <span class="math notranslate nohighlight">\(\beta=v/c\)</span>.</p>
 </dd>
 </dl>
@@ -396,7 +414,7 @@ of an insulator or semi-conducting material using</p>
 dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \right) \right]^{-1/2} \, .\]</div>
 </div>
 <div class="section" id="the-dielectric-function-from-kramers-kronig-analysis">
-<h3>The dielectric function from Kramers-Kronig analysis<a class="headerlink" href="#the-dielectric-function-from-kramers-kronig-analysis" title="Permalink to this headline">¶</a></h3>
+<h2>The dielectric function from Kramers-Kronig analysis<a class="headerlink" href="#the-dielectric-function-from-kramers-kronig-analysis" title="Permalink to this headline">¶</a></h2>
 <p>The dielectric function of a material, also known as permittivity, is a measure
 of how easy or difficult it is to polarise a dielectric material such an insulator
 upon the application of an external electric field.</p>
@@ -484,7 +502,7 @@ corresponds to specific energy-loss features provides a valuable handle to
 pinpoint the nature of local electronic excitations present in the analysed specimen.</p>
 </div>
 <div class="section" id="the-role-of-surface-scatterings">
-<h3>The role of surface scatterings<a class="headerlink" href="#the-role-of-surface-scatterings" title="Permalink to this headline">¶</a></h3>
+<h2>The role of surface scatterings<a class="headerlink" href="#the-role-of-surface-scatterings" title="Permalink to this headline">¶</a></h2>
 <p>The previous derivations assume that the specimen is thick enough such that the
 bulk of the measured energy loss distributions arises from volume inelastic
 scatterings, while edge- and surface-specific contributions can be neglected.</p>
@@ -525,7 +543,6 @@ thickness satisfies <span class="math notranslate nohighlight">\(t \gtrsim 20\)<
 spectra only when the thickness is above this threshold.</p>
 </div>
 </div>
-</div>
 
 
            </div>
@@ -535,10 +552,10 @@ spectra only when the thickness is above this threshold.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../implementation/training_strategies.html" class="btn btn-neutral float-right" title="Training Strategies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="bandgap_analysis.html" class="btn btn-neutral float-right" title="Bandgap analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../overview/datasets.html" class="btn btn-neutral float-left" title="Datasets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nn_training.html" class="btn btn-neutral float-left" title="NN training" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -547,7 +564,7 @@ spectra only when the thickness is above this threshold.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, A
+        &copy; Copyright 2021, EELSfitter developer team
 
     </p>
   </div>

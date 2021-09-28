@@ -21,8 +21,8 @@ sys.path.insert(0, os.path.abspath('../../EELS_KK/'))
 # -- Project information -----------------------------------------------------
 
 project = 'EELSfitter'
-copyright = '2021, A'
-author = 'A'
+copyright = '2021, EELSfitter developer team'
+author = 'EELSfitter developer team'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
@@ -45,14 +45,16 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
-    'sphinxcontrib.bibtex'
-]
+    "sphinxcontrib.bibtex",
+    "nbsphinx",]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # Bibtex
 bibtex_bibfiles = ['EELS_ML.bib']
+bibtex_default_style = 'unsrt'
+bibtex_reference_style = 'author_year'
 
 # Markdown configuration
 
@@ -61,8 +63,7 @@ bibtex_bibfiles = ['EELS_ML.bib']
 source_suffix = {
     ".rst": "restructuredtext",
     ".txt": "restructuredtext",
-    ".py": "restructuredtext",
-}
+    ".py": "restructuredtext"}
 
 autosectionlabel_prefix_document = True
 # autosectionlabel_maxdepth = 10
@@ -108,9 +109,7 @@ html_static_path = ['_static']
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
-html_css_files = [
-    'css/custom.css',
-]
+html_css_files = ['css/custom.css']
 
 # -- Options for intersphinx extension ---------------------------------------
 
@@ -123,8 +122,7 @@ intersphinx_mapping = {
     "pytorch": ("https://pytorch.org/docs/stable/", None),
     "pandas": ("https://pandas.pydata.org/docs/", None),
     "seaborn": ("https://seaborn.pydata.org/", None),
-    "matplotlib": ("https://matplotlib.org/", None),
-}
+    "matplotlib": ("https://matplotlib.org/", None)}
 
 # -- Options for todo extension ----------------------------------------------
 

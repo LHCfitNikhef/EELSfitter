@@ -25,7 +25,9 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -80,27 +82,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Overview</span></p>
+              <p class="caption"><span class="caption-text">Theory</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview/datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/bandgap_analysis.html">Bandgap analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Theory</span></p>
+<p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramer-Kronig Analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Implementation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../implementation/training_strategies.html">Training Strategies</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Results</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_10.html">EELS 1.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../results/EELS_20.html">EELS 2.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/tutorial.html">Tutorials</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../EELSFitter.html">EELSFitter package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -179,13 +179,15 @@
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
 
-<span class="kn">from</span> <span class="nn">..plotting</span> <span class="kn">import</span> <span class="n">plot_dE1</span>
 
 <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;family&#39;</span><span class="p">:</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">],</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">22</span><span class="p">})</span>
 <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
+<span class="kn">from</span> <span class="nn">..plotting.hyperparameters</span> <span class="kn">import</span> <span class="n">plot_dE1</span>
 
-<div class="viewcode-block" id="MLP"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.MLP">[docs]</a><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="MLP"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.MLP">[docs]</a><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Multilayer Perceptron (MLP) class. It uses the following architecture</span>
 
@@ -213,7 +215,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
 
-<div class="viewcode-block" id="MLP.forward"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.MLP.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="MLP.forward"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.MLP.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Propagates the input features ``x`` through the MLP.</span>
 <span class="sd">        Parameters</span>
@@ -237,15 +239,15 @@
         <span class="k">return</span> <span class="n">x</span></div></div>
 
 
-<div class="viewcode-block" id="scale"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.scale">[docs]</a><span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">ab</span><span class="p">):</span>
+<div class="viewcode-block" id="scale"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.scale">[docs]</a><span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">ab</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rescale the training data to lie between 0.1 and 0.9</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    inp: array_like</span>
+<span class="sd">    inp: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        training data to be rescaled, e.g. :math:`\Delta E`</span>
-<span class="sd">    ab: array_like</span>
+<span class="sd">    ab: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        scaling parameters, which can be find with :py:meth:`find_scale_var() &lt;find_scale_var&gt;`.</span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -254,13 +256,13 @@
     <span class="k">return</span> <span class="n">inp</span> <span class="o">*</span> <span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="find_scale_var"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.find_scale_var">[docs]</a><span class="k">def</span> <span class="nf">find_scale_var</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">min_out</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_out</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
+<div class="viewcode-block" id="find_scale_var"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.find_scale_var">[docs]</a><span class="k">def</span> <span class="nf">find_scale_var</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">min_out</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_out</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the scaling parameters needed to rescale the training data to lie between ``min_out`` and ``max_out``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    inp: array_like</span>
+<span class="sd">    inp: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        training data to be rescaled</span>
 <span class="sd">    min_out: float</span>
 <span class="sd">        lower limit. Set to 0.1 by default.</span>
@@ -277,7 +279,7 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="weight_reset"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.weight_reset">[docs]</a><span class="k">def</span> <span class="nf">weight_reset</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<div class="viewcode-block" id="weight_reset"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.weight_reset">[docs]</a><span class="k">def</span> <span class="nf">weight_reset</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reset the weights and biases associated with the model ``m``.</span>
 
@@ -290,7 +292,7 @@
         <span class="n">m</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="loss_fn"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.loss_fn">[docs]</a><span class="k">def</span> <span class="nf">loss_fn</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+<div class="viewcode-block" id="loss_fn"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.loss_fn">[docs]</a><span class="k">def</span> <span class="nf">loss_fn</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The loss function to train the ZLP takes the model ``output``, the raw spectrum ``target`` and</span>
 <span class="sd">    the associated ``error``. The latter corresponds to the one sigma spread within a given cluster</span>
@@ -321,9 +323,7 @@
     <span class="k">return</span> <span class="n">loss</span></div>
 
 
-<div class="viewcode-block" id="smooth"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.smooth">[docs]</a><span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_len</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="n">keep_original</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="c1">#TODO: function is duplicated in the spectralImage class</span>
-
+<div class="viewcode-block" id="smooth"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.smooth">[docs]</a><span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_len</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="n">keep_original</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    smooth the data using a window with requested size.</span>
 <span class="sd">    </span>
@@ -334,7 +334,7 @@
 <span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data: array_like</span>
+<span class="sd">    data: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        The input signal</span>
 <span class="sd">    window_len: int, optional</span>
 <span class="sd">        The dimension of the smoothing window; should be an odd integer. Set to 10 by default.</span>
@@ -344,7 +344,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    smoothed_signal: array_like</span>
+<span class="sd">    smoothed_signal: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        The smoothed spectrum</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -362,7 +362,7 @@
     <span class="k">return</span> <span class="n">smoothed_signal</span></div>
 
 
-<div class="viewcode-block" id="smooth_clusters"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.smooth_clusters">[docs]</a><span class="k">def</span> <span class="nf">smooth_clusters</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">clusters</span><span class="p">,</span> <span class="n">window_len</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="smooth_clusters"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.smooth_clusters">[docs]</a><span class="k">def</span> <span class="nf">smooth_clusters</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">clusters</span><span class="p">,</span> <span class="n">window_len</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Smooth the spectrum for all clusters</span>
 
@@ -370,14 +370,14 @@
 <span class="sd">    ----------</span>
 <span class="sd">    image: SpectralImage</span>
 <span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object</span>
-<span class="sd">    clusters: array_like</span>
+<span class="sd">    clusters: numpy.ndarray, shape=(M,)</span>
 
 <span class="sd">    window_len: int</span>
 <span class="sd">        Smoothing window length</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    smoothed_clusters: array_like</span>
+<span class="sd">    smoothed_clusters: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        The smoothed spectra for all clusters</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">smoothed_clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
@@ -386,7 +386,7 @@
     <span class="k">return</span> <span class="n">smoothed_clusters</span></div>
 
 
-<div class="viewcode-block" id="derivative_clusters"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.derivative_clusters">[docs]</a><span class="k">def</span> <span class="nf">derivative_clusters</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">clusters</span><span class="p">):</span>
+<div class="viewcode-block" id="derivative_clusters"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.derivative_clusters">[docs]</a><span class="k">def</span> <span class="nf">derivative_clusters</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">clusters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the derivative of the spectral image in each cluster.</span>
 
@@ -394,12 +394,12 @@
 <span class="sd">    ----------</span>
 <span class="sd">    image: SpectralImage</span>
 <span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object</span>
-<span class="sd">    clusters: array_like</span>
+<span class="sd">    clusters: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        An array with size the number of clusters Each entry is a 2D array that contains all the spectra within the cluster.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    der_clusters: array_like</span>
+<span class="sd">    der_clusters: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        Slope of the intensity spectrum for all clusters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dx</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">ddeltaE</span>
@@ -409,17 +409,17 @@
     <span class="k">return</span> <span class="n">der_clusters</span></div>
 
 
-<div class="viewcode-block" id="find_min_de1"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.find_min_de1">[docs]</a><span class="k">def</span> <span class="nf">find_min_de1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dy_dx</span><span class="p">,</span> <span class="n">y_smooth</span><span class="p">):</span>
+<div class="viewcode-block" id="find_min_de1"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.find_min_de1">[docs]</a><span class="k">def</span> <span class="nf">find_min_de1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dy_dx</span><span class="p">,</span> <span class="n">y_smooth</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Finds the location of the first local minimum of the intensity spectrum</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    image: SpectralImage</span>
-<span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object</span>
-<span class="sd">    dy_dx: array_like</span>
+<span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object</span>
+<span class="sd">    dy_dx: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        Derivative of the intensity spectrum</span>
-<span class="sd">    y_smooth: array_like</span>
+<span class="sd">    y_smooth: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        Smoothed intensity spectrum</span>
 
 <span class="sd">    Returns</span>
@@ -437,7 +437,7 @@
     <span class="k">return</span> <span class="n">pos_der</span></div>
 
 
-<div class="viewcode-block" id="determine_de1"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.determine_de1">[docs]</a><span class="k">def</span> <span class="nf">determine_de1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">shift_de1</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">perc_de1</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">plot_de1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="determine_de1"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.determine_de1">[docs]</a><span class="k">def</span> <span class="nf">determine_de1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">shift_de1</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">perc_de1</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">plot_de1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the hyperparamter :math:`\Delta E_I` for every cluster in two ways:</span>
 
@@ -448,10 +448,10 @@
 <span class="sd">    ----------</span>
 <span class="sd">    image: SpectralImage</span>
 <span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object.</span>
-<span class="sd">    dy_dx_clusters: array_like</span>
+<span class="sd">    dy_dx_clusters: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        An array that contains an array for each cluster, which subsequently contains the slope of the spectrum at each</span>
 <span class="sd">        pixel within the cluster.</span>
-<span class="sd">    y_smooth_clusters: array_like</span>
+<span class="sd">    y_smooth_clusters: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        An array that contains an array for each cluster, which subsequently contains the smoothed spectrum at each</span>
 <span class="sd">        pixel within the cluster.</span>
 <span class="sd">    shift_de1: float, optional</span>
@@ -466,7 +466,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    dE1_clusters: array_like</span>
+<span class="sd">    dE1_clusters: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        Array with the value of :math:`\Delta E_I` for each cluster.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -502,9 +502,7 @@
 
     <span class="c1"># display the computed values of dE1 (both methods) together with the raw EELS spectrum</span>
     <span class="k">if</span> <span class="n">plot_de1</span><span class="p">:</span>
-        <span class="n">fig_1</span><span class="p">,</span> <span class="n">fig_2</span> <span class="o">=</span> <span class="n">plot_dE1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">min_clusters</span><span class="p">,</span> <span class="n">de1_prob</span><span class="p">,</span> <span class="n">de1_shift</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
-        <span class="n">fig_1</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;der.pdf&#39;</span><span class="p">))</span>
-        <span class="n">fig_2</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s1">&#39;de1.pdf&#39;</span><span class="p">))</span>
+        <span class="n">plot_dE1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">min_clusters</span><span class="p">,</span> <span class="n">de1_prob</span><span class="p">,</span> <span class="n">de1_shift</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
 
     <span class="c1"># return the de1 selected by the bool prob</span>
     <span class="k">if</span> <span class="n">prob</span><span class="p">:</span>
@@ -513,7 +511,7 @@
         <span class="k">return</span> <span class="n">de1_shift</span></div>
 
 
-<div class="viewcode-block" id="filter_bad_bins"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.filter_bad_bins">[docs]</a><span class="k">def</span> <span class="nf">filter_bad_bins</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">spectra</span><span class="p">):</span>
+<div class="viewcode-block" id="filter_bad_bins"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.filter_bad_bins">[docs]</a><span class="k">def</span> <span class="nf">filter_bad_bins</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">spectra</span><span class="p">):</span>
     <span class="c1">#TODO: add dimensions to spectra in docstring</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filter out experimental hiccups.</span>
@@ -543,7 +541,7 @@
     <span class="k">return</span> <span class="n">spectra_filtered</span></div>
 
 
-<div class="viewcode-block" id="train_zlp_scaled"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.train_zlp_scaled">[docs]</a><span class="k">def</span> <span class="nf">train_zlp_scaled</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">spectra</span><span class="p">,</span> <span class="n">n_rep</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">n_epochs</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">shift_dE1</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">shift_dE2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<div class="viewcode-block" id="train_zlp_scaled"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.train_zlp_scaled">[docs]</a><span class="k">def</span> <span class="nf">train_zlp_scaled</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">spectra</span><span class="p">,</span> <span class="n">n_rep</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">n_epochs</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">shift_dE1</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">shift_dE2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
                      <span class="n">path_to_models</span><span class="o">=</span><span class="s2">&quot;models&quot;</span><span class="p">,</span>
                      <span class="n">display_step</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">bs_rep_num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">perc_de1</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">plot_de1</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -555,7 +553,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    image: SpectralImage</span>
 <span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;spectral_image.SpectralImage&gt;` object.</span>
-<span class="sd">    spectra: array_like</span>
+<span class="sd">    spectra: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        An array of size ``n_clusters``, with each entry being a 2D array that contains all the spectra within the cluster.</span>
 <span class="sd">    n_rep: int, optional</span>
 <span class="sd">        Number of replicas to train on. Each replica consists of one spectrum from each cluster. Set to 500 by default.</span>
@@ -769,7 +767,7 @@
             <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="training_report"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.training_report">[docs]</a><span class="k">def</span> <span class="nf">training_report</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">loss_train</span><span class="p">,</span> <span class="n">loss_test</span><span class="p">):</span>
+<div class="viewcode-block" id="training_report"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.training_report">[docs]</a><span class="k">def</span> <span class="nf">training_report</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">loss_train</span><span class="p">,</span> <span class="n">loss_test</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Produce a training report: evolution of the training and validation loss per epoch</span>
 
@@ -777,9 +775,9 @@
 <span class="sd">    ----------</span>
 <span class="sd">    path: str</span>
 <span class="sd">        location where to store the evolution plots</span>
-<span class="sd">    loss_train: array_like</span>
+<span class="sd">    loss_train: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        Training loss</span>
-<span class="sd">    loss_test: array_like</span>
+<span class="sd">    loss_test: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        Validation loss</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">training_loss_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;training_loss.txt&#39;</span><span class="p">)</span>
@@ -801,22 +799,22 @@
     <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;loss.pdf&#39;</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="ewd"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.ewd">[docs]</a><span class="k">def</span> <span class="nf">ewd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">nbins</span><span class="p">):</span>
+<div class="viewcode-block" id="ewd"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.ewd">[docs]</a><span class="k">def</span> <span class="nf">ewd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">nbins</span><span class="p">):</span>
     <span class="c1">#TODO: what is the purpose of this function?</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Apply Equal Width Discretization (EWD) to ``x`` to determine variances</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    x: array_like</span>
+<span class="sd">    x: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        input data</span>
 <span class="sd">    nbins: int</span>
 <span class="sd">        number of bins</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    cuts1: numpy.ndarray</span>
-<span class="sd">    cuts2: numpy.ndarray</span>
+<span class="sd">    cuts1: numpy.ndarray, shape=(M,)</span>
+<span class="sd">    cuts2: numpy.ndarray, shape=(M,)</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -826,13 +824,13 @@
     <span class="k">return</span> <span class="n">cuts1</span><span class="p">,</span> <span class="n">cuts2</span></div>
 
 
-<div class="viewcode-block" id="CI_high"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.CI_high">[docs]</a><span class="k">def</span> <span class="nf">CI_high</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.68</span><span class="p">):</span>
+<div class="viewcode-block" id="CI_high"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.CI_high">[docs]</a><span class="k">def</span> <span class="nf">CI_high</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.68</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the upper 68% confidence level (by default) of ``data``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data: array_like</span>
+<span class="sd">    data: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        arbitrary array</span>
 <span class="sd">    confidence: float</span>
 <span class="sd">        Confidence level</span>
@@ -853,13 +851,13 @@
     <span class="k">return</span> <span class="n">high_a</span></div>
 
 
-<div class="viewcode-block" id="CI_low"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.CI_low">[docs]</a><span class="k">def</span> <span class="nf">CI_low</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.68</span><span class="p">):</span>
+<div class="viewcode-block" id="CI_low"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.CI_low">[docs]</a><span class="k">def</span> <span class="nf">CI_low</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.68</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the lower 68% confidence level (by default) of ``data``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data: array_like</span>
+<span class="sd">    data: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        arbitrary array</span>
 <span class="sd">    confidence: float</span>
 <span class="sd">        Confidence level</span>
@@ -878,18 +876,18 @@
 
     <span class="k">return</span> <span class="n">low_a</span></div>
 
-<div class="viewcode-block" id="get_mean"><a class="viewcode-back" href="../../../EELSFitter.core.html#EELSFitter.core.training.get_mean">[docs]</a><span class="k">def</span> <span class="nf">get_mean</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="get_mean"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.get_mean">[docs]</a><span class="k">def</span> <span class="nf">get_mean</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="c1">#TODO: trivial function, remove</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the mean of ``data``.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data: array_like</span>
+<span class="sd">    data: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        data to average</span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    mean: array_like</span>
+<span class="sd">    mean: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        The mean of ``data``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -906,7 +904,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2021, A
+        &copy; Copyright 2021, EELSfitter developer team
 
     </p>
   </div>
