@@ -4,4 +4,4 @@ Tutorials
 .. toctree::
    :maxdepth: 1
 
-   EELS_tutorial
+   eelsfitter_tutorial

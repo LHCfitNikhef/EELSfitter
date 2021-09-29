@@ -15,8 +15,7 @@ the inelastic scatterings is described by
 
 .. math:: :label: eq:I1
 
-   I_{\rm inel}(E) \simeq  A \left( E-E_{\rm bg} \right)^{b} \, ,
-   \quad E \gtrsim E_{\rm bg} \, ,
+    I_{\rm inel}(E) \simeq  A \left( E-E_{\rm bg} \right)^{b} \, , \quad E \gtrsim E_{\rm bg} \, ,
 
 
 and vanishes for :math:`E < E_{\rm bg}`. Here :math:`A` is a normalisation constant, while
@@ -37,18 +36,24 @@ is not necessarily valid, while a too narrow fit range might not contain
 sufficient information to stabilize the results and be dominated by statistical
 fluctuation.
 
+.. _Bandgapfitsfig:
+
 .. figure:: figures/Fig-SI5.png
+    :width: 95%
+    :class: align-center
+    :figwidth: 90%
+    :figclass: align-center
 
-   Representative examples of bandgap fits to the onset of inelastic
-   spectra in the InSe (a) and WS\ :sub:`2`\  (b) specimens. The red shaded
-   areas indicate the polynomial fitting range, the blue curve and
-   band corresponds to the median and 68\% CL intervals of the
-   ZLP-subtracted intensity math:`I_{\rm inel}(E)`, and the outcome of
-   the bandgap fits based on Eq. :eq:`eq:I1` is indicated by the
-   green dashed curve (median) and band (68\% CL intervals).
+    *Representative examples of bandgap fits to the onset of inelastic
+    spectra in the InSe (a) and WS* \ :sub:`2`\  *(b) specimens. The red shaded
+    areas indicate the polynomial fitting range, the blue curve and
+    band corresponds to the median and 68\% CL intervals of the
+    ZLP-subtracted intensity* :math:`I_{\rm inel}(E)` *, and the outcome of
+    the bandgap fits based on Eq.* :eq:`eq:I1` *is indicated by the
+    green dashed curve (median) and band (68\% CL intervals).*
 
 
-Fig. (a,b) displays representative examples of bandgap
+:numref:`Bandgapfitsfig` (a,b) displays representative examples of bandgap
 fits to the onset of the inelastic spectra in the InSe (WS\ :sub:`2`\ ) specimens
 respectively. The red shaded areas indicate the fitting range, bracketed
 by :math:`E^{(\rm fit)}_{\rm min}` and :math:`E^{(\rm fit)}_{\rm max}`. The blue

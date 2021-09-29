@@ -13,7 +13,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../../EELS_KK/'))
+sys.path.insert(0, os.path.abspath('../../EELS_KK/src/'))
 # import pathlib
 
 # source_dir = pathlib.Path('../../EELS_KK/pyfiles').parent
@@ -25,7 +25,7 @@ copyright = '2021, EELSfitter developer team'
 author = 'EELSfitter developer team'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -57,6 +57,7 @@ bibtex_default_style = 'unsrt'
 bibtex_reference_style = 'author_year'
 
 # Markdown configuration
+numfig = True
 
 # The suffix(es) of source filenames.
 # you can specify multiple suffix as a list of string:

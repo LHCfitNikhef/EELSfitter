@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pooling and clustering &mdash; EELSfitter 0.0.1 documentation</title>
+  <title>Pooling and clustering &mdash; EELSfitter 1.0.0 documentation</title>
   
 
   
@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="NN training" href="nn_training.html" />
-    <link rel="prev" title="Welcome to EELSfitter website!" href="../index.html" /> 
+    <link rel="prev" title="Welcome to the EELSfitter website!" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -230,8 +230,7 @@ The idea underlying pooling is that one carries out the following replacement
 for the entries of the EELS spectral image listed in Eq. <a class="reference internal" href="#equation-eq-eelsmaster-image-app">(1)</a>:</p>
 <div class="math notranslate nohighlight">
 \[I^{(i,j)}_{\rm EELS}(E_\ell)\quad \to
-I^{(i,j)}_{\rm EELS}(E_\ell)\Big|_{\rm pooled} =\frac{1}{N^{(i,j)}_{\rm pool}}\sum_{|i'-i|\le d}
-\sum_{|j'-j|\le d}\left( \omega_{|i'-i|,|j'-j|} \times
+I^{(i,j)}_{\rm EELS}(E_\ell)\Big|_{\rm pooled} =\frac{1}{N^{(i,j)}_{\rm pool}}\sum_{|i'-i|\le d} \sum_{|j'-j|\le d}\left( \omega_{|i'-i|,|j'-j|} \times
 I^{(i',j')}_{\rm EELS}(E_\ell)\right) \, ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(d\)</span> indicates the pooling range, <span class="math notranslate nohighlight">\(\omega_{|i'-i|,|j'-j|}\)</span> is a weight factor,
 and the pooling normalisation is determined by the sum of the relevant weights,</p>
@@ -265,7 +264,7 @@ deep-learning model of the ZLP it is necessary to first group individual
 spectra as a function of their thickness. In this work this is achieved
 by means of unsupervised machine learning, specifically with the <span class="math notranslate nohighlight">\(K\)</span>-means
 clustering algorithm. Since the actual calculation of the thickness has as
-prerequisite the ZLP determination, see Eq. <a class="reference internal" href="kk_analysis.html#equation-eq-thickness-calculation">(14)</a>,
+prerequisite the ZLP determination, see Eq. <a class="reference internal" href="kk_analysis.html#equation-eq-thickness-calculation">(25)</a>,
 it is suitable to use instead the total integrated intensity as a proxy for
 the local thickness for the clustering procedure. That is, we cluster spectra
 as a function of</p>
@@ -292,13 +291,10 @@ which the data points will be assigned in the  procedure. Clustering on
 the logarithm of <span class="math notranslate nohighlight">\(N^{(r)}_{\rm tot}\)</span> rather than on its absolute value
 is found to be more efficient, given that depending on the specimen location
 the integrated intensity will vary by orders of magnitude.</p>
-<div class="figure align-default" id="id3">
-<img alt="../_images/InSe_Clustered.png" src="../_images/InSe_Clustered.png" />
-<p class="caption"><span class="caption-text">small The outcome of the <span class="math notranslate nohighlight">\(K\)</span>-means clustering procedure applied to the
-InSe specimen, where each color represents one of the <span class="math notranslate nohighlight">\(K=10\)</span> thickness
-clusters. It can be compared with the thickness map of Fig. :ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>fig:Fig2`(d).</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-<div class="legend">
-</div>
+<div class="align-center figure align-default" id="id1" style="width: 90%">
+<span id="inseclusteredfig"></span><a class="align-center reference internal image-reference" href="../_images/InSe_Clustered.png"><img alt="../_images/InSe_Clustered.png" class="align-center" src="../_images/InSe_Clustered.png" style="width: 90%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text"><em>The outcome of the</em> <span class="math notranslate nohighlight">\(K\)</span> <em>thickness
+clusters. It can be compared with the thickness map of</em> <a class="reference internal" href="#insethicknessfig"><span class="std std-numref">Fig. 3</span></a> <em>.</em></span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <p>In <span class="math notranslate nohighlight">\(K\)</span>-means clustering, the determination of the cluster means and data
 point assignments follows from the minimisation of a cost function. This
@@ -341,13 +337,17 @@ be possible to sample a sufficiently large number of representative spectra
 from each cluster to construct the prior probability distributions, as
 required for the Monte Carlo method used in this work. We find that <span class="math notranslate nohighlight">\(K=10\)</span>
 for the InSe and <span class="math notranslate nohighlight">\(K=5\)</span> for the <span class="math notranslate nohighlight">\(WS_2\)</span> specimens are suitable choices.
-Fig. <span class="xref std std-ref">InSe_Clustered</span> displays the outcome of the <span class="math notranslate nohighlight">\(K\)</span>-means
+<a class="reference internal" href="#inseclusteredfig"><span class="std std-numref">Fig. 2</span></a> displays the outcome of the <span class="math notranslate nohighlight">\(K\)</span>-means
 clustering procedure applied to the InSe specimen, where each color
 represents one of the <span class="math notranslate nohighlight">\(K=10\)</span> thickness clusters. It can be compared with
-the corresponding thickness map in Fig. <span class="xref std std-ref">fig:Fig2`(d); the qualitative
+the corresponding thickness map in <a class="reference internal" href="#insethicknessfig"><span class="std std-numref">Fig. 3</span></a>; the qualitative
 agreement further confirms that the total integrated intensity in each
-pixel :math:`N_{rm tot}^{(i,j)}</span> represents a suitable proxy for the local
+pixel <span class="math notranslate nohighlight">\(N_{\rm tot}^{(i,j)}\)</span> represents a suitable proxy for the local
 specimen thickness.</p>
+<div class="align-center figure align-default" id="id2" style="width: 90%">
+<span id="insethicknessfig"></span><a class="align-center reference internal image-reference" href="../_images/inse_thickness.png"><img alt="../_images/inse_thickness.png" class="align-center" src="../_images/inse_thickness.png" style="width: 90%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text"><em>The thickness map corresponding to the InSe SI.</em></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 
 
@@ -361,7 +361,7 @@ specimen thickness.</p>
         <a href="nn_training.html" class="btn btn-neutral float-right" title="NN training" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to EELSfitter website!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to the EELSfitter website!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

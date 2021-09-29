@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>EELSFitter.core.training &mdash; EELSfitter 0.0.1 documentation</title>
+  <title>EELSFitter.core.training &mdash; EELSfitter 1.0.0 documentation</title>
   
 
   
@@ -502,8 +502,11 @@
 
     <span class="c1"># display the computed values of dE1 (both methods) together with the raw EELS spectrum</span>
     <span class="k">if</span> <span class="n">plot_de1</span><span class="p">:</span>
-        <span class="n">plot_dE1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">min_clusters</span><span class="p">,</span> <span class="n">de1_prob</span><span class="p">,</span> <span class="n">de1_shift</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
-
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Plotting choice of dE1...&quot;</span><span class="p">)</span>
+        <span class="n">fig_1</span><span class="p">,</span> <span class="n">fig_2</span> <span class="o">=</span> <span class="n">plot_dE1</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">y_smooth_clusters</span><span class="p">,</span> <span class="n">dy_dx_clusters</span><span class="p">,</span> <span class="n">min_clusters</span><span class="p">,</span> <span class="n">de1_prob</span><span class="p">,</span> <span class="n">de1_shift</span><span class="p">,</span> <span class="n">prob</span><span class="p">)</span>
+        <span class="n">fig_1</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;der.pdf&quot;</span><span class="p">))</span>
+        <span class="n">fig_2</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;raw.pdf&quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Plots stored in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">output_path</span><span class="p">))</span>
     <span class="c1"># return the de1 selected by the bool prob</span>
     <span class="k">if</span> <span class="n">prob</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">de1_prob</span>

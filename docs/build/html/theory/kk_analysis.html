@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Kramers-Kronig analysis of EEL spectra &mdash; EELSfitter 0.0.1 documentation</title>
+  <title>Kramers-Kronig analysis of EEL spectra &mdash; EELSfitter 1.0.0 documentation</title>
   
 
   
@@ -202,7 +202,7 @@
 <div class="section" id="kramers-kronig-analysis-of-eel-spectra">
 <h1>Kramers-Kronig analysis of EEL spectra<a class="headerlink" href="#kramers-kronig-analysis-of-eel-spectra" title="Permalink to this headline">¶</a></h1>
 <p>Here we provide an overview of the theoretical formalism adopted in this
-work <span id="id1">[<a class="reference internal" href="../bibliography.html#id2">Egerton, 2007</a>]</span> to evaluate the single-scattering distribution, local
+work <span id="id1">[<a class="reference internal" href="../bibliography.html#id7">Egerton, 2007</a>]</span> to evaluate the single-scattering distribution, local
 thickness, bandgap energy and type and complex dielectric function from  EELS spectra.</p>
 <p>Electron energy loss spectra  measured experimentally are composed by three contributions:
 the one from inelastic single scatterings off the electrons in the specimen,
@@ -210,8 +210,9 @@ the one  associated to multiple inelastic scatterings, and then the Zero-Loss Pe
 arising from both elastic scatterings and from instrumental broadening.</p>
 <p>Hence, a given spectrum <span class="math notranslate nohighlight">\(I_{\rm EELS}(E)\)</span> can be decomposed as</p>
 <div class="math notranslate nohighlight" id="equation-eq-eelsmaster">
-<span class="eqno">(1)<a class="headerlink" href="#equation-eq-eelsmaster" title="Permalink to this equation">¶</a></span>\[I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) =
-I_{\rm ZLP}(E) + \sum_{n=1}^\infty I^{(n)}_{\rm inel}(E) \, ,\]</div>
+<span class="eqno">(12)<a class="headerlink" href="#equation-eq-eelsmaster" title="Permalink to this equation">¶</a></span>\[I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) =
+I_{\rm ZLP}(E) + \sum_{n=1}^\infty
+I^{(n)}_{\rm inel}(E) \, ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(E\)</span> is the energy loss experienced by the electrons
 upon traversing the specimen <a class="footnote-reference brackets" href="#f1" id="id2">1</a>,</p>
 <dl class="footnote brackets">
@@ -224,7 +225,7 @@ contribution, and <span class="math notranslate nohighlight">\(I^{(n)}_{\rm inel
 from <span class="math notranslate nohighlight">\(n\)</span> inelastic scatterings.</p>
 <p>The ZLP intensity can be further expressed as</p>
 <div class="math notranslate nohighlight" id="equation-eq-zlp-norm">
-<span class="eqno">(2)<a class="headerlink" href="#equation-eq-zlp-norm" title="Permalink to this equation">¶</a></span>\[I_{\rm ZLP}(E) = N_0 R(E) \, ,\qquad \int_{-\infty}^\infty dE \,R(E)=1 \, ,\]</div>
+<span class="eqno">(13)<a class="headerlink" href="#equation-eq-zlp-norm" title="Permalink to this equation">¶</a></span>\[I_{\rm ZLP}(E) = N_0 R(E) \, ,\qquad \int_{-\infty}^\infty dE \,R(E)=1 \, ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(R(E)\)</span> is known as the (normalised) resolution or instrumental response function,
 whose full width at half-maximum (FWHM) indicates the resolution of the instrument.
 The normalisation factor <span class="math notranslate nohighlight">\(N_0\)</span> thus corresponds to the integrated intensity under
@@ -232,9 +233,8 @@ the zero-loss peak.</p>
 <p>In the following we assume that the ZLP intensity <span class="math notranslate nohighlight">\(I_{\rm ZLP}(E)\)</span> is known
 and can be reliably subtracted from <span class="math notranslate nohighlight">\(I_{\rm EELS}(E)\)</span> in order to isolate
 the inelastic scattering contribution <span class="math notranslate nohighlight">\(I_{\rm inel}(E)\)</span>.</p>
-<p>In this work, the ZLP subtraction is achieved using a machine learning method
-developed in <span id="id3">[<a class="reference internal" href="../bibliography.html#id141">Roest <em>et al.</em>, 2021</a>]</span> and extended  to spectral images as described
-in Sect.~ref{sec:methodology}.</p>
+<p>In EELSfitter, the ZLP subtraction is achieved using a machine learning method
+developed in <span id="id3">[<a class="reference internal" href="../bibliography.html#id146">Roest <em>et al.</em>, 2021</a>]</span> and extended to spectral images.</p>
 <div class="section" id="the-single-scattering-distribution">
 <h2>The single-scattering distribution<a class="headerlink" href="#the-single-scattering-distribution" title="Permalink to this headline">¶</a></h2>
 <p>If one denotes by <span class="math notranslate nohighlight">\(t\)</span> the local thickness of the specimen and by <span class="math notranslate nohighlight">\(\lambda\)</span> the
@@ -247,12 +247,12 @@ uncorrelated it follows that the integral over the <span class="math notranslate
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-eq-n-n">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eq-n-n" title="Permalink to this equation">¶</a></span>\[N_n \equiv \int_{-\infty}^{\infty} dE\, I^{(n)}_{\rm inel}(E) =
+<span class="eqno">(14)<a class="headerlink" href="#equation-eq-n-n" title="Permalink to this equation">¶</a></span>\[N_n \equiv \int_{-\infty}^{\infty} dE\, I^{(n)}_{\rm inel}(E) =
 B \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda} \, , \qquad n=1,2,\ldots,\infty \, ,\]</div>
 <p>with <span class="math notranslate nohighlight">\(B\)</span> a normalisation constant.</p>
-<p>From the combination of Eqns. <a class="reference internal" href="#equation-eq-eelsmaster">(1)</a> and <a class="reference internal" href="#equation-eq-n-n">(3)</a> it follows that</p>
+<p>From the combination of Eqns. <a class="reference internal" href="#equation-eq-eelsmaster">(12)</a> and <a class="reference internal" href="#equation-eq-n-n">(14)</a> it follows that</p>
 <div class="math notranslate nohighlight" id="equation-eq-norm-inelastic">
-<span class="eqno">(4)<a class="headerlink" href="#equation-eq-norm-inelastic" title="Permalink to this equation">¶</a></span>\[N_{\rm inel}\equiv \int_{-\infty}^{\infty} dE\,
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-norm-inelastic" title="Permalink to this equation">¶</a></span>\[N_{\rm inel}\equiv \int_{-\infty}^{\infty} dE\,
 I_{\rm inel}(E) = \sum_{n=1}^\infty N_n = B \sum_{n=1}^\infty
 \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda}=B\left( 1-e^{-t/\lambda}\right) \, ,\]</div>
 <p>and hence one finds that the integral over the <span class="math notranslate nohighlight">\(n\)</span>-scatterings distribution
@@ -274,8 +274,9 @@ extract from them the single-scattering distribution (SSD), <span class="math no
 <p>The SSD is related to the experimentally measured <span class="math notranslate nohighlight">\(n=1\)</span> distribution,
 <span class="math notranslate nohighlight">\(I^{(1)}_{\rm inel}(E)\)</span> by the finite resolution of our measurement apparatus:</p>
 <div class="math notranslate nohighlight" id="equation-eq-def-convolution">
-<span class="eqno">(5)<a class="headerlink" href="#equation-eq-def-convolution" title="Permalink to this equation">¶</a></span>\[I^{(1)}_{\rm inel}(E) = R(E)\otimes I_{\rm SSD}(E) \equiv
-\int_{-\infty}^{\infty} dE'\, R(E-E')I_{\rm SSD}(E') \, ,\]</div>
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-def-convolution" title="Permalink to this equation">¶</a></span>\[I^{(1)}_{\rm inel}(E) = R(E)\otimes
+I_{\rm SSD}(E) \equiv \int_{-\infty}^{\infty} dE'\, R(E-E')
+I_{\rm SSD}(E') \, ,\]</div>
 <p>where in the following <span class="math notranslate nohighlight">\(\otimes\)</span> denotes the convolution operation.</p>
 <p>It can be shown, again treating individual scatterings as uncorrelated,
 that the experimentally measured <span class="math notranslate nohighlight">\(n=2\)</span> and <span class="math notranslate nohighlight">\(n=3\)</span> multiple scattering
@@ -287,39 +288,39 @@ I^{(3)}_{\rm inel}(E) &amp;=&amp;
 R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 3! N^2_0\right) \ ,\end{split}\]</div>
 <p>and likewise for <span class="math notranslate nohighlight">\(n\ge 4\)</span>.</p>
 <p>Combining this information, one observes that an experimentally measured EELS
-spectrum, Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(1)</a> can be expressed in terms of the resolution
+spectrum, Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(12)</a> can be expressed in terms of the resolution
 function <span class="math notranslate nohighlight">\(R\)</span>, the ZLP normalisation <span class="math notranslate nohighlight">\(N_0\)</span>, and the single-scattering distribution
 <span class="math notranslate nohighlight">\(I_{\rm SSD}\)</span> as follows</p>
 <div class="math notranslate nohighlight" id="equation-eq-eelsmaster-2">
-<span class="eqno">(6)<a class="headerlink" href="#equation-eq-eelsmaster-2" title="Permalink to this equation">¶</a></span>\[\begin{split}&amp;&amp; I_{\rm EELS}(E) \nonumber = N_0 R(E) + R(E)\otimes I_{\rm SSD}(E) +
-R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) + \ldots\\ \nonumber
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-eelsmaster-2" title="Permalink to this equation">¶</a></span>\[\begin{split}&amp;&amp; I_{\rm EELS}(E) \nonumber = N_0 R(E) + R(E)\otimes I_{\rm SSD}(E) + R(E)\otimes
+I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) + \ldots\\ \nonumber
 &amp;&amp; =R(E) \otimes \left( N_0\delta(E) + I_{\rm SSD}(E) + I_{\rm SSD}(E)\otimes
 I_{\rm SSD}(E)/\left( 2! N_0\right) +\ldots \right) \\
-&amp;&amp; =N_0 R(E) \otimes \left( \delta(E) +\sum_{n=1}^{\infty} \left[ I_{\rm SSD}(E)\otimes\right]^n
-\delta(E)/\left( n! N_0^{n}\right)  \right) \, ,\end{split}\]</div>
+&amp;&amp; =N_0 R(E) \otimes \left( \delta(E) +\sum_{n=1}^{\infty} \left[
+I_{\rm SSD}(E)\otimes\right]^n \delta(E)/\left( n! N_0^{n}\right)  \right) \, ,\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\delta(E)\)</span> is the Dirac delta function.</p>
 <p>If the ZLP normalisation factor <span class="math notranslate nohighlight">\(N_0\)</span> and resolution function <span class="math notranslate nohighlight">\(R(E)\)</span>
-are known, then one can use Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(6)</a> to extract the SSD from
+are known, then one can use Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(17)</a> to extract the SSD from
 the measured spectra by means of a deconvolution procedure.</p>
 </div>
 <div class="section" id="ssd-deconvolution">
 <h2>SSD deconvolution<a class="headerlink" href="#ssd-deconvolution" title="Permalink to this headline">¶</a></h2>
-<p>The structure of Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(6)</a> suggests that transforming to Fourier
+<p>The structure of Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(17)</a> suggests that transforming to Fourier
 space will lead to an algebraic equation which can then be solved for the SSD.</p>
 <p>Here we define the Fourier transform <span class="math notranslate nohighlight">\(\widetilde{f}(\nu)\)</span> of a function <span class="math notranslate nohighlight">\(f(E)\)</span> as follows</p>
 <div class="math notranslate nohighlight" id="equation-eq-continuous-fourier-transform">
-<span class="eqno">(7)<a class="headerlink" href="#equation-eq-continuous-fourier-transform" title="Permalink to this equation">¶</a></span>\[\mathcal{F}\left[ f(E) \right](\nu)\equiv \widetilde{f}(\nu)\equiv \int_{-\infty}^\infty
+<span class="eqno">(18)<a class="headerlink" href="#equation-eq-continuous-fourier-transform" title="Permalink to this equation">¶</a></span>\[\mathcal{F}\left[ f(E) \right](\nu)\equiv \widetilde{f}(\nu)\equiv \int_{-\infty}^\infty
 dE\,f(E) e^{-2\pi i E\nu}\, ,\]</div>
 <p>whose inverse is given by</p>
 <div class="math notranslate nohighlight" id="equation-eq-continuous-fourier-transform-inverse">
-<span class="eqno">(8)<a class="headerlink" href="#equation-eq-continuous-fourier-transform-inverse" title="Permalink to this equation">¶</a></span>\[\mathcal{F}^{-1}\left[ \widetilde{f}(\nu) \right](E) = f(E)\equiv \int_{-\infty}^\infty
+<span class="eqno">(19)<a class="headerlink" href="#equation-eq-continuous-fourier-transform-inverse" title="Permalink to this equation">¶</a></span>\[\mathcal{F}^{-1}\left[ \widetilde{f}(\nu) \right](E) = f(E)\equiv \int_{-\infty}^\infty
 d\nu\,\widetilde{f}(\nu) e^{2\pi i E\nu}\, ,\]</div>
-<p>which has the useful property that convolutions such as  Eq. <a class="reference internal" href="#equation-eq-def-convolution">(5)</a>
+<p>which has the useful property that convolutions such as  Eq. <a class="reference internal" href="#equation-eq-def-convolution">(16)</a>
 are transformed into products,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fourier-convolutions">
-<span class="eqno">(9)<a class="headerlink" href="#equation-eq-fourier-convolutions" title="Permalink to this equation">¶</a></span>\[{\rm if~}f(E)=g(E)\otimes h(E)\quad{\rm then}\quad \mathcal{F}\left[ f(E) \right] =
+<span class="eqno">(20)<a class="headerlink" href="#equation-eq-fourier-convolutions" title="Permalink to this equation">¶</a></span>\[{\rm if~}f(E)=g(E)\otimes h(E)\quad{\rm then}\quad \mathcal{F}\left[ f(E) \right] =
 \widetilde{f}(\nu) = \widetilde{g}(\nu)\widetilde{h}(\nu) \, .\]</div>
-<p>The Fourier transform of Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(6)</a> leads to the Taylor expansion
+<p>The Fourier transform of Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(17)</a> leads to the Taylor expansion
 of the exponential and hence</p>
 <div class="math notranslate nohighlight">
 \[\widetilde{I}_{\rm EELS}(\nu)=N_0\widetilde{R}(\nu)\exp\left(  \frac{\widetilde{I}_{\rm SSD}(\nu)}{N_0}\right) \, ,\]</div>
@@ -330,32 +331,32 @@ of the exponential and hence</p>
 <p>By taking the  inverse Fourier transform, one obtains the sought-for expression
 for the single scattering distribution as a function of the electron energy loss</p>
 <div class="math notranslate nohighlight" id="equation-eq-deconvolution-procedure">
-<span class="eqno">(10)<a class="headerlink" href="#equation-eq-deconvolution-procedure" title="Permalink to this equation">¶</a></span>\[I_{\rm SSD}(E)=N_0 \mathcal{F}^{-1}\left[ \ln \frac{\mathcal{F}\left[ I_{\rm EELS}\right] }{N_0 \mathcal{F}\left[  R\right]
-}\right] \, ,\]</div>
+<span class="eqno">(21)<a class="headerlink" href="#equation-eq-deconvolution-procedure" title="Permalink to this equation">¶</a></span>\[I_{\rm SSD}(E)=N_0 \mathcal{F}^{-1}\left[ \ln \frac{\mathcal{F}\left[
+I_{\rm EELS}\right] }{N_0 \mathcal{F}\left[  R\right]}\right] \, ,\]</div>
 <p>where the only required inputs are the experimentally measured EELS spectra,
-Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(1)</a>, with the corresponding ZLP.</p>
+Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(12)</a>, with the corresponding ZLP.</p>
 </div>
 <div class="section" id="discrete-fourier-transforms">
 <h2>Discrete Fourier transforms<a class="headerlink" href="#discrete-fourier-transforms" title="Permalink to this headline">¶</a></h2>
-<p>In this work, Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(10)</a> is evaluated numerically by
-approximating the continuous transform Eq. <a class="reference internal" href="#equation-eq-continuous-fourier-transform">(7)</a>
+<p>In EELSfitter, Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(21)</a> is evaluated numerically by
+approximating the continuous transform Eq. <a class="reference internal" href="#equation-eq-continuous-fourier-transform">(18)</a>
 by its discrete Fourier transform equivalent.</p>
 <p>The same method will be used for the implementation of the Kramers-Kronig analysis.</p>
 <p>The discrete Fourier transform  of a discretised function <span class="math notranslate nohighlight">\(f(E)\)</span> defined at
 <span class="math notranslate nohighlight">\(E_n \in \{E_0, ..., E_{N-1}\}\)</span> is given by:</p>
 <div class="math notranslate nohighlight" id="equation-eq-def-dft">
-<span class="eqno">(11)<a class="headerlink" href="#equation-eq-def-dft" title="Permalink to this equation">¶</a></span>\[\mathcal{F}_D \left[ f(E) \right] (\nu_k) = \widetilde{f}(\nu_k) = \sum^{N-1}_{n=0}
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-def-dft" title="Permalink to this equation">¶</a></span>\[\mathcal{F}_D \left[ f(E) \right] (\nu_k) = \widetilde{f}(\nu_k) = \sum^{N-1}_{n=0}
 \operatorname{e}^{-i2\pi kn/N} f(E_n), \qquad \forall\, k \in \{0, ..., N-1\} \, ,\]</div>
 <p>with the corresponding inverse transformation</p>
 <div class="math notranslate nohighlight" id="equation-eq-def-dft-inverse">
-<span class="eqno">(12)<a class="headerlink" href="#equation-eq-def-dft-inverse" title="Permalink to this equation">¶</a></span>\[\mathcal{F}_D^{-1} \left[ \widetilde{f}(\nu) \right] (E_n) = f(E_n) =\frac{1}{N}
+<span class="eqno">(23)<a class="headerlink" href="#equation-eq-def-dft-inverse" title="Permalink to this equation">¶</a></span>\[\mathcal{F}_D^{-1} \left[ \widetilde{f}(\nu) \right] (E_n) = f(E_n) =\frac{1}{N}
 \sum^{N-1}_{k=0} \operatorname{e}^{i2\pi kn/N}  \widetilde{f}(\nu_k) \qquad
 \forall\, n \in \{0, ..., N-1\} \, .\]</div>
 <p>If one approximates the continuous function <span class="math notranslate nohighlight">\(f(E)\)</span> by its discretised version
 <span class="math notranslate nohighlight">\(f(E_0 + n\Delta E)\)</span> and likewise <span class="math notranslate nohighlight">\(\widetilde{f}(\nu)\)</span> by <span class="math notranslate nohighlight">\(\widetilde{f}(k\Delta \nu)\)</span>
 where <span class="math notranslate nohighlight">\(\Delta x \Delta \nu = N^{-1}\)</span> one finds that</p>
 <div class="math notranslate nohighlight" id="equation-eq-approx-cft">
-<span class="eqno">(13)<a class="headerlink" href="#equation-eq-approx-cft" title="Permalink to this equation">¶</a></span>\[\widetilde{f}(\nu) \approx \Delta x e^{-i 2\pi k \Delta \nu E_0}\mathcal{F}_D \left[ f(E)\right] \, ,\]</div>
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-approx-cft" title="Permalink to this equation">¶</a></span>\[\widetilde{f}(\nu) \approx \Delta x e^{-i 2\pi k \Delta \nu E_0}\mathcal{F}_D \left[ f(E)\right] \, ,\]</div>
 <p>and likewise for the inverse transform</p>
 <div class="math notranslate nohighlight">
 \[f(E) \approx \frac{1}{\Delta x} \mathcal{F}_D^{-1} \left[ \widetilde{g}(k\Delta\nu)
@@ -368,22 +369,22 @@ very close to the exact one.</p>
 <div class="section" id="thickness-calculation">
 <h2>Thickness calculation<a class="headerlink" href="#thickness-calculation" title="Permalink to this headline">¶</a></h2>
 <p>Once the SSD has been determined by means of the deconvolution procedure summarised
-by Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(10)</a>, it can be used as input in order to
+by Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(21)</a>, it can be used as input in order to
 evaluate the local sample thickness <span class="math notranslate nohighlight">\(t\)</span> from the experimentally measured spectra.</p>
 <p>Kramers-Kronig analysis  provides the following relation between the thickness <span class="math notranslate nohighlight">\(t\)</span>,
 the ZLP normalisation <span class="math notranslate nohighlight">\(N_0\)</span>, and the single-scattering distribution,</p>
 <div class="math notranslate nohighlight" id="equation-eq-thickness-calculation">
-<span class="eqno">(14)<a class="headerlink" href="#equation-eq-thickness-calculation" title="Permalink to this equation">¶</a></span>\[t = \frac{4a_0 F E_0}{N_0\left(  1-{\rm Re}\left[ 1/\epsilon(0)\right]\right)} \int_0^\infty
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-thickness-calculation" title="Permalink to this equation">¶</a></span>\[t = \frac{4a_0 F E_0}{N_0\left(  1-{\rm Re}\left[ 1/\epsilon(0)\right]\right)} \int_0^\infty
 dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,\]</div>
 <p>where we have assumed that the effects of surface scatterings can be neglected.</p>
-<p>In Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(14)</a>, <span class="math notranslate nohighlight">\(a_0=0.0529\)</span> nm is Bohr’s radius, <span class="math notranslate nohighlight">\(F\)</span> is a relativistic
+<p>In Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(25)</a>, <span class="math notranslate nohighlight">\(a_0=0.0529\)</span> nm is Bohr’s radius, <span class="math notranslate nohighlight">\(F\)</span> is a relativistic
 correction factor,</p>
 <div class="math notranslate nohighlight">
 \[F = \frac{  1+E_0/(1022~{\rm keV})  }{\left[ 1+E_0/(511~{\rm keV})\right]^2  } \, ,\]</div>
 <p>with <span class="math notranslate nohighlight">\(E_0\)</span> being the incident electron energy, <span class="math notranslate nohighlight">\(\epsilon(E)\)</span> is the complex dielectric function,
 and <span class="math notranslate nohighlight">\(\theta_E\)</span> is the characteristic angle defined by</p>
 <div class="math notranslate nohighlight" id="equation-eq-characteristic-angle">
-<span class="eqno">(15)<a class="headerlink" href="#equation-eq-characteristic-angle" title="Permalink to this equation">¶</a></span>\[\theta_E = \frac{E}{\gamma m_0v^2} = \frac{E}{\left( E_0 + m_0c^2\right) (v/c)^2}\]</div>
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-characteristic-angle" title="Permalink to this equation">¶</a></span>\[\theta_E = \frac{E}{\gamma m_0v^2} = \frac{E}{\left( E_0 + m_0c^2\right) (v/c)^2}\]</div>
 <p>with <span class="math notranslate nohighlight">\(\gamma\)</span> being the usual relativistic dilation factor, <span class="math notranslate nohighlight">\(\gamma=\left( 1-v^2/c^2\right)^{-1/2}\)</span>,
 and <span class="math notranslate nohighlight">\(\beta\)</span> the collection semi-angle of the microscope. <a class="footnote-reference brackets" href="#f3" id="id5">3</a></p>
 <dl class="footnote brackets">
@@ -394,20 +395,20 @@ and <span class="math notranslate nohighlight">\(\beta\)</span> the collection s
 <p>For either an  insulator or a semiconductor material
 with refractive index <span class="math notranslate nohighlight">\(n\)</span>, one has that</p>
 <div class="math notranslate nohighlight" id="equation-eq-refractive-index">
-<span class="eqno">(16)<a class="headerlink" href="#equation-eq-refractive-index" title="Permalink to this equation">¶</a></span>\[{\rm Re}\left[ 1/\epsilon(0)\right] = n^{-2} \, ,\]</div>
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-refractive-index" title="Permalink to this equation">¶</a></span>\[{\rm Re}\left[ 1/\epsilon(0)\right] = n^{-2} \, ,\]</div>
 <p>while <span class="math notranslate nohighlight">\({\rm Re}\left[ 1/\epsilon(0)\right]=0\)</span> for a metal or semi-metal.</p>
 <p>Hence, the determination of the dielectric function is not a pre-requisite to
 evaluate the specimen thickness, and for given microscope operation conditions
-we can express Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(14)</a> as</p>
+we can express Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(25)</a> as</p>
 <div class="math notranslate nohighlight" id="equation-eq-thickness-calculation-v2">
-<span class="eqno">(17)<a class="headerlink" href="#equation-eq-thickness-calculation-v2" title="Permalink to this equation">¶</a></span>\[t = \frac{A}{N_0} \int_0^\infty dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,\]</div>
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-thickness-calculation-v2" title="Permalink to this equation">¶</a></span>\[t = \frac{A}{N_0} \int_0^\infty dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,\]</div>
 <p>with <span class="math notranslate nohighlight">\(A\)</span>  constant across the specimen.</p>
 <p>If the thickness of the specimen
-is already known at some location, then Eq. <a class="reference internal" href="#equation-eq-thickness-calculation-v2">(17)</a>  can be  used
+is already known at some location, then Eq. <a class="reference internal" href="#equation-eq-thickness-calculation-v2">(28)</a>  can be  used
 to calibrate <span class="math notranslate nohighlight">\(A\)</span> and  evaluate this thickness elsewhere.</p>
 <p>Furthermore, if the thickness of the material has already been
 determined by means of an independent experimental technique, then
-Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(14)</a> can be inverted to determine the refractive index <span class="math notranslate nohighlight">\(n\)</span>
+Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(25)</a> can be inverted to determine the refractive index <span class="math notranslate nohighlight">\(n\)</span>
 of an insulator or semi-conducting material using</p>
 <div class="math notranslate nohighlight">
 \[n = \left[ 1-\frac{4a_0 FE_0}{N_0 t} \left( \int_0^\infty
@@ -426,7 +427,7 @@ on the oscillation frequency <span class="math notranslate nohighlight">\(\omega
 <p>which can also be expressed in terms of the energy <span class="math notranslate nohighlight">\(E=\hbar \omega\)</span> of the photons
 that constitute this electromagnetic radiation,</p>
 <div class="math notranslate nohighlight" id="equation-eq-dielectric-function-def">
-<span class="eqno">(18)<a class="headerlink" href="#equation-eq-dielectric-function-def" title="Permalink to this equation">¶</a></span>\[\epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \, .\]</div>
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-dielectric-function-def" title="Permalink to this equation">¶</a></span>\[\epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \, .\]</div>
 <p>In the vacuum, the real and imaginary parts
 of the dielectric function reduce to <span class="math notranslate nohighlight">\({\rm Re}\left[ \epsilon(E)\right]=1\)</span>
 and <span class="math notranslate nohighlight">\({\rm Im}\left[ \epsilon(E)\right]=0\)</span>.</p>
@@ -443,31 +444,32 @@ part of the  complex dielectric function <span class="math notranslate nohighlig
 the microscope operation parameters defined in Sect. <a class="reference internal" href="#thickness-calculation"><span class="std std-ref">Thickness calculation</span></a>.</p>
 <p>We can invert this relation to obtain</p>
 <div class="math notranslate nohighlight" id="equation-eq-im-diel-fun">
-<span class="eqno">(19)<a class="headerlink" href="#equation-eq-im-diel-fun" title="Permalink to this equation">¶</a></span>\[{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\pi a_0 m_0 v^2}{N_0 t}\frac{I_{\rm SSD}(E)}{\ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right]} \, .\]</div>
-<p>Since the prefactor in Eq. <a class="reference internal" href="#equation-eq-im-diel-fun">(19)</a> does not depend on the energy loss <span class="math notranslate nohighlight">\(E\)</span>,
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-im-diel-fun" title="Permalink to this equation">¶</a></span>\[{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\pi a_0 m_0 v^2}{N_0 t}\frac{
+I_{\rm SSD}(E)}{\ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right]} \, .\]</div>
+<p>Since the prefactor in Eq. <a class="reference internal" href="#equation-eq-im-diel-fun">(30)</a> does not depend on the energy loss <span class="math notranslate nohighlight">\(E\)</span>,
 we see that <span class="math notranslate nohighlight">\({\rm Im}[-1/\epsilon(E)]\)</span> will be proportional to the single scattering
 distribution <span class="math notranslate nohighlight">\(I_{\rm SSD}(E)\)</span> with a denominator that decreases with the energy
 (since <span class="math notranslate nohighlight">\(\theta_E\propto E\)</span>) and hence weights more higher energy losses.</p>
 <p>Given that the dielectric response function is causal, the real part of the dielectric function
 can be obtained from the imaginary one by using a Kramers-Kronig relation of the form</p>
 <div class="math notranslate nohighlight" id="equation-eq-kramerskronig">
-<span class="eqno">(20)<a class="headerlink" href="#equation-eq-kramerskronig" title="Permalink to this equation">¶</a></span>\[{\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE'\, {\rm Im}
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-kramerskronig" title="Permalink to this equation">¶</a></span>\[{\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE'\, {\rm Im}
 \left[ \frac{-1}{\epsilon(E')}\right] \frac{E'}{E'^2-E^2} \, ,\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> stands for Cauchy’s prescription to evaluate the principal
 part of the integral.</p>
 <p>A particularly important application of this relation is the <span class="math notranslate nohighlight">\(E=0\)</span> case,</p>
 <div class="math notranslate nohighlight" id="equation-eq-normalisation-im-deltaeim">
-<span class="eqno">(21)<a class="headerlink" href="#equation-eq-normalisation-im-deltaeim" title="Permalink to this equation">¶</a></span>\[{\rm Re}\left[ \frac{1}{\epsilon(0)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE\, {\rm Im}
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-normalisation-im-deltaeim" title="Permalink to this equation">¶</a></span>\[{\rm Re}\left[ \frac{1}{\epsilon(0)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE\, {\rm Im}
 \left[ \frac{-1}{\epsilon(E)}\right] \frac{1}{E} \, ,\]</div>
 <p>which is known as the Kramers-Kronig sum rule.</p>
-<p>Eq. <a class="reference internal" href="#equation-eq-normalisation-im-deltaeim">(21)</a> can be used to determine the overall
+<p>Eq. <a class="reference internal" href="#equation-eq-normalisation-im-deltaeim">(32)</a> can be used to determine the overall
 normalisation of <span class="math notranslate nohighlight">\({\rm Im}\left[ -1/\epsilon(E)\right]\)</span>, since <span class="math notranslate nohighlight">\({\rm Re}\left[ 1/\epsilon(0)\right]\)</span>
 is known for most materials.</p>
-<p>For instance, as mentioned in Eq. <a class="reference internal" href="#equation-eq-refractive-index">(16)</a>, for an insulator
+<p>For instance, as mentioned in Eq. <a class="reference internal" href="#equation-eq-refractive-index">(27)</a>, for an insulator
 or semiconductor material it is given in terms of its refractive index <span class="math notranslate nohighlight">\(n\)</span>.</p>
 <p>Once the imaginary part of the dielectric function has been determined from the
-single-scattering distribution, Eq. <a class="reference internal" href="#equation-eq-im-diel-fun">(19)</a>, then one can obtain
-the corresponding real part by means of the Kramers-Kronig relation, Eq. <a class="reference internal" href="#equation-eq-kramerskronig">(20)</a>.</p>
+single-scattering distribution, Eq. <a class="reference internal" href="#equation-eq-im-diel-fun">(30)</a>, then one can obtain
+the corresponding real part by means of the Kramers-Kronig relation, Eq. <a class="reference internal" href="#equation-eq-kramerskronig">(31)</a>.</p>
 <p>Afterwards, the full complex dielectric function can be reconstructed by combining
 the calculation of the real and imaginary parts, since</p>
 <div class="math notranslate nohighlight">
@@ -480,7 +482,7 @@ the calculation of the real and imaginary parts, since</p>
 <p>and hence one can express the dielectric function in terms of the quantities that
 one has just evaluated as follows</p>
 <div class="math notranslate nohighlight" id="equation-eq-final-dielectric-function">
-<span class="eqno">(22)<a class="headerlink" href="#equation-eq-final-dielectric-function" title="Permalink to this equation">¶</a></span>\[\epsilon(E) = \frac{{\rm Re}\left[ \frac{1}{\epsilon(E)}\right]+ i{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]}{\left( {\rm Re}\left[ \frac{1}{\epsilon(E)}\right]\right)^2+\left( {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]\right)^2} \, .\]</div>
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-final-dielectric-function" title="Permalink to this equation">¶</a></span>\[\epsilon(E) = \frac{{\rm Re}\left[ \frac{1}{\epsilon(E)}\right]+ i{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]}{\left( {\rm Re}\left[ \frac{1}{\epsilon(E)}\right]\right)^2+\left( {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]\right)^2} \, .\]</div>
 <p>Once the complex dielectric function of a material has been determined, it is
 possible to evaluate related quantities that also provide information about the
 opto-electronic properties of a material.</p>
@@ -508,27 +510,27 @@ bulk of the measured energy loss distributions arises from volume inelastic
 scatterings, while edge- and surface-specific contributions can be neglected.</p>
 <p>However, for relatively thin samples with thickness <span class="math notranslate nohighlight">\(t\)</span> below a few tens of nm,
 this approximation is not necessarily suitable.</p>
-<p>Assuming a locally flat specimen with two surfaces, in this case  Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(1)</a>
+<p>Assuming a locally flat specimen with two surfaces, in this case  Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(12)</a>
 must be generalised to</p>
 <div class="math notranslate nohighlight" id="equation-eq-eelsmaster-v3">
-<span class="eqno">(23)<a class="headerlink" href="#equation-eq-eelsmaster-v3" title="Permalink to this equation">¶</a></span>\[I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) +  I_{S}(E)\]</div>
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-eelsmaster-v3" title="Permalink to this equation">¶</a></span>\[I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) +  I_{S}(E)\]</div>
 <p>with <span class="math notranslate nohighlight">\(I_{S}(E)\)</span> representing the  contribution from surface-specific inelastic
 scattering.</p>
 <p>This surface contribution can be evaluated in terms of the real <span class="math notranslate nohighlight">\(\epsilon_1\)</span> and
 imaginary <span class="math notranslate nohighlight">\(\epsilon_2\)</span> components of the complex dielectric function,</p>
 <div class="math notranslate nohighlight" id="equation-eq-surface-intensity">
-<span class="eqno">(24)<a class="headerlink" href="#equation-eq-surface-intensity" title="Permalink to this equation">¶</a></span>\[I_{S}(E) = \frac{N_0}{\pi a_0 k_0 T} \left[ \frac{\tan^{-1}(\beta/\theta_E)}{\theta_E} -
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-surface-intensity" title="Permalink to this equation">¶</a></span>\[I_{S}(E) = \frac{N_0}{\pi a_0 k_0 T} \left[ \frac{\tan^{-1}(\beta/\theta_E)}{\theta_E} -
 \frac{\beta}{\beta^2+\theta_E^2} \right] \left( \frac{4\epsilon_2}{\left( \epsilon_1 + 1 \right)^2
 +\epsilon_2^2} - {\rm Im}\left[\frac{-1}{\epsilon(E)} \right] \right) \, ,\]</div>
 <p>where the electron kinetic energy is <span class="math notranslate nohighlight">\(T=m_ev^2/2\)</span>.</p>
-<p>The main challenge to evaluate the surface component from Eq. <a class="reference internal" href="#equation-eq-surface-intensity">(24)</a>
+<p>The main challenge to evaluate the surface component from Eq. <a class="reference internal" href="#equation-eq-surface-intensity">(35)</a>
 is that it depends on the complex dielectric function <span class="math notranslate nohighlight">\(\epsilon(E)\)</span>, which in
 turn is a function of the single scattering distribution obtained from the deconvolution
 of <span class="math notranslate nohighlight">\(I_{\rm inel}(E)\)</span> obtained assuming that <span class="math notranslate nohighlight">\(I_S(E)\)</span> vanishes.</p>
 <p>For not too thin specimens, the best approach is then an iterative procedure,
 whereby one starts by assuming that <span class="math notranslate nohighlight">\(I_{S}(E)\simeq 0\)</span>, evaluates <span class="math notranslate nohighlight">\(\epsilon(E)\)</span>,
-and uses it to evaluate a first approximation to <span class="math notranslate nohighlight">\(I_S(E)\)</span> using Eq. <a class="reference internal" href="#equation-eq-surface-intensity">(24)</a>.</p>
-<p>This approximation is then subtracted from Eq. <a class="reference internal" href="#equation-eq-eelsmaster-v3">(23)</a>
+and uses it to evaluate a first approximation to <span class="math notranslate nohighlight">\(I_S(E)\)</span> using Eq. <a class="reference internal" href="#equation-eq-surface-intensity">(35)</a>.</p>
+<p>This approximation is then subtracted from Eq. <a class="reference internal" href="#equation-eq-eelsmaster-v3">(34)</a>
 and hence provides a better estimate of the bulk contribution <span class="math notranslate nohighlight">\(I_{\rm inel}(E)\)</span>.</p>
 <p>One can go back to the first step and iterate the procedure until some convergence
 criterion is met.</p>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>EELSFitter.core.spectral_image &mdash; EELSfitter 0.0.1 documentation</title>
+  <title>EELSFitter.core.spectral_image &mdash; EELSfitter 1.0.0 documentation</title>
   
 
   
@@ -237,6 +237,8 @@
 <span class="sd">        cluster means of each cluster</span>
 <span class="sd">    clustered: numpy.ndarray, shape=(M,)</span>
 <span class="sd">        A 2D array containing the index of the cluster to which each pixel belongs</span>
+<span class="sd">    output_path: str, optional</span>
+<span class="sd">        Location where to store plots</span>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
@@ -275,7 +277,7 @@
                  <span class="n">dielectric_function_im_avg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dielectric_function_im_std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_s_avg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_s_std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">thickness_avg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">thickness_std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">IEELS_avg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">IEELS_std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clustered</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cluster_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deltaE</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_axis</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">ZLP_models</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scale_var_deltaE</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crossings_E</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crossings_n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dE1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pooled</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">scale_var_log_sum_I</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                 <span class="n">scale_var_log_sum_I</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ddeltaE</span> <span class="o">=</span> <span class="n">deltadeltaE</span>
@@ -314,7 +316,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pooled</span> <span class="o">=</span> <span class="n">pooled</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_sum_I</span> <span class="o">=</span> <span class="n">scale_var_log_sum_I</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">output_path</span>
 
 <div class="viewcode-block" id="SpectralImage.save_image"><a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.save_image">[docs]</a>    <span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1590,7 +1595,7 @@
             <span class="k">return</span> <span class="mf">1E-12</span>
         <span class="k">if</span> <span class="n">prefix</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">1E-9</span>
-        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;micron&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;micron&#39;</span><span class="p">,</span> <span class="s1">&#39;µ&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="mf">1E-6</span>
         <span class="k">if</span> <span class="n">prefix</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">1E-3</span>

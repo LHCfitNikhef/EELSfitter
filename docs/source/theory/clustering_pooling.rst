@@ -7,18 +7,18 @@ Then the information contained within an EELS-SI may be expressed as
 
 .. math:: :label: eq:EELSmaster_image_app
 
-   I^{(i,j)}_{\rm EELS}(E_\ell) \,,
-   \quad i=1,\ldots, n_x\,,
-   \quad j=1,\ldots, n_y\,,
-   \quad  \ell=1,\ldots, n_E \, ,
+    I^{(i,j)}_{\rm EELS}(E_\ell) \,,
+    \quad i=1,\ldots, n_x\,,
+    \quad j=1,\ldots, n_y\,,
+    \quad  \ell=1,\ldots, n_E \, ,
 
 With each spectra constructed as
 
 .. math:: :label: eq:EELSmaster_image
 
-   I^{(i,j)}_{\rm EELS}(E_\ell) =
-   I^{(i,j)}_{\rm ZLP}(E_\ell) +
-   I^{(i,j)}_{\rm inel}(E_\ell) \, ,
+    I^{(i,j)}_{\rm EELS}(E_\ell) =
+    I^{(i,j)}_{\rm ZLP}(E_\ell) +
+    I^{(i,j)}_{\rm inel}(E_\ell) \, ,
 
 
 where :math:`I^{(i,j)}_{\rm EELS}(E_\ell)` indicates the recorded total
@@ -29,7 +29,7 @@ the :math:`x` and :math:`y` directions is usually taken to be the same, implying
 
 .. math::
 
-   \Delta x = \Delta y \simeq \frac{L_x}{n_x} = \frac{L_y}{n_y} \, .
+    \Delta x = \Delta y \simeq \frac{L_x}{n_x} = \frac{L_y}{n_y} \, .
 
 
 For the specimens analysed in this work we have :math:`n_p=\mathcal{O}(10^4)`
@@ -51,10 +51,9 @@ for the entries of the EELS spectral image listed in Eq. :eq:`eq:EELSmaster_imag
 
 .. math::
 
-   I^{(i,j)}_{\rm EELS}(E_\ell)\quad \to
-   I^{(i,j)}_{\rm EELS}(E_\ell)\Big|_{\rm pooled} =\frac{1}{N^{(i,j)}_{\rm pool}}\sum_{|i'-i|\le d}
-   \sum_{|j'-j|\le d}\left( \omega_{|i'-i|,|j'-j|} \times
-   I^{(i',j')}_{\rm EELS}(E_\ell)\right) \, ,
+    I^{(i,j)}_{\rm EELS}(E_\ell)\quad \to
+    I^{(i,j)}_{\rm EELS}(E_\ell)\Big|_{\rm pooled} =\frac{1}{N^{(i,j)}_{\rm pool}}\sum_{|i'-i|\le d} \sum_{|j'-j|\le d}\left( \omega_{|i'-i|,|j'-j|} \times
+    I^{(i',j')}_{\rm EELS}(E_\ell)\right) \, ,
 
 
 where :math:`d` indicates the pooling range, :math:`\omega_{|i'-i|,|j'-j|}` is a weight factor,
@@ -62,7 +61,7 @@ and the pooling normalisation is determined by the sum of the relevant weights,
 
 .. math::
 
-   N^{(i,j)}_{\rm pool} = \sum_{|i'-i|\le d} \sum_{|j'-j|\le d} \omega_{|i'-i|,|j'-j|} \, .
+    N^{(i,j)}_{\rm pool} = \sum_{|i'-i|\le d} \sum_{|j'-j|\le d} \omega_{|i'-i|,|j'-j|} \, .
 
 By increasing the pooling range :math:`d`, one combines the local information
 from a higher number of spectra and thus reduces statistical fluctuations,
@@ -76,7 +75,7 @@ other options such as Gaussian weights
 
 .. math::
 
-   \omega_{|i'-i|,|j'-j|} = \exp\left( - \frac{(i-i')^2}{2d^2} - \frac{(j-j')^2}{2d^2}  \right) \, ,
+    \omega_{|i'-i|,|j'-j|} = \exp\left( - \frac{(i-i')^2}{2d^2} - \frac{(j-j')^2}{2d^2}  \right) \, ,
 
 
 with :math:`\sigma^2=d^2` as variance are straightforward to implement in
@@ -104,10 +103,10 @@ as a function of
 
 .. math:: :label: eq:total_integrated_intensity
 
-   N^{(i,j)}_{\rm tot} \equiv \int_{-\infty}^{\infty} dE\,
-   I_{\rm EELS}^{(i,j)}(E) = \int_{-\infty}^{\infty} dE\,\left(
-   I^{(i,j)}_{\rm ZLP}(E) +
-   I^{(i,j)}_{\rm inel}(E) \right) = N^{(i,j)}_0 + N^{(i,j)}_{\rm inel} \, ,
+    N^{(i,j)}_{\rm tot} \equiv \int_{-\infty}^{\infty} dE\,
+    I_{\rm EELS}^{(i,j)}(E) = \int_{-\infty}^{\infty} dE\,\left(
+    I^{(i,j)}_{\rm ZLP}(E) +
+    I^{(i,j)}_{\rm inel}(E) \right) = N^{(i,j)}_0 + N^{(i,j)}_{\rm inel} \, ,
 
 
 which coincides with the sum of the ZLP and inelastic scattering normalisation
@@ -121,7 +120,7 @@ The starting point of :math:`K`-means clustering is a dataset composed by
 
 .. math::
 
-   \ln\left( N^{(r)}_{\rm tot}\right) \,,\quad r=1,\ldots , n_p\,, \qquad r=i+(n_y-1)j \, ,
+    \ln\left( N^{(r)}_{\rm tot}\right) \,,\quad r=1,\ldots , n_p\,, \qquad r=i+(n_y-1)j \, ,
 
 
 which we want to group into :math:`K` separate clusters :math:`T_k`, whose means are
@@ -129,7 +128,7 @@ given by
 
 .. math::
 
-   \ln \left( \widetilde{N}^{(k)}\right) \,,\quad k=1,\ldots, K\,.
+    \ln \left( \widetilde{N}^{(k)}\right) \,,\quad k=1,\ldots, K\,.
 
 
 The cluster means represent the main features of the :math:`k`-th cluster to
@@ -138,11 +137,17 @@ the logarithm of :math:`N^{(r)}_{\rm tot}` rather than on its absolute value
 is found to be more efficient, given that depending on the specimen location
 the integrated intensity will vary by orders of magnitude.
 
-.. figure:: figures/InSe_Clustered.png
+.. _InSeClusteredfig:
 
-   \small The outcome of the :math:`K`-means clustering procedure applied to the
-   InSe specimen, where each color represents one of the :math:`K=10` thickness
-   clusters. It can be compared with the thickness map of Fig. :ref:`fig:Fig2`(d).
+.. figure:: figures/InSe_Clustered.png
+    :width: 90%
+    :class: align-center
+    :figwidth: 90%
+    :figclass: align-center
+
+    *The outcome of the* :math:`K`*-means clustering procedure applied to the
+    InSe specimen, where each color represents one of the* :math:`K=10` *thickness
+    clusters. It can be compared with the thickness map of* :numref:`InSeThicknessfig` *.*
 
 
 In :math:`K`-means clustering, the determination of the cluster means and data
@@ -151,10 +156,10 @@ is defined in terms of a distance in specimen thickness space, given by
 
 .. math:: :label: eq:kmeans_clustering
 
-   C_{\rm Kmeans}\left( {\boldsymbol N}_{\rm tot}, {\boldsymbol T}\right)
-   = \sum_{r=1}^{n_p}\sum_{k=1}^{K} d_{rk}\left|  \ln\left(
-   \frac{\widetilde{N}^{(k)}}{N^{(r)}_{\rm tot}}\right)
-   \right|^p \, ,
+    C_{\rm Kmeans}\left( {\boldsymbol N}_{\rm tot}, {\boldsymbol T}\right)
+    = \sum_{r=1}^{n_p}\sum_{k=1}^{K} d_{rk}\left|  \ln\left(
+    \frac{\widetilde{N}^{(k)}}{N^{(r)}_{\rm tot}}\right)
+    \right|^p \, ,
 
 with :math:`d_{rk}` being a binary assignment variable, equal to 1 if :math:`r`
 belongs to cluster :math:`k` (:math:`d_{rk}=1` for :math:`r\in T_k`) and zero otherwise,
@@ -166,7 +171,7 @@ sum rule
 
 .. math::
 
-   \sum_{k=1}^K d_{rk}=1 \, ,\quad \forall\,r \, .
+    \sum_{k=1}^K d_{rk}=1 \, ,\quad \forall\,r \, .
 
 
 The minimisation of Eq. :eq:`eq:kmeans_clustering` results in a cluster
@@ -182,9 +187,9 @@ label the information contained in the (pooled) spectral image
 
 .. math:: :label: eq:cases_intensity
 
-   I^{(i,j)}_{{\rm EELS},k}(E_\ell) = \begin{cases}
-   I^{(r)}_{\rm EELS}(E_\ell)\quad {\rm if} \quad r\in T_k  \\ 0 \quad {\rm otherwise}
-   \end{cases} \,, \quad k=1,\dots, K\, .
+    I^{(i,j)}_{{\rm EELS},k}(E_\ell) = \begin{cases}
+    I^{(r)}_{\rm EELS}(E_\ell)\quad {\rm if} \quad r\in T_k  \\ 0 \quad {\rm otherwise}
+    \end{cases} \,, \quad k=1,\dots, K\, .
 
 
 This cluster assignment makes possible training  the ZLP deep-learning
@@ -198,10 +203,20 @@ be possible to sample a sufficiently large number of representative spectra
 from each cluster to construct the prior probability distributions, as
 required for the Monte Carlo method used in this work. We find that :math:`K=10`
 for the InSe and :math:`K=5` for the :math:`WS_2` specimens are suitable choices.
-Fig. :ref:`InSe_Clustered` displays the outcome of the :math:`K`-means
+:numref:`InSeClusteredfig` displays the outcome of the :math:`K`-means
 clustering procedure applied to the InSe specimen, where each color
 represents one of the :math:`K=10` thickness clusters. It can be compared with
-the corresponding thickness map in Fig. :ref:`fig:Fig2`(d); the qualitative
+the corresponding thickness map in :numref:`InSeThicknessfig`; the qualitative
 agreement further confirms that the total integrated intensity in each
 pixel :math:`N_{\rm tot}^{(i,j)}` represents a suitable proxy for the local
 specimen thickness.
+
+.. _InSeThicknessfig:
+
+.. figure:: figures/inse_thickness.png
+    :width: 90%
+    :class: align-center
+    :figwidth: 90%
+    :figclass: align-center
+
+    *The thickness map corresponding to the InSe SI.*

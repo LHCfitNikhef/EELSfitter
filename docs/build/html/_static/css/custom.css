@@ -9,3 +9,10 @@ img[src*="logo"]{
    padding-right: 10px;
    /*border: 5px dotted black*/
 }
+
+.math {
+    text-align: left;
+}
+.eqno {
+    float: right;
+}

@@ -15,8 +15,9 @@ Hence, a given spectrum :math:`I_{\rm EELS}(E)` can be decomposed as
 
 .. math:: :label: eq:EELSmaster
 
-   I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) = 
-   I_{\rm ZLP}(E) + \sum_{n=1}^\infty I^{(n)}_{\rm inel}(E) \, ,
+    I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) =
+    I_{\rm ZLP}(E) + \sum_{n=1}^\infty
+    I^{(n)}_{\rm inel}(E) \, ,
 
 
 where :math:`E` is the energy loss experienced by the electrons
@@ -32,7 +33,7 @@ The ZLP intensity can be further expressed as
 
 .. math:: :label: eq:ZLP_norm
 
-   I_{\rm ZLP}(E) = N_0 R(E) \, ,\qquad \int_{-\infty}^\infty dE \,R(E)=1 \, ,
+    I_{\rm ZLP}(E) = N_0 R(E) \, ,\qquad \int_{-\infty}^\infty dE \,R(E)=1 \, ,
 
 
 where :math:`R(E)` is known as the (normalised) resolution or instrumental response function,
@@ -44,9 +45,8 @@ In the following we assume that the ZLP intensity :math:`I_{\rm ZLP}(E)` is know
 and can be reliably subtracted from :math:`I_{\rm EELS}(E)` in order to isolate 
 the inelastic scattering contribution :math:`I_{\rm inel}(E)`.
 
-In this work, the ZLP subtraction is achieved using a machine learning method 
-developed in :cite:p:`Roest:2020kqy` and extended  to spectral images as described
-in Sect.~\ref{sec:methodology}.
+In EELSfitter, the ZLP subtraction is achieved using a machine learning method
+developed in :cite:p:`Roest:2020kqy` and extended to spectral images.
 
 
 The single-scattering distribution
@@ -62,8 +62,8 @@ uncorrelated it follows that the integral over the :math:`n`-scatterings distrib
 
 .. math:: :label: eq:N_n
 
-   N_n \equiv \int_{-\infty}^{\infty} dE\, I^{(n)}_{\rm inel}(E) = 
-   B \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda} \, , \qquad n=1,2,\ldots,\infty \, ,
+    N_n \equiv \int_{-\infty}^{\infty} dE\, I^{(n)}_{\rm inel}(E) =
+    B \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda} \, , \qquad n=1,2,\ldots,\infty \, ,
 
 
 with :math:`B` a normalisation constant.
@@ -72,9 +72,9 @@ From the combination of Eqns. :eq:`eq:EELSmaster` and :eq:`eq:N_n` it follows th
 
 .. math:: :label: eq:norm_inelastic
 
-   N_{\rm inel}\equiv \int_{-\infty}^{\infty} dE\,
-   I_{\rm inel}(E) = \sum_{n=1}^\infty N_n = B \sum_{n=1}^\infty
-   \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda}=B\left( 1-e^{-t/\lambda}\right) \, ,
+    N_{\rm inel}\equiv \int_{-\infty}^{\infty} dE\,
+    I_{\rm inel}(E) = \sum_{n=1}^\infty N_n = B \sum_{n=1}^\infty
+    \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda}=B\left( 1-e^{-t/\lambda}\right) \, ,
 
 
 and hence one finds that the integral over the :math:`n`-scatterings distribution 
@@ -93,14 +93,14 @@ the inelastic one as
 
 .. math::
 
-   N_0 = \frac{N_{\rm inel}}{e^{t/\lambda}-1} \, ,
+    N_0 = \frac{N_{\rm inel}}{e^{t/\lambda}-1} \, ,
 
 
 and hence one has the following relations between integrated inelastic scattering intensities
 
 .. math::
 
-   \frac{N_1^n}{N_k}=n!N_0^{n-1} \, ,\qquad \forall ~n \ge 1 \, .
+    \frac{N_1^n}{N_k}=n!N_0^{n-1} \, ,\qquad \forall ~n \ge 1 \, .
 
 
 In order to evaluate the local thickness of the specimen and the corresponding 
@@ -112,8 +112,9 @@ The SSD is related to the experimentally measured :math:`n=1` distribution,
 
 .. math:: :label: eq:def_convolution
 
-   I^{(1)}_{\rm inel}(E) = R(E)\otimes I_{\rm SSD}(E) \equiv 
-   \int_{-\infty}^{\infty} dE'\, R(E-E')I_{\rm SSD}(E') \, ,
+    I^{(1)}_{\rm inel}(E) = R(E)\otimes
+    I_{\rm SSD}(E) \equiv \int_{-\infty}^{\infty} dE'\, R(E-E')
+    I_{\rm SSD}(E') \, ,
 
 
 where in the following :math:`\otimes` denotes the convolution operation.
@@ -124,10 +125,10 @@ distributions can be expressed in terms of the SSD as
 
 .. math::
 
-   I^{(2)}_{\rm inel}(E) &=&  R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) \ ,
-   \\
-   I^{(3)}_{\rm inel}(E) &=&
-   R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 3! N^2_0\right) \ ,
+    I^{(2)}_{\rm inel}(E) &=&  R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) \ ,
+    \\
+    I^{(3)}_{\rm inel}(E) &=&
+    R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 3! N^2_0\right) \ ,
 
 
 and likewise for :math:`n\ge 4`.
@@ -139,12 +140,12 @@ function :math:`R`, the ZLP normalisation :math:`N_0`, and the single-scattering
 
 .. math:: :label: eq:EELSmaster_2
 
-   && I_{\rm EELS}(E) \nonumber = N_0 R(E) + R(E)\otimes I_{\rm SSD}(E) + 
-   R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) + \ldots\\ \nonumber
-   && =R(E) \otimes \left( N_0\delta(E) + I_{\rm SSD}(E) + I_{\rm SSD}(E)\otimes 
-   I_{\rm SSD}(E)/\left( 2! N_0\right) +\ldots \right) \\
-   && =N_0 R(E) \otimes \left( \delta(E) +\sum_{n=1}^{\infty} \left[ I_{\rm SSD}(E)\otimes\right]^n 
-   \delta(E)/\left( n! N_0^{n}\right)  \right) \, ,
+    && I_{\rm EELS}(E) \nonumber = N_0 R(E) + R(E)\otimes I_{\rm SSD}(E) + R(E)\otimes
+    I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) + \ldots\\ \nonumber
+    && =R(E) \otimes \left( N_0\delta(E) + I_{\rm SSD}(E) + I_{\rm SSD}(E)\otimes
+    I_{\rm SSD}(E)/\left( 2! N_0\right) +\ldots \right) \\
+    && =N_0 R(E) \otimes \left( \delta(E) +\sum_{n=1}^{\infty} \left[
+    I_{\rm SSD}(E)\otimes\right]^n \delta(E)/\left( n! N_0^{n}\right)  \right) \, ,
 
 
 where :math:`\delta(E)` is the Dirac delta function.
@@ -165,16 +166,16 @@ Here we define the Fourier transform :math:`\widetilde{f}(\nu)` of a function :m
 
 .. math:: :label: eq:continuous_fourier_transform
 
-   \mathcal{F}\left[ f(E) \right](\nu)\equiv \widetilde{f}(\nu)\equiv \int_{-\infty}^\infty 
-   dE\,f(E) e^{-2\pi i E\nu}\, ,
+    \mathcal{F}\left[ f(E) \right](\nu)\equiv \widetilde{f}(\nu)\equiv \int_{-\infty}^\infty
+    dE\,f(E) e^{-2\pi i E\nu}\, ,
 
 
 whose inverse is given by
 
 .. math:: :label: eq:continuous_fourier_transform_inverse
 
-   \mathcal{F}^{-1}\left[ \widetilde{f}(\nu) \right](E) = f(E)\equiv \int_{-\infty}^\infty 
-   d\nu\,\widetilde{f}(\nu) e^{2\pi i E\nu}\, ,
+    \mathcal{F}^{-1}\left[ \widetilde{f}(\nu) \right](E) = f(E)\equiv \int_{-\infty}^\infty
+    d\nu\,\widetilde{f}(\nu) e^{2\pi i E\nu}\, ,
 
 
 which has the useful property that convolutions such as  Eq. :eq:`eq:def_convolution`
@@ -182,8 +183,8 @@ are transformed into products,
 
 .. math:: :label: eq:fourier_convolutions
 
-   {\rm if~}f(E)=g(E)\otimes h(E)\quad{\rm then}\quad \mathcal{F}\left[ f(E) \right] = 
-   \widetilde{f}(\nu) = \widetilde{g}(\nu)\widetilde{h}(\nu) \, .
+    {\rm if~}f(E)=g(E)\otimes h(E)\quad{\rm then}\quad \mathcal{F}\left[ f(E) \right] =
+    \widetilde{f}(\nu) = \widetilde{g}(\nu)\widetilde{h}(\nu) \, .
 
 
 The Fourier transform of Eq. :eq:`eq:EELSmaster_2` leads to the Taylor expansion 
@@ -191,15 +192,15 @@ of the exponential and hence
 
 .. math::
 
-   \widetilde{I}_{\rm EELS}(\nu)=N_0\widetilde{R}(\nu)\exp\left(  \frac{\widetilde{I}_{\rm SSD}(\nu)}{N_0}\right) \, ,
+    \widetilde{I}_{\rm EELS}(\nu)=N_0\widetilde{R}(\nu)\exp\left(  \frac{\widetilde{I}_{\rm SSD}(\nu)}{N_0}\right) \, ,
 
 
 which can be solved for the Fourier transform of the single scattering distribution
 
 .. math::
 
-   \widetilde{I}_{\rm SSD}(\nu)=N_0 \ln \frac{\widetilde{I}_{\rm EELS}(\nu)}{N_0\widetilde{R}(\nu)}
-   = N_0 \ln \frac{\mathcal{F}\left[ I_{\rm EELS}(E)\right] (\nu)}{N_0 \mathcal{F}\left[ R(E)\right] (\nu)  } \, .
+    \widetilde{I}_{\rm SSD}(\nu)=N_0 \ln \frac{\widetilde{I}_{\rm EELS}(\nu)}{N_0\widetilde{R}(\nu)}
+    = N_0 \ln \frac{\mathcal{F}\left[ I_{\rm EELS}(E)\right] (\nu)}{N_0 \mathcal{F}\left[ R(E)\right] (\nu)  } \, .
 
 
 By taking the  inverse Fourier transform, one obtains the sought-for expression
@@ -207,8 +208,8 @@ for the single scattering distribution as a function of the electron energy loss
 
 .. math:: :label: eq:deconvolution_procedure
 
-   I_{\rm SSD}(E)=N_0 \mathcal{F}^{-1}\left[ \ln \frac{\mathcal{F}\left[ I_{\rm EELS}\right] }{N_0 \mathcal{F}\left[  R\right]
-   }\right] \, ,
+    I_{\rm SSD}(E)=N_0 \mathcal{F}^{-1}\left[ \ln \frac{\mathcal{F}\left[
+    I_{\rm EELS}\right] }{N_0 \mathcal{F}\left[  R\right]}\right] \, ,
 
 
 where the only required inputs are the experimentally measured EELS spectra,
@@ -219,7 +220,7 @@ Discrete Fourier transforms
 ---------------------------
 
 
-In this work, Eq. :eq:`eq:deconvolution_procedure` is evaluated numerically by 
+In EELSfitter, Eq. :eq:`eq:deconvolution_procedure` is evaluated numerically by
 approximating the continuous transform Eq. :eq:`eq:continuous_fourier_transform`
 by its discrete Fourier transform equivalent.
 
@@ -230,17 +231,17 @@ The discrete Fourier transform  of a discretised function :math:`f(E)` defined a
 
 .. math:: :label: eq_def_DFT
 
-   \mathcal{F}_D \left[ f(E) \right] (\nu_k) = \widetilde{f}(\nu_k) = \sum^{N-1}_{n=0} 
-   \operatorname{e}^{-i2\pi kn/N} f(E_n), \qquad \forall\, k \in \{0, ..., N-1\} \, ,
+    \mathcal{F}_D \left[ f(E) \right] (\nu_k) = \widetilde{f}(\nu_k) = \sum^{N-1}_{n=0}
+    \operatorname{e}^{-i2\pi kn/N} f(E_n), \qquad \forall\, k \in \{0, ..., N-1\} \, ,
 
 
 with the corresponding inverse transformation 
 
 .. math:: :label: eq_def_DFT_inverse
 
-   \mathcal{F}_D^{-1} \left[ \widetilde{f}(\nu) \right] (E_n) = f(E_n) =\frac{1}{N} 
-   \sum^{N-1}_{k=0} \operatorname{e}^{i2\pi kn/N}  \widetilde{f}(\nu_k) \qquad 
-   \forall\, n \in \{0, ..., N-1\} \, .
+    \mathcal{F}_D^{-1} \left[ \widetilde{f}(\nu) \right] (E_n) = f(E_n) =\frac{1}{N}
+    \sum^{N-1}_{k=0} \operatorname{e}^{i2\pi kn/N}  \widetilde{f}(\nu_k) \qquad
+    \forall\, n \in \{0, ..., N-1\} \, .
 
 
 If one approximates the continuous function :math:`f(E)` by its discretised version
@@ -256,9 +257,9 @@ and likewise for the inverse transform
 
 .. math::
 
-   f(E) \approx \frac{1}{\Delta x} \mathcal{F}_D^{-1} \left[ \widetilde{g}(k\Delta\nu) 
-   \right] \, ,\qquad \widetilde{g}(k\Delta\nu) \equiv e^{i2\pi k \Delta\nu E_0} 
-   \widetilde{f}(k\Delta\nu) \, .
+    f(E) \approx \frac{1}{\Delta x} \mathcal{F}_D^{-1} \left[ \widetilde{g}(k\Delta\nu)
+    \right] \, ,\qquad \widetilde{g}(k\Delta\nu) \equiv e^{i2\pi k \Delta\nu E_0}
+    \widetilde{f}(k\Delta\nu) \, .
 
 
 In practice, the EELS spectra considered are characterised by a fine spacing in 
@@ -279,8 +280,8 @@ the ZLP normalisation :math:`N_0`, and the single-scattering distribution,
 
 .. math:: :label: eq:thickness_calculation
 
-   t = \frac{4a_0 F E_0}{N_0\left(  1-{\rm Re}\left[ 1/\epsilon(0)\right]\right)} \int_0^\infty 
-   dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,
+    t = \frac{4a_0 F E_0}{N_0\left(  1-{\rm Re}\left[ 1/\epsilon(0)\right]\right)} \int_0^\infty
+    dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,
 
 
 where we have assumed that the effects of surface scatterings can be neglected.
@@ -290,7 +291,7 @@ correction factor,
 
 .. math::
 
-   F = \frac{  1+E_0/(1022~{\rm keV})  }{\left[ 1+E_0/(511~{\rm keV})\right]^2  } \, ,
+    F = \frac{  1+E_0/(1022~{\rm keV})  }{\left[ 1+E_0/(511~{\rm keV})\right]^2  } \, ,
 
 
 with :math:`E_0` being the incident electron energy, :math:`\epsilon(E)` is the complex dielectric function,
@@ -298,7 +299,7 @@ and :math:`\theta_E` is the characteristic angle defined by
 
 .. math:: :label: eq:characteristic_angle
 
-   \theta_E = \frac{E}{\gamma m_0v^2} = \frac{E}{\left( E_0 + m_0c^2\right) (v/c)^2}
+    \theta_E = \frac{E}{\gamma m_0v^2} = \frac{E}{\left( E_0 + m_0c^2\right) (v/c)^2}
 
 
 with :math:`\gamma` being the usual relativistic dilation factor, :math:`\gamma=\left( 1-v^2/c^2\right)^{-1/2}`,
@@ -312,7 +313,7 @@ with refractive index :math:`n`, one has that
 
 .. math:: :label: eq:refractive_index
 
-   {\rm Re}\left[ 1/\epsilon(0)\right] = n^{-2} \, ,
+    {\rm Re}\left[ 1/\epsilon(0)\right] = n^{-2} \, ,
 
 
 while :math:`{\rm Re}\left[ 1/\epsilon(0)\right]=0` for a metal or semi-metal.
@@ -323,7 +324,7 @@ we can express Eq. :eq:`eq:thickness_calculation` as
 
 .. math:: :label: eq:thickness_calculation_v2
 
-   t = \frac{A}{N_0} \int_0^\infty dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,
+    t = \frac{A}{N_0} \int_0^\infty dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,
 
 
 with :math:`A`  constant across the specimen.
@@ -339,8 +340,8 @@ of an insulator or semi-conducting material using
 
 .. math::
 
-   n = \left[ 1-\frac{4a_0 FE_0}{N_0 t} \left( \int_0^\infty 
-   dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \right) \right]^{-1/2} \, .
+    n = \left[ 1-\frac{4a_0 FE_0}{N_0 t} \left( \int_0^\infty
+    dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \right) \right]^{-1/2} \, .
 
 
 The dielectric function from Kramers-Kronig analysis
@@ -357,7 +358,7 @@ on the oscillation frequency :math:`\omega`,
 
 .. math::
 
-   \epsilon(\omega)={\rm Re}\left[ \omega\right]+i{\rm Im}\left[ \omega\right] \, ,
+    \epsilon(\omega)={\rm Re}\left[ \omega\right]+i{\rm Im}\left[ \omega\right] \, ,
 
 
 which can also be expressed in terms of the energy :math:`E=\hbar \omega` of the photons
@@ -365,7 +366,7 @@ that constitute this electromagnetic radiation,
 
 .. math:: :label: eq:dielectric_function_def
 
-   \epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \, .
+    \epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \, .
 
 
 In the vacuum, the real and imaginary parts
@@ -376,7 +377,7 @@ Furthermore, the dielectric function is related to the susceptibility :math:`\ch
 
 .. math::
 
-   \epsilon(E)=1-\nu\chi(E) \, , 
+    \epsilon(E)=1-\nu\chi(E) \, ,
 
 
 where :math:`\nu` is the so-called Coulomb matrix.
@@ -386,8 +387,8 @@ part of the  complex dielectric function :math:`\epsilon(E)` by means the follow
 
 .. math::
 
-   I_{\rm SSD}(E) = \frac{N_0 t}{\pi a_0 m_0 v^2}{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]
-   \ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right] \, ,
+    I_{\rm SSD}(E) = \frac{N_0 t}{\pi a_0 m_0 v^2}{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]
+    \ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right] \, ,
 
 
 in terms of the sample thickness :math:`t`, the ZLP normalisation :math:`N_0`, and
@@ -397,7 +398,8 @@ We can invert this relation to obtain
 
 .. math:: :label: eq:im_diel_fun
 
-   {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\pi a_0 m_0 v^2}{N_0 t}\frac{I_{\rm SSD}(E)}{\ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right]} \, .
+    {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\pi a_0 m_0 v^2}{N_0 t}\frac{
+    I_{\rm SSD}(E)}{\ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right]} \, .
 
 
 Since the prefactor in Eq. :eq:`eq:im_diel_fun` does not depend on the energy loss :math:`E`,
@@ -410,8 +412,8 @@ can be obtained from the imaginary one by using a Kramers-Kronig relation of the
 
 .. math:: :label: eq:kramerskronig
 
-   {\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE'\, {\rm Im}
-   \left[ \frac{-1}{\epsilon(E')}\right] \frac{E'}{E'^2-E^2} \, ,
+    {\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE'\, {\rm Im}
+    \left[ \frac{-1}{\epsilon(E')}\right] \frac{E'}{E'^2-E^2} \, ,
 
 
 where :math:`\mathcal{P}` stands for Cauchy's prescription to evaluate the principal
@@ -421,8 +423,8 @@ A particularly important application of this relation is the :math:`E=0` case,
 
 .. math:: :label: eq:normalisation_im_deltaEim
 
-   {\rm Re}\left[ \frac{1}{\epsilon(0)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE\, {\rm Im}
-   \left[ \frac{-1}{\epsilon(E)}\right] \frac{1}{E} \, ,
+    {\rm Re}\left[ \frac{1}{\epsilon(0)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE\, {\rm Im}
+    \left[ \frac{-1}{\epsilon(E)}\right] \frac{1}{E} \, ,
 
 
 which is known as the Kramers-Kronig sum rule.
@@ -443,16 +445,16 @@ the calculation of the real and imaginary parts, since
 
 .. math::
 
-   \epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \equiv
-   \epsilon_1(E)+i\epsilon_2(E) \, ,
+    \epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \equiv
+    \epsilon_1(E)+i\epsilon_2(E) \, ,
 
 
 implies that
 
 .. math::
 
-   {\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = \frac{\epsilon_1(E)}{\epsilon_1^2(E) + \epsilon_2^2(E)}\,,\qquad
-   {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\epsilon_2(E)}{\epsilon_1^2(E) + \epsilon_2^2(E)}\,,
+    {\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = \frac{\epsilon_1(E)}{\epsilon_1^2(E) + \epsilon_2^2(E)}\,,\qquad
+    {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\epsilon_2(E)}{\epsilon_1^2(E) + \epsilon_2^2(E)}\,,
 
 
 and hence one can express the dielectric function in terms of the quantities that
@@ -460,7 +462,7 @@ one has just evaluated as follows
 
 .. math:: :label: eq:final_dielectric_function
 
-   \epsilon(E) = \frac{{\rm Re}\left[ \frac{1}{\epsilon(E)}\right]+ i{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]}{\left( {\rm Re}\left[ \frac{1}{\epsilon(E)}\right]\right)^2+\left( {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]\right)^2} \, .
+    \epsilon(E) = \frac{{\rm Re}\left[ \frac{1}{\epsilon(E)}\right]+ i{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]}{\left( {\rm Re}\left[ \frac{1}{\epsilon(E)}\right]\right)^2+\left( {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]\right)^2} \, .
 
 
 Once the complex dielectric function of a material has been determined, it is 
@@ -471,7 +473,7 @@ One example of this would be the optical absorption coefficient, given by
 
 .. math::
 
-   \mu(E) = \frac{E}{\hbar c}\left[ 2\left( \epsilon_1^2(E)+\epsilon_2^2(E)\right)^{1/2}-2\epsilon_1(E)\right]^{1/2} \, ,
+    \mu(E) = \frac{E}{\hbar c}\left[ 2\left( \epsilon_1^2(E)+\epsilon_2^2(E)\right)^{1/2}-2\epsilon_1(E)\right]^{1/2} \, ,
 
 
 which represents a measure of how far light of a given wavelength :math:`\lambda=hc/E` can penetrate
@@ -509,7 +511,7 @@ must be generalised to
 
 .. math:: :label: eq:EELSmaster_v3
 
-   I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) +  I_{S}(E) 
+    I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) +  I_{S}(E)
 
 
 with :math:`I_{S}(E)` representing the  contribution from surface-specific inelastic 
@@ -520,9 +522,9 @@ imaginary :math:`\epsilon_2` components of the complex dielectric function,
 
 .. math:: :label: eq:surface_intensity
 
-   I_{S}(E) = \frac{N_0}{\pi a_0 k_0 T} \left[ \frac{\tan^{-1}(\beta/\theta_E)}{\theta_E} -
-   \frac{\beta}{\beta^2+\theta_E^2} \right] \left( \frac{4\epsilon_2}{\left( \epsilon_1 + 1 \right)^2
-   +\epsilon_2^2} - {\rm Im}\left[\frac{-1}{\epsilon(E)} \right] \right) \, ,
+    I_{S}(E) = \frac{N_0}{\pi a_0 k_0 T} \left[ \frac{\tan^{-1}(\beta/\theta_E)}{\theta_E} -
+    \frac{\beta}{\beta^2+\theta_E^2} \right] \left( \frac{4\epsilon_2}{\left( \epsilon_1 + 1 \right)^2
+    +\epsilon_2^2} - {\rm Im}\left[\frac{-1}{\epsilon(E)} \right] \right) \, ,
 
 
 where the electron kinetic energy is :math:`T=m_ev^2/2`.
