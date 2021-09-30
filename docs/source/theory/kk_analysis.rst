@@ -5,13 +5,11 @@ Kramers-Kronig analysis of EEL spectra
 Here we provide an overview of the theoretical formalism adopted in this 
 work :cite:p:`Egerton:2007` to evaluate the single-scattering distribution, local
 thickness, bandgap energy and type and complex dielectric function from  EELS spectra.
-
 Electron energy loss spectra  measured experimentally are composed by three contributions:
 the one from inelastic single scatterings off the electrons in the specimen, 
 the one  associated to multiple inelastic scatterings, and then the Zero-Loss Peak (ZLP) 
-arising from both elastic scatterings and from instrumental broadening.
-
-Hence, a given spectrum :math:`I_{\rm EELS}(E)` can be decomposed as
+arising from both elastic scatterings and from instrumental broadening. Hence, a
+given spectrum :math:`I_{\rm EELS}(E)` can be decomposed as
 
 .. math:: :label: eq:EELSmaster
 
@@ -20,16 +18,10 @@ Hence, a given spectrum :math:`I_{\rm EELS}(E)` can be decomposed as
     I^{(n)}_{\rm inel}(E) \, ,
 
 
-where :math:`E` is the energy loss experienced by the electrons
-upon traversing the specimen [#f1]_,
-
-.. [#f1] Here :math:`E` indicates the energy lost by EELS electrons, with :math:`E` for elastic scatterings.
-  
-:math:`I_{\rm ZLP}(E)` is the ZLP
-contribution, and :math:`I^{(n)}_{\rm inel}(E)` indicates the contribution
-from :math:`n` inelastic scatterings.
-
-The ZLP intensity can be further expressed as
+where :math:`E` is the energy loss experienced by the electrons upon traversing the specimen [#f1]_,
+:math:`I_{\rm ZLP}(E)` is the ZLP contribution, and :math:`I^{(n)}_{\rm inel}(E)` indicates
+the contribution from :math:`n` inelastic scatterings. The ZLP intensity can be further
+expressed as
 
 .. math:: :label: eq:ZLP_norm
 
@@ -39,14 +31,11 @@ The ZLP intensity can be further expressed as
 where :math:`R(E)` is known as the (normalised) resolution or instrumental response function,
 whose full width at half-maximum (FWHM) indicates the resolution of the instrument.
 The normalisation factor :math:`N_0` thus corresponds to the integrated intensity under 
-the zero-loss peak.
-
-In the following we assume that the ZLP intensity :math:`I_{\rm ZLP}(E)` is known
-and can be reliably subtracted from :math:`I_{\rm EELS}(E)` in order to isolate 
-the inelastic scattering contribution :math:`I_{\rm inel}(E)`.
-
-In EELSfitter, the ZLP subtraction is achieved using a machine learning method
-developed in :cite:p:`Roest:2020kqy` and extended to spectral images.
+the zero-loss peak. In the following we assume that the ZLP intensity :math:`I_{\rm ZLP}(E)`
+is known and can be reliably subtracted from :math:`I_{\rm EELS}(E)` in order to isolate
+the inelastic scattering contribution :math:`I_{\rm inel}(E)`. In EELSfitter, the ZLP
+subtraction is achieved using a machine learning method developed in :cite:p:`Roest:2020kqy`
+and extended to spectral images.
 
 
 The single-scattering distribution
@@ -58,17 +47,14 @@ mean free path of the electrons, then assuming that inelastic scatterings are
 uncorrelated it follows that the integral over the :math:`n`-scatterings distribution
 :math:`I^{(n)}_{\rm inel}` follow a Poisson distribution [#f2]_ 
 
-.. [#f2] The following derivation assumes that the specimen is not too thin, that is, :math:`t \gtrsim \lambda`.
-
 .. math:: :label: eq:N_n
 
     N_n \equiv \int_{-\infty}^{\infty} dE\, I^{(n)}_{\rm inel}(E) =
     B \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda} \, , \qquad n=1,2,\ldots,\infty \, ,
 
 
-with :math:`B` a normalisation constant.
-
-From the combination of Eqns. :eq:`eq:EELSmaster` and :eq:`eq:N_n` it follows that
+with :math:`B` a normalisation constant. From the combination of Eqns. :eq:`eq:EELSmaster`
+and :eq:`eq:N_n` it follows that
 
 .. math:: :label: eq:norm_inelastic
 
@@ -87,8 +73,7 @@ is such that
 
 in terms of the normalisation :math:`N_{\rm inel}` of the full inelastic scattering 
 distribution, the sample thickness :math:`t` and the mean free path :math:`\lambda`.
-
-Note also that the ZLP normalisation factor :math:`N_0` is then given in terms of 
+Note also that the ZLP normalisation factor :math:`N_0` is then given in terms of
 the inelastic one as
 
 .. math::
@@ -106,8 +91,7 @@ and hence one has the following relations between integrated inelastic scatterin
 In order to evaluate the local thickness of the specimen and the corresponding 
 dielectric function, it is necessary to deconvolute the measured spectra and 
 extract from them the single-scattering distribution (SSD), :math:`I_{\rm SSD}(E)`.
-
-The SSD is related to the experimentally measured :math:`n=1` distribution, 
+The SSD is related to the experimentally measured :math:`n=1` distribution,
 :math:`I^{(1)}_{\rm inel}(E)` by the finite resolution of our measurement apparatus:
 
 .. math:: :label: eq:def_convolution
@@ -117,10 +101,9 @@ The SSD is related to the experimentally measured :math:`n=1` distribution,
     I_{\rm SSD}(E') \, ,
 
 
-where in the following :math:`\otimes` denotes the convolution operation.
-
-It can be shown, again treating individual scatterings as uncorrelated,
-that the experimentally measured :math:`n=2` and :math:`n=3` multiple scattering 
+where in the following :math:`\otimes` denotes the convolution operation. It can
+be shown, again treating individual scatterings as uncorrelated, that the
+experimentally measured :math:`n=2` and :math:`n=3` multiple scattering
 distributions can be expressed in terms of the SSD as
 
 .. math::
@@ -131,12 +114,10 @@ distributions can be expressed in terms of the SSD as
     R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 3! N^2_0\right) \ ,
 
 
-and likewise for :math:`n\ge 4`.
-
-Combining this information, one observes that an experimentally measured EELS
-spectrum, Eq. :eq:`eq:EELSmaster` can be expressed in terms of the resolution
-function :math:`R`, the ZLP normalisation :math:`N_0`, and the single-scattering distribution 
-:math:`I_{\rm SSD}` as follows
+and likewise for :math:`n\ge 4`. Combining this information, one observes that an
+experimentally measured EELS spectrum, Eq. :eq:`eq:EELSmaster` can be expressed in terms
+of the resolution function :math:`R`, the ZLP normalisation :math:`N_0`, and the single-scattering
+distribution :math:`I_{\rm SSD}` as follows
 
 .. math:: :label: eq:EELSmaster_2
 
@@ -148,11 +129,9 @@ function :math:`R`, the ZLP normalisation :math:`N_0`, and the single-scattering
     I_{\rm SSD}(E)\otimes\right]^n \delta(E)/\left( n! N_0^{n}\right)  \right) \, ,
 
 
-where :math:`\delta(E)` is the Dirac delta function.
-
-If the ZLP normalisation factor :math:`N_0` and resolution function :math:`R(E)` 
-are known, then one can use Eq. :eq:`eq:EELSmaster_2` to extract the SSD from 
-the measured spectra by means of a deconvolution procedure.
+where :math:`\delta(E)` is the Dirac delta function. If the ZLP normalisation factor
+:math:`N_0` and resolution function :math:`R(E)` are known, then one can use Eq. :eq:`eq:EELSmaster_2`
+to extract the SSD from the measured spectra by means of a deconvolution procedure.
 
 
 SSD deconvolution
@@ -161,8 +140,8 @@ SSD deconvolution
 
 The structure of Eq. :eq:`eq:EELSmaster_2` suggests that transforming to Fourier 
 space will lead to an algebraic equation which can then be solved for the SSD.
-
-Here we define the Fourier transform :math:`\widetilde{f}(\nu)` of a function :math:`f(E)` as follows
+Here we define the Fourier transform :math:`\widetilde{f}(\nu)` of a function :math:`f(E)`
+as follows
 
 .. math:: :label: eq:continuous_fourier_transform
 
@@ -222,12 +201,10 @@ Discrete Fourier transforms
 
 In EELSfitter, Eq. :eq:`eq:deconvolution_procedure` is evaluated numerically by
 approximating the continuous transform Eq. :eq:`eq:continuous_fourier_transform`
-by its discrete Fourier transform equivalent.
-
-The same method will be used for the implementation of the Kramers-Kronig analysis.
-
-The discrete Fourier transform  of a discretised function :math:`f(E)` defined at 
-:math:`E_n \in \{E_0, ..., E_{N-1}\}` is given by:
+by its discrete Fourier transform equivalent. The same method will be used for the
+implementation of the Kramers-Kronig analysis. The discrete Fourier transform  of a
+discretised function :math:`f(E)` defined at :math:`E_n \in \{E_0, ..., E_{N-1}\}`
+is given by:
 
 .. math:: :label: eq_def_DFT
 
@@ -274,7 +251,6 @@ Thickness calculation
 Once the SSD has been determined by means of the deconvolution procedure summarised 
 by Eq. :eq:`eq:deconvolution_procedure`, it can be used as input in order to 
 evaluate the local sample thickness :math:`t` from the experimentally measured spectra.
-
 Kramers-Kronig analysis  provides the following relation between the thickness :math:`t`,
 the ZLP normalisation :math:`N_0`, and the single-scattering distribution,
 
@@ -285,17 +261,16 @@ the ZLP normalisation :math:`N_0`, and the single-scattering distribution,
 
 
 where we have assumed that the effects of surface scatterings can be neglected.
-
-In Eq. :eq:`eq:thickness_calculation`, :math:`a_0=0.0529` nm is Bohr's radius, :math:`F` is a relativistic
-correction factor,
+In Eq. :eq:`eq:thickness_calculation`, :math:`a_0=0.0529` nm is Bohr's radius, :math:`F`
+is a relativistic correction factor,
 
 .. math::
 
     F = \frac{  1+E_0/(1022~{\rm keV})  }{\left[ 1+E_0/(511~{\rm keV})\right]^2  } \, ,
 
 
-with :math:`E_0` being the incident electron energy, :math:`\epsilon(E)` is the complex dielectric function,
-and :math:`\theta_E` is the characteristic angle defined by
+with :math:`E_0` being the incident electron energy, :math:`\epsilon(E)` is the
+complex dielectric function, and :math:`\theta_E` is the characteristic angle defined by
 
 .. math:: :label: eq:characteristic_angle
 
@@ -305,7 +280,7 @@ and :math:`\theta_E` is the characteristic angle defined by
 with :math:`\gamma` being the usual relativistic dilation factor, :math:`\gamma=\left( 1-v^2/c^2\right)^{-1/2}`,
 and :math:`\beta` the collection semi-angle of the microscope. [#f3]_
 
-.. [#f3] Which should not be confused with the normalised velocity often used in relativity, :math:`\beta=v/c`.
+
 
 
 For either an  insulator or a semiconductor material
@@ -329,12 +304,10 @@ we can express Eq. :eq:`eq:thickness_calculation` as
 
 with :math:`A`  constant across the specimen.
 
-If the thickness of the specimen
-is already known at some location, then Eq. :eq:`eq:thickness_calculation_v2`  can be  used
-to calibrate :math:`A` and  evaluate this thickness elsewhere.
-
-Furthermore, if the thickness of the material has already been
-determined by means of an independent experimental technique, then
+If the thickness of the specimen is already known at some location, then
+Eq. :eq:`eq:thickness_calculation_v2`  can be  used to calibrate :math:`A`
+and evaluate this thickness elsewhere. Furthermore, if the thickness of the material
+has already been determined by means of an independent experimental technique, then
 Eq. :eq:`eq:thickness_calculation` can be inverted to determine the refractive index :math:`n`
 of an insulator or semi-conducting material using
 
@@ -350,11 +323,9 @@ The dielectric function from Kramers-Kronig analysis
 
 The dielectric function of a material, also known as permittivity, is a measure 
 of how easy or difficult it is to polarise a dielectric material such an insulator 
-upon the application of an external electric field.
-
-In the case of oscillating electric fields such as those that constitute electromagnetic radiation,
-the dielectric response will have both a real and a complex part and will depend
-on the oscillation frequency :math:`\omega`,
+upon the application of an external electric field. In the case of oscillating electric
+fields such as those that constitute electromagnetic radiation, the dielectric response
+will have both a real and a complex part and will depend on the oscillation frequency :math:`\omega`,
 
 .. math::
 
@@ -369,10 +340,8 @@ that constitute this electromagnetic radiation,
     \epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \, .
 
 
-In the vacuum, the real and imaginary parts
-of the dielectric function reduce to :math:`{\rm Re}\left[ \epsilon(E)\right]=1`
-and :math:`{\rm Im}\left[ \epsilon(E)\right]=0`.
-
+In the vacuum, the real and imaginary parts of the dielectric function reduce to
+:math:`{\rm Re}\left[ \epsilon(E)\right]=1` and :math:`{\rm Im}\left[ \epsilon(E)\right]=0`.
 Furthermore, the dielectric function is related to the susceptibility :math:`\chi` by
 
 .. math::
@@ -380,10 +349,9 @@ Furthermore, the dielectric function is related to the susceptibility :math:`\ch
     \epsilon(E)=1-\nu\chi(E) \, ,
 
 
-where :math:`\nu` is the so-called Coulomb matrix.
-
-The single scattering distribution :math:`I_{\rm SSD}(E)` is related to the imaginary
-part of the  complex dielectric function :math:`\epsilon(E)` by means the following relation
+where :math:`\nu` is the so-called Coulomb matrix. The single scattering distribution
+:math:`I_{\rm SSD}(E)` is related to the imaginary part of the  complex dielectric function
+:math:`\epsilon(E)` by means the following relation
 
 .. math::
 
@@ -393,7 +361,6 @@ part of the  complex dielectric function :math:`\epsilon(E)` by means the follow
 
 in terms of the sample thickness :math:`t`, the ZLP normalisation :math:`N_0`, and
 the microscope operation parameters defined in Sect. :ref:`theory/kk_analysis:Thickness calculation`.
-
 We can invert this relation to obtain
 
 .. math:: :label: eq:im_diel_fun
@@ -405,9 +372,8 @@ We can invert this relation to obtain
 Since the prefactor in Eq. :eq:`eq:im_diel_fun` does not depend on the energy loss :math:`E`,
 we see that :math:`{\rm Im}[-1/\epsilon(E)]` will be proportional to the single scattering
 distribution :math:`I_{\rm SSD}(E)` with a denominator that decreases with the energy
-(since :math:`\theta_E\propto E`) and hence weights more higher energy losses.
-
-Given that the dielectric response function is causal, the real part of the dielectric function
+(since :math:`\theta_E\propto E`) and hence weights more higher energy losses. Given that
+the dielectric response function is causal, the real part of the dielectric function
 can be obtained from the imaginary one by using a Kramers-Kronig relation of the form
 
 .. math:: :label: eq:kramerskronig
@@ -427,20 +393,15 @@ A particularly important application of this relation is the :math:`E=0` case,
     \left[ \frac{-1}{\epsilon(E)}\right] \frac{1}{E} \, ,
 
 
-which is known as the Kramers-Kronig sum rule.
-
-Eq. :eq:`eq:normalisation_im_deltaEim` can be used to determine the overall
-normalisation of :math:`{\rm Im}\left[ -1/\epsilon(E)\right]`, since :math:`{\rm Re}\left[ 1/\epsilon(0)\right]` 
-is known for most materials.
-
+which is known as the Kramers-Kronig sum rule. Eq. :eq:`eq:normalisation_im_deltaEim`
+can be used to determine the overall normalisation of :math:`{\rm Im}\left[ -1/\epsilon(E)\right]`,
+since :math:`{\rm Re}\left[ 1/\epsilon(0)\right]` is known for most materials.
 For instance, as mentioned in Eq. :eq:`eq:refractive_index`, for an insulator
 or semiconductor material it is given in terms of its refractive index :math:`n`.
-
-Once the imaginary part of the dielectric function has been determined from the 
+Once the imaginary part of the dielectric function has been determined from the
 single-scattering distribution, Eq. :eq:`eq:im_diel_fun`, then one can obtain 
 the corresponding real part by means of the Kramers-Kronig relation, Eq. :eq:`eq:kramerskronig`.
-
-Afterwards, the full complex dielectric function can be reconstructed by combining 
+Afterwards, the full complex dielectric function can be reconstructed by combining
 the calculation of the real and imaginary parts, since
 
 .. math::
@@ -476,21 +437,15 @@ One example of this would be the optical absorption coefficient, given by
     \mu(E) = \frac{E}{\hbar c}\left[ 2\left( \epsilon_1^2(E)+\epsilon_2^2(E)\right)^{1/2}-2\epsilon_1(E)\right]^{1/2} \, ,
 
 
-which represents a measure of how far light of a given wavelength :math:`\lambda=hc/E` can penetrate
-into a material before it is fully extinguished via absorption processes.
-
-The complex dielectric function  :math:`\epsilon(E)` provides direct information on 
-the opto-electronic properties of a material, for example those associated to 
-plasmonic resonances.
-
-Specifically, a collective plasmonic excitation should be indicated by the condition
-that the real part of the dielectric function crosses the :math:`x` axis, :math:`\epsilon_1(E)=0`,
-with a positive slope.
-
-These plasmonic excitations typically are also translated by a well-defined peak
-in the energy loss spectra.
-
-Hence, verifying that a plasmonic transition indicated by :math:`\epsilon_1(E)=0`
+which represents a measure of how far light of a given wavelength :math:`\lambda=hc/E`
+can penetrate into a material before it is fully extinguished via absorption processes.
+The complex dielectric function :math:`\epsilon(E)` provides direct information on
+the opto-electronic properties of a material, for example those associated to plasmonic
+resonances. Specifically, a collective plasmonic excitation should be indicated by the
+condition that the real part of the dielectric function crosses the :math:`x` axis,
+:math:`\epsilon_1(E)=0`, with a positive slope. These plasmonic excitations typically
+are also translated by a well-defined peak in the energy loss spectra. Hence,
+verifying that a plasmonic transition indicated by :math:`\epsilon_1(E)=0`
 corresponds to specific energy-loss features provides a valuable handle to 
 pinpoint the nature of local electronic excitations present in the analysed specimen.
 
@@ -502,12 +457,9 @@ The role of surface scatterings
 The previous derivations assume that the specimen is thick enough such that the 
 bulk of the measured energy loss distributions arises from volume inelastic 
 scatterings, while edge- and surface-specific contributions can be neglected.
-
 However, for relatively thin samples with thickness :math:`t` below a few tens of nm,
-this approximation is not necessarily suitable.
-
-Assuming a locally flat specimen with two surfaces, in this case  Eq. :eq:`eq:EELSmaster` 
-must be generalised to
+this approximation is not necessarily suitable. Assuming a locally flat specimen with
+two surfaces, in this case  Eq. :eq:`eq:EELSmaster` must be generalised to
 
 .. math:: :label: eq:EELSmaster_v3
 
@@ -515,9 +467,7 @@ must be generalised to
 
 
 with :math:`I_{S}(E)` representing the  contribution from surface-specific inelastic 
-scattering.
-
-This surface contribution can be evaluated in terms of the real :math:`\epsilon_1` and 
+scattering. This surface contribution can be evaluated in terms of the real :math:`\epsilon_1` and
 imaginary :math:`\epsilon_2` components of the complex dielectric function,
 
 .. math:: :label: eq:surface_intensity
@@ -527,32 +477,26 @@ imaginary :math:`\epsilon_2` components of the complex dielectric function,
     +\epsilon_2^2} - {\rm Im}\left[\frac{-1}{\epsilon(E)} \right] \right) \, ,
 
 
-where the electron kinetic energy is :math:`T=m_ev^2/2`.
-
-The main challenge to evaluate the surface component from Eq. :eq:`eq:surface_intensity` 
-is that it depends on the complex dielectric function :math:`\epsilon(E)`, which in 
-turn is a function of the single scattering distribution obtained from the deconvolution 
-of :math:`I_{\rm inel}(E)` obtained assuming that :math:`I_S(E)` vanishes.
-
-For not too thin specimens, the best approach is then an iterative procedure,
-whereby one starts by assuming that :math:`I_{S}(E)\simeq 0`, evaluates :math:`\epsilon(E)`, 
-and uses it to evaluate a first approximation to :math:`I_S(E)` using Eq. :eq:`eq:surface_intensity`.
-
-This approximation is then subtracted from Eq. :eq:`eq:EELSmaster_v3`
-and hence provides a better estimate of the bulk contribution :math:`I_{\rm inel}(E)`.
-
-One can go back to the first step and iterate the procedure until some convergence 
-criterion is met.
-
-Whether or not this procedure converges will depend on the specimen under consideration,
-and specifically on the features of the EELS spectra at low energy losses,
-:math:`E \lesssim 10` eV.
+where the electron kinetic energy is :math:`T=m_ev^2/2`. The main challenge to evaluate
+the surface component from Eq. :eq:`eq:surface_intensity` is that it depends on the
+complex dielectric function :math:`\epsilon(E)`, which in turn is a function of the
+single scattering distribution obtained from the deconvolution of :math:`I_{\rm inel}(E)`
+obtained assuming that :math:`I_S(E)` vanishes. For not too thin specimens, the best approach
+is then an iterative procedure, whereby one starts by assuming that :math:`I_{S}(E)\simeq 0`,
+evaluates :math:`\epsilon(E)`, and uses it to evaluate a first approximation to :math:`I_S(E)`
+using Eq. :eq:`eq:surface_intensity`. This approximation is then subtracted from Eq.
+:eq:`eq:EELSmaster_v3` and hence provides a better estimate of the bulk contribution
+:math:`I_{\rm inel}(E)`. One can go back to the first step and iterate the procedure
+until some convergence criterion is met. Whether or not this procedure converges will
+depend on the specimen under consideration, and specifically on the features of the EELS
+spectra at low energy losses, :math:`E \lesssim 10` eV.
 
 For the specimens considered in this study, it is found that this iterative procedure
 to determine the surface contributions converges provided that the local sample
-thickness satisfies :math:`t \gtrsim 20` nm.
+thickness satisfies :math:`t \gtrsim 20` nm. For thinner samples the iterative approach
+fails to converge and another strategy would be needed. Hence in this work we disentangle the
+bulk from the surface contributions to the EELS spectra only when the thickness is above this threshold.
 
-For thinner samples the iterative approach fails to converge and another strategy would be needed.
-
-Hence in this work we disentangle the bulk from the surface contributions to the EELS
-spectra only when the thickness is above this threshold.
+.. [#f1] Here :math:`E` indicates the energy lost by EELS electrons, with :math:`E` for elastic scatterings.
+.. [#f2] The following derivation assumes that the specimen is not too thin, that is, :math:`t \gtrsim \lambda`.
+.. [#f3] Which should not be confused with the normalised velocity often used in relativity, :math:`\beta=v/c`.

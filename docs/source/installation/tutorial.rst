@@ -1,7 +1,5 @@
-Tutorials
-=========
-
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: EELSfiter tutorial
 
    eelsfitter_tutorial

@@ -16,3 +16,7 @@ img[src*="logo"]{
 .eqno {
     float: right;
 }
+
+figcaption{
+    text-algin: left;
+}

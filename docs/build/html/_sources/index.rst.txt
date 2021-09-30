@@ -23,7 +23,7 @@
 Welcome to the EELSfitter website!
 =======================================
 
-EELSfiter is an open-source Python-based framework developed for the analysis and interpretation of Electron Energy Loss Spectroscopy (EELS) measurements in Transmission Electron Microscopy (TEM). EELSfitter is based on the machine learning techniques developed by the NNPDF Collaboration in the context of applications in high energy physics, in particular feed-forward neural networks for unbiased regression in multidimensional problems.
+EELSfiter is an open-source Python-based framework developed for the analysis and interpretation of Electron Energy Loss Spectroscopy (EELS) measurements in Transmission Electron Microscopy (TEM). EELSfitter is based on the machine learning techniques developed by the `NNPDF Collaboration <https://nnpdf.mi.infn.it>`_ in the context of applications in high energy physics, in particular feed-forward neural networks for unbiased regression in multidimensional problems.
 
 .. figure:: ../_assets/ws2_bandgap_energy.png
     :width: 90%
@@ -61,6 +61,14 @@ Former members of the EELSfitter project include
 
 - Laurien Roest, now data scientist at *Picnic*
 
+Citation policy
+~~~~~~~~~~~~~~~
+If you use EELSfitter in a scientific publication, please make sure to cite:
+
+- *Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning*, Roest, Laurien I. and van Heijst, Sabrya E. and Maduro, Luigi and Rojo, Juan and Conesa-Boj, Sonia :cite:p:`Roest:2020kqy`.
+- *Spatially-resolved bandgap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy*, Brokkelkamp, Abel, and ter Hoeve, Jaco, and Postmes, Isabel, and van Heijst, Sabrya E. and Maduro, Luigi, and Davydov, Albert, and Krylyuk, Sergiy, and Rojo, Juan and Conesa-Boj, Sonia, *in preparation*.
+
+
 .. toctree::
    :maxdepth: 1
    :caption: Theory
@@ -72,7 +80,7 @@ Former members of the EELSfitter project include
    theory/bandgap_analysis
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Installation
    :hidden:
 

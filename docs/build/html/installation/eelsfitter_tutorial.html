@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>EELSFitter tutorial &mdash; EELSfitter 1.0.0 documentation</title>
+  <title>EELSfitter tutorial &mdash; EELSfitter 1.0.0 documentation</title>
   
 
   
@@ -40,7 +40,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="EELSFitter package" href="../modules/EELSFitter.html" />
-    <link rel="prev" title="Tutorials" href="tutorial.html" /> 
+    <link rel="prev" title="&lt;no title&gt;" href="tutorial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,15 +94,13 @@
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="instructions.html">Instructions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorials</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">EELSFitter tutorial</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Loading-the-SI">Loading the SI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Visualising-the-SI">Visualising the SI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Clustering">Clustering</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Training-of-the-ZLP">Training of the ZLP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Training-report">Training report</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">EELSfitter tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Installing-EELSfitter">Installing EELSfitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Loading-the-SI">Loading the SI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Visualising-the-SI">Visualising the SI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Clustering">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Training-of-the-ZLP">Training of the ZLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Training-report">Training report</a></li>
 </ul>
 </li>
 </ul>
@@ -158,9 +156,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="tutorial.html">Tutorials</a> &raquo;</li>
+          <li><a href="tutorial.html">&lt;no title&gt;</a> &raquo;</li>
         
-      <li>EELSFitter tutorial</li>
+      <li>EELSfitter tutorial</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -450,10 +448,24 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <p><a class="reference external" href="https://colab.research.google.com/github/LHCfitNikhef/EELSfitter/blob/documentation/tutorials/tutorial_eelsfitter.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<div class="section" id="EELSFitter-tutorial">
-<h1>EELSFitter tutorial<a class="headerlink" href="#EELSFitter-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="EELSfitter-tutorial">
+<h1>EELSfitter tutorial<a class="headerlink" href="#EELSfitter-tutorial" title="Permalink to this headline">¶</a></h1>
 <p>In this tutorial, we are going to train a model of the zero-loss peak (ZLP) background of polytopic WS<span class="math notranslate nohighlight">\(_2\)</span> nanoflowers. Individiual spectra are first classified as a function of the local thickness with <span class="math notranslate nohighlight">\(K\)</span>-means clustering before serving as input to a feedforward neural network.</p>
 <p>The ZLP models can be used to obtain a ZLP-subtracted spectral image (SI), which in turn gives access to the dielectric function through the Kramers-Krönig analysis. One can also find the bandgap energy from the subtracted spectrum.</p>
+<div class="section" id="Installing-EELSfitter">
+<h2>Installing EELSfitter<a class="headerlink" href="#Installing-EELSfitter" title="Permalink to this headline">¶</a></h2>
+<p>To install EELSFitter, if not done already, one should run the following command.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">!</span>pip install EELSFitter
+</pre></div>
+</div>
+</div>
+<p>This is a necessary step if one chooses to run from google colab. This step can be skipped if one is running locally and EELSFitter has already been installed.</p>
+</div>
 <div class="section" id="Loading-the-SI">
 <h2>Loading the SI<a class="headerlink" href="#Loading-the-SI" title="Permalink to this headline">¶</a></h2>
 <p>First of all, let us import the EELSFitter package:</p>
@@ -476,7 +488,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
 
 <span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;family&#39;</span><span class="p">:</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">:[</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">],</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
-<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -552,7 +564,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_14_0.png" src="../_images/installation_eelsfitter_tutorial_14_0.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_18_0.png" src="../_images/installation_eelsfitter_tutorial_18_0.png" />
 </div>
 </div>
 </div>
@@ -587,7 +599,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_18_0.png" src="../_images/installation_eelsfitter_tutorial_18_0.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_22_0.png" src="../_images/installation_eelsfitter_tutorial_22_0.png" />
 </div>
 </div>
 </div>
@@ -648,21 +660,21 @@ Rep 0, Epoch 1000, Training loss 173.342, Testing loss 223.135
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_21_2.png" src="../_images/installation_eelsfitter_tutorial_21_2.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_25_2.png" src="../_images/installation_eelsfitter_tutorial_25_2.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_21_3.png" src="../_images/installation_eelsfitter_tutorial_21_3.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_25_3.png" src="../_images/installation_eelsfitter_tutorial_25_3.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_21_4.png" src="../_images/installation_eelsfitter_tutorial_21_4.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_25_4.png" src="../_images/installation_eelsfitter_tutorial_25_4.png" />
 </div>
 </div>
 <p>Since the actual training time that is needed to obtain a fair ammount of models (~5000) takes a couple of hourse, we provide a set of <em>pretrained</em> models to experiment with. We will use these in what follows.</p>
@@ -720,7 +732,7 @@ chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_29_1.png" src="../_images/installation_eelsfitter_tutorial_29_1.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_33_1.png" src="../_images/installation_eelsfitter_tutorial_33_1.png" />
 </div>
 </div>
 <p>Besides the distribution of the costs, we can also plot how the predicted ZLPs behave as a function of the total integrated intensity per cluster:</p>
@@ -737,7 +749,7 @@ chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_31_0.png" src="../_images/installation_eelsfitter_tutorial_31_0.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_35_0.png" src="../_images/installation_eelsfitter_tutorial_35_0.png" />
 </div>
 </div>
 <p>This shows that the clustering has been effective, since the ZLPs do not overlap before <span class="math notranslate nohighlight">\(E_I\)</span>. Let us consider a specific pixel, say (30, 90), to see how the subtacted spectrum compares to the raw spectrum.</p>
@@ -755,7 +767,7 @@ chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_33_0.png" src="../_images/installation_eelsfitter_tutorial_33_0.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_37_0.png" src="../_images/installation_eelsfitter_tutorial_37_0.png" />
 </div>
 </div>
 <p>We conclude this tutorial by plotting, for each cluster, the raw signal plus the ZLP with uncertainties evaluated at the cluster means:</p>
@@ -784,7 +796,7 @@ chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_35_1.png" src="../_images/installation_eelsfitter_tutorial_35_1.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_39_1.png" src="../_images/installation_eelsfitter_tutorial_39_1.png" />
 </div>
 </div>
 </div>
@@ -801,7 +813,7 @@ chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
         <a href="../modules/EELSFitter.html" class="btn btn-neutral float-right" title="EELSFitter package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tutorial.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
