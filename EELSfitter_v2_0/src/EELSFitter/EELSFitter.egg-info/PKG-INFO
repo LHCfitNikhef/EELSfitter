@@ -1,0 +1,17 @@
+Metadata-Version: 1.2
+Name: EELSFitter
+Version: 0.7.1
+Summary: Evolution Kernel Operator
+Home-page: https://github.com/N3PDF/eko
+Author: A. Candido, S. Carrazza, J. Cruz-Martinez, F. Hekhorn, G. Magni
+Author-email: stefano.carrazza@cern.ch
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Requires-Python: >=3.7
