@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NN training &mdash; EELSfitter 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Kramers-Kronig analysis of EEL spectra" href="kk_analysis.html" />
+    <link rel="prev" title="Pooling and clustering" href="clustering_pooling.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> EELSfitter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Theory</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bandgap_analysis.html">Bandgap analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSfitter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>NN training</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/theory/nn_training.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="nn-training">
+<h1>NN training<a class="headerlink" href="#nn-training" title="Permalink to this headline">¶</a></h1>
+<p>Given that the zero-loss peak background cannot be evaluated from first
+principles, in this work we deploy supervised machine learning combined
+with Monte Carlo methods to construct a neural network parameterisation
+of the ZLP. Within this approach, one can faithfully model the ZLP dependence
+on both the electron energy loss and on the local specimen thickness. Our approach,
+first presented in <span id="id1">[<a class="reference internal" href="../bibliography.html#id146">Roest <em>et al.</em>, 2021</a>]</span>, is here extended to model the thickness
+dependence and to the simultaneous interpretation of the <span class="math notranslate nohighlight">\(\mathcal{O}(10^4)\)</span> spectra
+that constitute a typical EELS-SI. One key advantage is the robust estimate of the
+uncertainties associated to the ZLP modelling and subtraction procedures using the
+Monte Carlo replica method <span id="id2">[<a class="reference internal" href="../bibliography.html#id639">Del Debbio <em>et al.</em>, 2007</a>]</span>.</p>
+<div class="align-center figure align-default" id="id8" style="width: 90%">
+<span id="architecture"></span><a class="align-center reference internal image-reference" href="../_images/neuralnetwork.png"><img alt="../_images/neuralnetwork.png" class="align-center" src="../_images/neuralnetwork.png" style="width: 90%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text"><em>The neural network architecture parametrising the ZLP. The input neurons are the
+energy loss</em> <span class="math notranslate nohighlight">\(E\)</span> <em>and the logarithm of the integrated intensity</em> <span class="math notranslate nohighlight">\(N_{\rm tot}\)</span> <em>, while
+the output neuron is the (logarithm of the) model prediction for the ZLP intensity.</em></span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>The neural network architecture adopted in this work is displayed in
+<a class="reference internal" href="#architecture"><span class="std std-numref">Fig. 4</span></a>. It contains two input variables, namely the energy
+loss <span class="math notranslate nohighlight">\(E\)</span> and the logarithm of the integrated intensity <span class="math notranslate nohighlight">\(\ln\left( N_{\rm tot}\right)\)</span>,
+the latter providing a  proxy for the thickness <span class="math notranslate nohighlight">\(t\)</span>. Both <span class="math notranslate nohighlight">\(E\)</span> and <span class="math notranslate nohighlight">\(\ln\left( N_{\rm tot}\right)\)</span>
+are preprocessed and rescaled to lie between 0.1 and 0.9 before given as input to
+the network. Three hidden layers contain 10, 15, and 5 neurons respectively. The
+activation state of the output neuron in the last layer, <span class="math notranslate nohighlight">\(\xi^{(n_L)}_1\)</span>, is then
+related to the intensity of the ZLP as</p>
+<div class="math notranslate nohighlight">
+\[I_{\rm ZLP}^{(\rm NN)}(E,\ln (N_{\rm tot}) ) =
+\exp\left( \xi^{(n_L)}_1( E, \ln ( N_{\rm tot})) \right) \, ,\]</div>
+<p>where an exponential function is chosen to facilitate the learning, given that the
+EELS intensities in the training dataset can vary by orders of magnitude. Sigmoid
+activation functions are adopted for all layers except for a ReLU in the final layer,
+to guarantee a positive-definite output of the network and hence of the predicted intensity.</p>
+<p>The training of this neural network model for the ZLP is carried out as follows.
+Assume that the input SI  has been  classified into <span class="math notranslate nohighlight">\(K\)</span> clusters following the
+procedure of App.~ref{sec:processing-SI}. The members of each cluster exhibit a
+similar value of the local thickness. Then one selects at random a representative
+spectrum from each cluster,</p>
+<div class="math notranslate nohighlight" id="equation-eq-random-choice-spectra-app">
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-random-choice-spectra-app" title="Permalink to this equation">¶</a></span>\[\left\{ I_{\rm EELS}^{(i_1,j_1)}(E),
+I_{\rm EELS}^{(i_2,j_2)}(E),\ldots,
+I_{\rm EELS}^{(i_K,j_K)}(E) \right\} \, ,\]</div>
+<p>each one characterised by a different total integrated intensity evaluated from Eq.
+<a class="reference internal" href="clustering_pooling.html#equation-eq-total-integrated-intensity">(3)</a>,</p>
+<div class="math notranslate nohighlight">
+\[\left\{
+N_{\rm tot}^{(i_1,j_1)},
+N_{\rm tot}^{(i_2,j_2)},\ldots,
+N_{\rm tot}^{(i_K,j_K)} \right\} \, ,\]</div>
+<p>such that <span class="math notranslate nohighlight">\((i_k,j_k)\)</span> belongs to the <span class="math notranslate nohighlight">\(k\)</span>-th cluster. To ensure that the neural network
+model accounts only for the energy loss <span class="math notranslate nohighlight">\(E\)</span> dependence in the region where the ZLP
+dominates the recorded spectra, we remove from the training dataset those bins with
+<span class="math notranslate nohighlight">\(E \ge  E_{{\rm I},k}\)</span> with <span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span> being a model hyperparameter <span id="id3">[<a class="reference internal" href="../bibliography.html#id146">Roest <em>et al.</em>, 2021</a>]</span>
+which varies in each thickness cluster. The cost function <span class="math notranslate nohighlight">\(C_{\rm ZLP}\)</span> used to train
+the NN model is then</p>
+<div class="math notranslate nohighlight" id="equation-eq-costfunction-nntraining-appendix">
+<span class="eqno">(7)<a class="headerlink" href="#equation-eq-costfunction-nntraining-appendix" title="Permalink to this equation">¶</a></span>\[C_{\rm ZLP} = \frac{1}{n_{E}}\sum_{k=1}^K \sum_{\ell_k=1}^{n_E^{(k)}} \frac{\left[
+I_{\rm EELS}^{(i_k,j_k)}(E_{\ell_k}) - I_{\rm ZLP}^{(\rm NN)} \left(
+E_{\ell_k},\ln \left( N_{\rm tot}^{(i_k,j_k)}\right) \right) \right]^2}{\sigma^2_k \left( E_{\ell_k}\right) } \, ,\qquad
+E_{\ell_k} \le E_{{\rm I},k} \, ,\]</div>
+<p>where the total number of energy loss bins that enter the calculation is the
+sum of bins in each individual spectrum, <span class="math notranslate nohighlight">\(n_{E} = \sum_{k=1}^K n_E^{(k)} \, .\)</span>
+The denominator of Eq. <a class="reference internal" href="#equation-eq-costfunction-nntraining-appendix">(7)</a> is given by
+<span class="math notranslate nohighlight">\(\sigma_k \left( E_{\ell_k}\right)\)</span>, which represents the variance within the <span class="math notranslate nohighlight">\(k\)</span>-th
+cluster for a given value of the energy loss <span class="math notranslate nohighlight">\(E_{\ell_k}\)</span>. This variance is evaluated
+as the size of the 68% confidence level (CL) interval of the intensities associated
+to the <span class="math notranslate nohighlight">\(k\)</span>-th cluster for a given value of <span class="math notranslate nohighlight">\(E_{\ell_k}\)</span>.</p>
+<p>For such a random choice of representative cluster spectra, Eq. <a class="reference internal" href="#equation-eq-random-choice-spectra-app">(6)</a>,
+the parameters (weights and thresholds) of the neural network model are obtained
+from the minimisationof <a class="reference internal" href="#equation-eq-costfunction-nntraining-appendix">(7)</a> until a
+suitable convergence criterion is achieved. Here this training is carried out using
+stochastic gradient descent (SGD) as implemented in the {tt PyTorch} library <span id="id4">[<a class="reference internal" href="../bibliography.html#id5">Paszke <em>et al.</em>, 2019</a>]</span>,
+specifically by means of the ADAM minimiser. The optimal training length is determined
+by means of the look-back cross-validation stopping. In this method, the training data is
+divided <span class="math notranslate nohighlight">\(80\%/20\%\)</span>  into training and validation subsets, with the best training point
+given by the absolute minimum of the validation cost function <span class="math notranslate nohighlight">\(C_{\rm ZLP}^{(\rm val)}\)</span>
+evaluated over a sufficiently large number of iterations.</p>
+<p>In order to estimate and propagate uncertainties associated to the ZLP parametrisation
+and subtraction procedure, here we adopt a variant of the Monte Carlo replica method <span id="id5">[<a class="reference internal" href="../bibliography.html#id146">Roest <em>et al.</em>, 2021</a>]</span>
+benefiting from the high statistics (large number of pixels) provided by an EELS-SI.
+The starting point is selecting <span class="math notranslate nohighlight">\(N_{\rm rep}\simeq \mathcal{O}\left( 5000\right)\)</span> subsets of
+spectra such as the one in Eq. <a class="reference internal" href="#equation-eq-random-choice-spectra-app">(6)</a> containing one
+representative of each of the <span class="math notranslate nohighlight">\(K\)</span> clusters considered. One denotes this subset of
+spectra as a Monte Carlo (MC) replica, and we denote the collection of replicas by</p>
+<div class="math notranslate nohighlight" id="equation-eq-random-choice-spectra-v2">
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-random-choice-spectra-v2" title="Permalink to this equation">¶</a></span>\[{\boldsymbol I}^{(m)} = \left\{
+I_{\rm EELS}^{(i_{m,1},j_{m,1})}(E),
+I_{\rm EELS}^{(i_{m,2},j_{m,2})}(E),\ldots,
+I_{\rm EELS}^{(i_{m,K},j_{m,K})}(E) \right\} \, ,
+\quad m=1,\ldots,N_{\rm rep} \, .\]</div>
+<p>where now the superindices <span class="math notranslate nohighlight">\((i_{m,k},j_{m,k})\)</span> indicate a specific spectrum from the
+<span class="math notranslate nohighlight">\(k\)</span>-th cluster that has been assigned to the <span class="math notranslate nohighlight">\(m\)</span>-th replica. Given that these replicas
+are selected at random, they provide a representation of the underlying probability
+density in the space of EELS spectra, e.g. those spectra closer to the cluster mean will
+be represented more frequently in the replica distribution.</p>
+<div class="align-center figure align-default" id="id9" style="width: 90%">
+<span id="eelstoyfig"></span><a class="align-center reference internal image-reference" href="../_images/EELS_toy.png"><img alt="../_images/EELS_toy.png" class="align-center" src="../_images/EELS_toy.png" style="width: 80%;" /></a>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text"><em>Schematic representation of the ZLP and inelastic scattering contributions adding
+up to the total EELS intensity within a toy simulation. We indicate the values
+of the hyperparameters</em> <span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(E_{{\rm II},k}\)</span> <em>for such configuration:
+the neural network model for the ZLP is trained on the data corresponding to region I
+(hence</em> <span class="math notranslate nohighlight">\(E\le E_{{\rm I},k}\)</span> <em>), while the behaviour in region II is determined purely
+from model predictions. The inset displays the first derivative of each of the three curves.</em></span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>By training now a separate model to each of the <span class="math notranslate nohighlight">\(N_{\rm rep}\)</span> replicas, one ends up
+with another Monte Carlo representation, now of the probability density in the space
+of ZLP parametrisations. This is done by replacing the cost function
+<a class="reference internal" href="#equation-eq-costfunction-nntraining">(9)</a></p>
+<div class="math notranslate nohighlight" id="equation-eq-costfunction-nntraining">
+<span class="eqno">(9)<a class="headerlink" href="#equation-eq-costfunction-nntraining" title="Permalink to this equation">¶</a></span>\[C_{\rm ZLP}({\boldsymbol \theta}) \propto \sum_{k=1}^K \sum_{\ell_k=1}^{n_E^{(k)}} \frac{\left[
+I^{(i_k,j_k)}(E_{\ell_k}) - I_{\rm ZLP}^{(\rm NN)} \left(
+E_{\ell_k},\ln \left( N_{\rm tot}^{(i_k,j_k)}\right) ;{\boldsymbol \theta}\right) \right]^2}{\sigma^2_k \left(
+E_{\ell_k}\right) } \, ,\qquad E_{\ell_k} \le E_{{\rm I},k} \, ,\]</div>
+<p>by</p>
+<div class="math notranslate nohighlight" id="equation-eq-costfunction-nntraining-v2">
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-costfunction-nntraining-v2" title="Permalink to this equation">¶</a></span>\[C_{\rm ZLP}^{(m)} = \frac{1}{n_{E}}\sum_{k=1}^K \sum_{\ell_k=1}^{n_E^{(k)}} \frac{\left[
+I_{\rm EELS}^{(i_{m,k},j_{m,k})}(E_{\ell_k}) -
+I_{\rm ZLP}^{({\rm NN})(m)} \left(
+E_{\ell_k},\ln \left( N_{\rm tot}^{(i_{m,k},j_{m,k})}\right) \right) \right]^2}{\sigma^2_k \left(
+E_{\ell_k}\right) }  \, , \qquad E_{\ell_k} \le E_{{\rm I},k} \, ,\]</div>
+<p>and then performing the model training separately for each individual replica. Note
+that the denominator of the cost function Eq. <a class="reference internal" href="#equation-eq-costfunction-nntraining-v2">(10)</a> is
+independent of the replica. The resulting Monte Carlo distribution of ZLP models, indicated by</p>
+<div class="math notranslate nohighlight" id="equation-eq-random-choice-spectra-v6">
+<span class="eqno">(11)<a class="headerlink" href="#equation-eq-random-choice-spectra-v6" title="Permalink to this equation">¶</a></span>\[{\boldsymbol I}_{\rm ZLP}^{(\rm NN)} = \left\{
+I_{\rm ZLP}^{({\rm NN})(1)} \left(E,\ln \left( N_{\rm tot} \right)\right), \ldots,
+I_{\rm ZLP}^{({\rm NN})(N_{\rm rep})} \left(E,\ln \left( N_{\rm tot} \right)\right) \right\}\]</div>
+<p>makes possible subtracting the ZLP from the measured EELS spectra following the
+matching procedure described in <span id="id6">[<a class="reference internal" href="../bibliography.html#id146">Roest <em>et al.</em>, 2021</a>]</span> and hence  isolating the inelastic
+contribution in each pixel,</p>
+<div class="math notranslate nohighlight">
+\[I_{\rm inel}^{(i,j)(m)}(E) \simeq \left[ I^{(i,j)}_{\rm EELS}(E) -
+I_{\rm ZLP}^{({\rm NN})(m)} \left( E,\ln \left( N_{\rm tot}^{(i,j)}
+\right) \right) \right] \, ,\quad m=1,\ldots,N_{\rm rep}  \, .\]</div>
+<p>The variance of <span class="math notranslate nohighlight">\(I_{\rm inel}^{(i,j)}(E)\)</span> over the MC replica sample estimates the
+uncertainties associated to the ZLP subtraction procedure. By means of these MC samplings
+of the  probability distributions associated to the ZLP and inelastic components of the
+recorded spectra, one can evaluate the relevant derived quantities with a faithful error
+estimate. Note that in our approach error propagation is realised without the need to resort
+to any approximation, e.g. linear error analysis.</p>
+<p>One important benefit of Eq. <a class="reference internal" href="#equation-eq-costfunction-nntraining-v2">(10)</a> is that the machine learning
+model training can be carried out fully in parallel, rather than sequentially, for each replica.
+Hence our approach is most efficiently implemented when running on a computer cluster
+with a large number of CPU (or GPU) nodes, since this configuration maximally exploits
+the parallelization flexibility of the Monte Carlo replica method.</p>
+<p>As mentioned above, the cluster-dependent hyperparameters <span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span> ensure that the
+model is trained only in the  energy loss data region where ZLP dominates total intensity.
+This is illustrated by the scheme of <a class="reference internal" href="#eelstoyfig"><span class="std std-numref">Fig. 5</span></a>, showing a toy simulation of
+the ZLP and inelastic scattering contributions adding up to the total recorded EELS intensity.
+The neural network model for the ZLP is then trained on the data corresponding to region I,
+while region II is obtained entirely from model predictions. To determine the values of
+<span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span>, we evaluate the first derivative of the total recording intensity,
+<span class="math notranslate nohighlight">\(dI_{\rm EELS}(E)/dE\)</span>, for each of the members of the <span class="math notranslate nohighlight">\(k\)</span>-th cluster. When this derivative
+crosses zero, the contribution from <span class="math notranslate nohighlight">\(I_{\rm inel}\)</span> will already be dominant. There are then
+two options. First, one sets <span class="math notranslate nohighlight">\(E_{{\rm I},k} = f \times E_{{\rm min},k}\)</span>, where <span class="math notranslate nohighlight">\(f &lt; 1\)</span>
+and <span class="math notranslate nohighlight">\(E_{{\rm min},k}\)</span> is the energy where the median of <span class="math notranslate nohighlight">\(dI_{\rm EELS}/dE\)</span> crosses zero
+(first local minimum) for cluster <span class="math notranslate nohighlight">\(k\)</span>. Second, one sets <span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span> to be  the value
+where at most <span class="math notranslate nohighlight">\(f\%\)</span> of the models have crossed <span class="math notranslate nohighlight">\(dI_{\rm EELS}/dE=0\)</span>, with <span class="math notranslate nohighlight">\(f\simeq 10\%\)</span>.
+This choice implies that 90% of the models still exhibit a negative derivative. We have
+verified that compatible results are obtained with the two choices, indicating that results
+are reasonably stable with respect to the value of the hyperparameter <span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span>.</p>
+<p>The second model hyperparameter, denoted by <span class="math notranslate nohighlight">\(E_{{\rm II},k}\)</span> in <a class="reference internal" href="#eelstoyfig"><span class="std std-numref">Fig. 5</span></a>,
+indicates the region for which the ZLP can be considered as fully negligible. Hence in
+this region III we impose that <span class="math notranslate nohighlight">\(I_{\rm ZLP}(E)\to 0\)</span> by means of the Lagrange multiplier
+method. This condition fixes the model behaviour in the large energy loss limit, which
+otherwise would remain unconstrained. Since the ZLP is known to be a steeply-falling
+function, <span class="math notranslate nohighlight">\(E_{{\rm II},k}\)</span> should not chosen not too far from <span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span> to avoid
+an excessive interpolation region. In this work we use <span class="math notranslate nohighlight">\(E_{{\rm II},k}=3\times E_{{\rm I},k}\)</span>,
+though this choice can be adjusted by the user.</p>
+<p>Finally, we mention that the model hyperparameters <span class="math notranslate nohighlight">\(E_{{\rm I},k}\)</span> and <span class="math notranslate nohighlight">\(E_{{\rm II},k}\)</span>
+could eventually be determined by means of an automated hyper-optimisation procedure as
+proposed in <span id="id7">[<a class="reference internal" href="../bibliography.html#id8">Ball <em>et al.</em>, 2021</a>]</span>, hence further reducing the need for human-specific input
+in the whole procedure.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kk_analysis.html" class="btn btn-neutral float-right" title="Kramers-Kronig analysis of EEL spectra" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="clustering_pooling.html" class="btn btn-neutral float-left" title="Pooling and clustering" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, EELSfitter developer team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

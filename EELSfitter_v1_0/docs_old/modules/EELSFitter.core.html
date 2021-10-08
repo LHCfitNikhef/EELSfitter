@@ -1,0 +1,1301 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>EELSFitter.core package &mdash; EELSfitter 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EELSFitter.plotting package" href="EELSFitter.plotting.html" />
+    <link rel="prev" title="EELSFitter.clustering package" href="EELSFitter.clustering.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> EELSfitter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/bandgap_analysis.html">Bandgap analysis</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/tutorial.html">Tutorials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="EELSFitter.html">EELSFitter package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="EELSFitter.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.clustering.html">EELSFitter.clustering package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">EELSFitter.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-EELSFitter.core.spectral_image">EELSFitter.core.spectral_image module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-EELSFitter.core.training">EELSFitter.core.training module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html">EELSFitter.plotting package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSfitter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="EELSFitter.html">EELSFitter package</a> &raquo;</li>
+        
+      <li>EELSFitter.core package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/EELSFitter.core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="eelsfitter-core-package">
+<h1>EELSFitter.core package<a class="headerlink" href="#eelsfitter-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-EELSFitter.core.spectral_image">
+<span id="eelsfitter-core-spectral-image-module"></span><h2>EELSFitter.core.spectral_image module<a class="headerlink" href="#module-EELSFitter.core.spectral_image" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="EELSFitter.core.spectral_image.SpectralImage">
+<em class="property">class </em><code class="sig-prename descclassname">EELSFitter.core.spectral_image.</code><code class="sig-name descname">SpectralImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">deltadeltaE</span></em>, <em class="sig-param"><span class="n">pixelsize</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">beam_energy</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">collection_angle</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dielectric_function_im_avg</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dielectric_function_im_std</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">S_s_avg</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">S_s_std</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">thickness_avg</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">thickness_std</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">IEELS_avg</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">IEELS_std</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">clusters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">clustered</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cluster_data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">deltaE</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ZLP_models</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scale_var_deltaE</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">crossings_E</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">crossings_n</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_smooth</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dE1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pooled</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scale_var_log_sum_I</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>The spectral image class that provides several tools to analyse spectral images with the zero-loss peak
+subtracted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>N</em><em>,</em><em>L</em><em>)</em>) – Array containing the 3-D spectral image. The axes correspond to the x-axis (M), y-axis (N) and energy-loss (L).</p></li>
+<li><p><strong>deltadeltaE</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – bin width in energy loss spectrum</p></li>
+<li><p><strong>pixelsize</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>2</em><em>,</em><em>)</em><em>, </em><em>optional</em>) – width of pixels</p></li>
+<li><p><strong>beam_energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Energy of electron beam in eV</p></li>
+<li><p><strong>collection_angle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Collection angle of STEM in rad</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Title of the plots</p></li>
+<li><p><strong>dielectric_function_im_avg</strong> – average dielectric function for each pixel</p></li>
+<li><p><strong>dielectric_function_im_std</strong> – standard deviation of the dielectric function at each energy per pixel</p></li>
+<li><p><strong>S_s_avg</strong> – average surface scattering distribution for each pixel</p></li>
+<li><p><strong>S_s_std</strong> – standard deviation of the surface scattering distribution at each energy for each pixel</p></li>
+<li><p><strong>thickness_avg</strong> – average thickness for each pixel</p></li>
+<li><p><strong>IEELS_avg</strong> – average bulk scattering distribution for each pixel</p></li>
+<li><p><strong>IEELS_std</strong> – standard deviation of the bulk scattering distribution at each energy for each pixel</p></li>
+<li><p><strong>cluster_data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – filled with 2D numpy arrays. If save_as_attribute set to True, the cluster data is also saved as attribute</p></li>
+<li><p><strong>deltaE</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – shifted array of energy losses such that the zero point corresponds to the point of highest intensity.</p></li>
+<li><p><strong>x_axis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – x-axis of the spectral image</p></li>
+<li><p><strong>y_axis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – y-axis of the spectral image</p></li>
+<li><p><strong>clusters</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – cluster means of each cluster</p></li>
+<li><p><strong>clustered</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – A 2D array containing the index of the cluster to which each pixel belongs</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>An example how to train and anlyse a spectral image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dm4_path</span> <span class="o">=</span> <span class="s1">&#39;path to dm4 file&#39;</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">SpectralImage</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">dm4_path</span><span class="p">)</span>
+<span class="n">im</span><span class="o">.</span><span class="n">train_zlp</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
+         <span class="n">n_rep</span><span class="o">=</span><span class="n">n_rep</span><span class="p">,</span>
+         <span class="n">n_epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
+         <span class="n">bs_rep_num</span><span class="o">=</span><span class="n">bs_rep_num</span><span class="p">,</span>
+         <span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_models</span><span class="p">,</span>
+         <span class="n">display_step</span><span class="o">=</span><span class="n">display_step</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.KK_pixel">
+<code class="sig-name descname">KK_pixel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">signal</span><span class="o">=</span><span class="default_value">'EELS'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.KK_pixel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.KK_pixel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a Kramer-Krönig analysis on pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – x-coordinate of the pixel</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – y-coordinate of the pixel.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>dielectric_functions</strong> (<em>numpy.ndarray, shape=(M,)</em>) – Collection dielectric-functions replicas at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>).</p></li>
+<li><p><strong>ts</strong> (<em>float</em>) – Thickness.</p></li>
+<li><p><strong>S_ss</strong> (<em>array_like</em>) – Surface scatterings.</p></li>
+<li><p><strong>IEELSs</strong> (<em>array_like</em>) – Deconvoluted EELS spectrum.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.calc_axes">
+<code class="sig-name descname">calc_axes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.calc_axes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.calc_axes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the  x_axis and y_axis of the spectral image. Stores them in <code class="docutils literal notranslate"><span class="pre">self.x_axis</span></code> and <code class="docutils literal notranslate"><span class="pre">self.y_axis</span></code> respectively.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.calc_thickness">
+<code class="sig-name descname">calc_thickness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">spect</span></em>, <em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">N_ZLP</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.calc_thickness"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.calc_thickness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates thickness from sample data, using Egerton <a href="#id9"><span class="problematic" id="id1">[1]_</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spect</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – spectral image</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – refraction index</p></li>
+<li><p><strong>N_ZLP</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Set to 1 by default, for already normalized EELS spectra.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>te</strong> – thickness</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Surface scatterings are not corrected for. If you wish to correct
+for surface scatterings, please extract the thickness <code class="docutils literal notranslate"><span class="pre">t</span></code> from <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_hs" title="EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_hs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kramers_kronig_hs()</span></code></a>.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets">1</span></dt>
+<dd><p>Ray Egerton, “Electron Energy-Loss Spectroscopy in the Electron
+Microscope”, Springer-Verlag, 2011.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.calc_zlp_ntot">
+<code class="sig-name descname">calc_zlp_ntot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ntot</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.calc_zlp_ntot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.calc_zlp_ntot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape-(M, N) array of zlp model predictions at the scaled log integrated intensity <code class="docutils literal notranslate"><span class="pre">ntot</span></code>.
+M and N correspond to the number of model predictions and <span class="math notranslate nohighlight">\(\Delta E\)</span> s respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ntot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Log integrated intensity (rescaled)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.calc_zlps">
+<code class="sig-name descname">calc_zlps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">signal</span><span class="o">=</span><span class="default_value">'EELS'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.calc_zlps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.calc_zlps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape-(M, N) array of ZLP model predictions at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>) after training, where
+M and N correspond to the number of model predictions and <span class="math notranslate nohighlight">\(\Delta E\)</span> s respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – horizontal pixel.</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – vertical pixel.</p></li>
+<li><p><strong>signal</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Description of signal type. Set to <code class="docutils literal notranslate"><span class="pre">&quot;EELS&quot;</span></code> by default.</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>predictions</strong> – The ZLP predictions at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M, N)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.calc_zlps_matched">
+<code class="sig-name descname">calc_zlps_matched</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">signal</span><span class="o">=</span><span class="default_value">'EELS'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.calc_zlps_matched"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.calc_zlps_matched" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the shape-(M, N) array of matched ZLP model predictions at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>) after training.
+M and N correspond to the number of model predictions and <span class="math notranslate nohighlight">\(\Delta E\)</span> s respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – horizontal pixel.</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – vertical pixel.</p></li>
+<li><p><strong>signal</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Description of signal type. Set to <code class="docutils literal notranslate"><span class="pre">&quot;EELS&quot;</span></code> by default.</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>predictions</strong> – The matched ZLP predictions at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M, N)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.cluster">
+<code class="sig-name descname">cluster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_clusters</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">based_on</span><span class="o">=</span><span class="default_value">'log'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clusters the spectral image into clusters according to the (log) integrated intensity at each
+pixel. Cluster means are stored in the attribute <code class="docutils literal notranslate"><span class="pre">self.clusters</span></code> and the index to which each cluster belongs is
+stored in the attribute <code class="docutils literal notranslate"><span class="pre">self.clustered</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Number of clusters, 5 by default</p></li>
+<li><p><strong>based_on</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – One can cluster either on the sum of the intensities (pass <code class="docutils literal notranslate"><span class="pre">``sum``</span></code>), the log of the sum (pass <code class="docutils literal notranslate"><span class="pre">``log``</span></code>) or the thickness (pass <code class="docutils literal notranslate"><span class="pre">``thickness``</span></code>).
+The default is <code class="docutils literal notranslate"><span class="pre">``log``</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>keyword arguments</em>) – additional keyword arguments to pass to <a class="reference internal" href="EELSFitter.clustering.html#EELSFitter.clustering.k_means_clustering.k_means" title="EELSFitter.clustering.k_means_clustering.k_means"><code class="xref py py-meth docutils literal notranslate"><span class="pre">k_means_clustering.k_means()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.cluster_on_cluster_values">
+<code class="sig-name descname">cluster_on_cluster_values</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cluster_values</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.cluster_on_cluster_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.cluster_on_cluster_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the image has been clustered before and the the cluster means are already known,
+one can use this function to reconstruct the original clustering of the image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cluster_values</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – Array with the cluster means</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Works only for images clustered on (log) integrated intensity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.compressed_pickle">
+<em class="property">static </em><code class="sig-name descname">compressed_pickle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.compressed_pickle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.compressed_pickle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves <code class="docutils literal notranslate"><span class="pre">data</span></code> at location <code class="docutils literal notranslate"><span class="pre">title</span></code> as compressed pickle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.cut">
+<code class="sig-name descname">cut</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">E1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">E2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">in_ex</span><span class="o">=</span><span class="default_value">'in'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.cut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.cut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cuts the spectral image at <code class="docutils literal notranslate"><span class="pre">E1</span></code> and <code class="docutils literal notranslate"><span class="pre">E2</span></code> and keeps only the part in between.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>E1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – lower cut. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, which means no cut is applied.</p></li>
+<li><p><strong>E2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – upper cut. The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, which means no cut is applied.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.cut_image">
+<code class="sig-name descname">cut_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">range_width</span></em>, <em class="sig-param"><span class="n">range_height</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.cut_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.cut_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cuts the spectral image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>range_width</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>2</em><em>,</em><em>)</em>) – Contains the horizontal selection cut</p></li>
+<li><p><strong>range_height</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>2</em><em>,</em><em>)</em>) – Contains the vertical selection cut</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.decompress_pickle">
+<em class="property">static </em><code class="sig-name descname">decompress_pickle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.decompress_pickle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.decompress_pickle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens, decompresses and returns the pickle file at location <code class="docutils literal notranslate"><span class="pre">file</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – location where the pickle file is stored</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>data</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage">SpectralImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.deconvolute">
+<code class="sig-name descname">deconvolute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">ZLP</span></em>, <em class="sig-param"><span class="n">signal</span><span class="o">=</span><span class="default_value">'EELS'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.deconvolute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.deconvolute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the effect of plural scatterings from the spectrum at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – x-coordinate of the pixel</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – y-coordinate of the pixel</p></li>
+<li><p><strong>ZLP</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – zero-loss peak at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>) of length M</p></li>
+<li><p><strong>signal</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Type of signal, ‘‘“EELS”’’ by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>output</strong> – deconvoluted spectrum.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.determine_deltaE">
+<code class="sig-name descname">determine_deltaE</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.determine_deltaE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.determine_deltaE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the energy losses of the spectral image, based on the bin width of the energy loss.
+It shifts the <code class="docutils literal notranslate"><span class="pre">self.deltaE</span></code> attribute such that the zero point corresponds with the point of highest
+intensity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>deltaE</strong> – Array of <span class="math notranslate nohighlight">\(\Delta E\)</span> values</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.get_cluster_spectra">
+<code class="sig-name descname">get_cluster_spectra</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">conf_interval</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">clusters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal</span><span class="o">=</span><span class="default_value">'EELS'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.get_cluster_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.get_cluster_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a clustered spectral image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conf_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – The ratio of spectra returned. The spectra are selected based on the
+based_on value. The default is 1.</p></li>
+<li><p><strong>clusters</strong> (<em>list of ints</em><em>, </em><em>optional</em>) – list with all the cluster labels.</p></li>
+<li><p><strong>signal</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Description of signal, <code class="docutils literal notranslate"><span class="pre">&quot;EELS&quot;</span></code> by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>cluster_data</strong> – An array with size equal to the number of clusters. Each entry is a 2D array that contains all the spectra within that cluster.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.get_pixel_signal">
+<code class="sig-name descname">get_pixel_signal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">j</span></em>, <em class="sig-param"><span class="n">signal</span><span class="o">=</span><span class="default_value">'EELS'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.get_pixel_signal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.get_pixel_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the spectrum at pixel (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – x-coordinate of the pixel</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – y-coordinate of the pixel</p></li>
+<li><p><strong>signal</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – The type of signal that is requested, should comply with the defined names. Set to <cite>EELS</cite> by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>signal</strong> – Array with the requested signal from the requested pixel</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.get_prefix">
+<em class="property">static </em><code class="sig-name descname">get_prefix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">unit</span></em>, <em class="sig-param"><span class="n">SIunit</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">numeric</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.get_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.get_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to convert units to their associated SI values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>,</em>) – unit of which the prefix is requested</p></li>
+<li><p><strong>SIunit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – The SI unit of the unit</p></li>
+<li><p><strong>numeric</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Default is <cite>True</cite>. If <cite>True</cite> the prefix is translated to the numeric value
+(e.g. <span class="math notranslate nohighlight">\(10^3\)</span> for <cite>k</cite>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>prefix</strong> – The character of the prefix or the numeric value of the prefix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a> or <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.get_ticks">
+<code class="sig-name descname">get_ticks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sig_ticks</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">npix_xtick</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">npix_ytick</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">scale_ticks</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">tick_int</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.get_ticks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.get_ticks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the proper tick labels and tick positions for the heatmap plots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sig_ticks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Set the amount of significant numbers displayed in the ticks. The default is 2.</p></li>
+<li><p><strong>npix_xtick</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Display a tick per n pixels in the x-axis. Note that this value can be a float. The default is 10.</p></li>
+<li><p><strong>npix_ytick</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Display a tick per n pixels in the y-axis. Note that this value can be a float. The default is 10.</p></li>
+<li><p><strong>scale_ticks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Change the scaling of the numbers displayed in the ticks. Microns ([μm]) are assumed as standard scale, adjust scaling from there. The default is 1.</p></li>
+<li><p><strong>tick_int</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Set whether you only want the ticks to display as integers instead of floats. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>xticks</strong> (<em>numpy.ndarray, shape=(M,)</em>) – Array of the xticks positions.</p></li>
+<li><p><strong>yticks</strong> (<em>numpy.ndarray, shape=(M,)</em>) – Array of the yticks positions.</p></li>
+<li><p><strong>xticks_labels</strong> (<em>numpy.ndarray, shape=(M,)</em>) – Array with strings of the xtick labels.</p></li>
+<li><p><strong>yticks_labels</strong> (<em>numpy.ndarray, shape=(M,)</em>) – Array with strings of the ytick labels.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.im_dielectric_function">
+<code class="sig-name descname">im_dielectric_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">track_process</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">save_index</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">save_path</span><span class="o">=</span><span class="default_value">'KK_analysis'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.im_dielectric_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.im_dielectric_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the dielectric function by performing a Kramer-Krönig analysis at each pixel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>track_process</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – default is <cite>False</cite>, if <cite>True</cite>,  outputs for each pixel the program that is busy with that pixel.</p></li>
+<li><p><strong>plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – default is <cite>False</cite>, if <cite>True</cite>, plots all calculated dielectric functions</p></li>
+<li><p><strong>save_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – optional labelling to include in <code class="docutils literal notranslate"><span class="pre">save_path</span></code>.</p></li>
+<li><p><strong>save_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – location where the dielectric function, SSD and thickness are stored.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.image_shape">
+<em class="property">property </em><code class="sig-name descname">image_shape</code><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.image_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 2D-shape of <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_hs">
+<code class="sig-name descname">kramers_kronig_hs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">I_EELS</span></em>, <em class="sig-param"><span class="n">N_ZLP</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">delta</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">correct_S_s</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.kramers_kronig_hs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_hs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the complex dielectric function from the single scattering
+distribution (SSD) <code class="docutils literal notranslate"><span class="pre">I_EELS</span></code> following the Kramers-Kronig relations. This
+is inspired by Hyperspy’s <code class="xref py py-meth docutils literal notranslate"><span class="pre">kramers_kronig_analysis</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>I_EELS</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – SSD of length energy-loss (M)</p></li>
+<li><p><strong>N_ZLP</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Total integrated intensity of the ZLP</p></li>
+<li><p><strong>iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Number of the iterations for the internal loop to remove the
+surface plasmon contribution. If 1 the surface plasmon contribution
+is not estimated and subtracted (the default is 1).</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The medium refractive index. Used for normalization of the
+SSD to obtain the energy loss function. If given the thickness
+is estimated and returned. It is only required when <cite>t</cite> is None.</p></li>
+<li><p><strong>t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – The sample thickness in nm.</p></li>
+<li><p><strong>delta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – A small number (0.1-0.5 eV) added to the energy axis in
+specific steps of the calculation the surface loss correction to
+improve stability.</p></li>
+<li><p><strong>correct_S_s</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether or not to correct for surface scatterings. Set to <cite>False</cite> by default</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><strong>eps</strong> (<em>numpy.ndarray</em>) –</p>
+<p>The complex dielectric function,</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\epsilon = \epsilon_1 + i*\epsilon_2,\]</div>
+</div></blockquote>
+</li>
+<li><p><strong>te</strong> (<em>float</em>) – local thickness</p></li>
+<li><p><strong>Srfint</strong> (<em>numpy.ndarray</em>) – Surface losses correction</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method is based on Egerton’s Matlab code <a href="#id10"><span class="problematic" id="id3">[1]_</span></a>, as also stated in the <a class="reference external" href="http://hyperspy.org/hyperspy-doc/v0.8/api/hyperspy._signals.html#hyperspy._signals.eels.EELSSpectrum.kramers_kronig_analysis">hyperspy documentation</a>.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets">1</span></dt>
+<dd><p>Ray Egerton, “Electron Energy-Loss Spectroscopy in the Electron
+Microscope”, Springer-Verlag, 2011.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.l">
+<em class="property">property </em><code class="sig-name descname">l</code><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns length of <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object,
+i.e. num energy loss bins</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.load_compressed_Spectral_image">
+<em class="property">classmethod </em><code class="sig-name descname">load_compressed_Spectral_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_to_compressed_pickle</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.load_compressed_Spectral_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.load_compressed_Spectral_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads spectral image from a compressed pickled file. This will take longer than loading from non compressed pickle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path_to_compressed_pickle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – path to the compressed pickle image file.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – If path_to_compressed_pickle does not end on the desired format .pbz2.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.9)"><strong>FileNotFoundError</strong></a> – If path_to_compressed_pickle does not exists.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>image</strong> – <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> instance loaded from the compressed pickle file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage">SpectralImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.load_data">
+<em class="property">classmethod </em><code class="sig-name descname">load_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_to_dmfile</span></em>, <em class="sig-param"><span class="n">load_additional_data</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.load_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the .dm4 spectral image and return a <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path_to_dmfile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – location of .dm4 file</p></li>
+<li><p><strong>load_additional_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Default is <cite>False</cite>. If <cite>True</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> instance of the dm4 file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage">SpectralImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.load_spectral_image">
+<em class="property">classmethod </em><code class="sig-name descname">load_spectral_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_to_pickle</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.load_spectral_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.load_spectral_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> instance from a pickled file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path_to_pickle</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – path to the pickled image file.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – If path_to_pickle does not end on the desired format .pkl.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.9)"><strong>FileNotFoundError</strong></a> – If path_to_pickle does not exists.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object (i.e. including all attributes) loaded from pickle file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage">SpectralImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.load_zlp_models">
+<code class="sig-name descname">load_zlp_models</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path_to_models</span></em>, <em class="sig-param"><span class="n">plot_chi2</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">idx</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.load_zlp_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.load_zlp_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the trained ZLP models and stores them in <code class="docutils literal notranslate"><span class="pre">self.ZLP_models</span></code>. Models that have a <span class="math notranslate nohighlight">\(\chi^2 &gt; \chi^2_{\mathrm{mean}} + 5\sigma\)</span> are
+discarded, where <span class="math notranslate nohighlight">\(\sigma\)</span> denotes the 68% CI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path_to_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Location where the model predictions have been stored after training.</p></li>
+<li><p><strong>plot_chi2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – When set to <cite>True</cite>, plot and save the <span class="math notranslate nohighlight">\(\chi^2\)</span> distribution.</p></li>
+<li><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – When specified, only the zlp labelled by <code class="docutils literal notranslate"><span class="pre">idx</span></code> is loaded, instead of all model predictions.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.n_clusters">
+<em class="property">property </em><code class="sig-name descname">n_clusters</code><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.n_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of clusters in the <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.n_spectra">
+<em class="property">property </em><code class="sig-name descname">n_spectra</code><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.n_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of spectra present in <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>nspectra</strong> – number of spectra in spectral image</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.pool">
+<code class="sig-name descname">pool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_p</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pools the spectral image using a squared window of size <a href="#id5"><span class="problematic" id="id6">``</span></a>n_p’’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_p</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – pooling parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.save_compressed_image">
+<code class="sig-name descname">save_compressed_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.save_compressed_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.save_compressed_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to save image, including all attributes, in compressed pickle (.pbz2) format. Image will             be saved at location <code class="docutils literal notranslate"><span class="pre">filename</span></code>. Advantage over <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage.save_image" title="EELSFitter.core.spectral_image.SpectralImage.save_image"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_image()</span></code></a> is that             the saved file has a reduced file size, disadvantage is that saving and reloading the image             takes significantly longer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – path to save location plus filename. If it does not end on “.pbz2”, “.pbz2” will be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.save_image">
+<code class="sig-name descname">save_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.save_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.save_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to save image, including all attributes, in pickle (.pkl) format. Image will be saved         at indicated location and name in filename input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – path to save location plus filename. If it does not end on “.pkl”, “.pkl” will be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.set_n">
+<code class="sig-name descname">set_n</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">n_background</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.set_n"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.set_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets value of refractive index for the image as attribute self.n. If unclusered, n will be an             array of length one, otherwise it is an array of len n_clusters. If n_background is defined,             the cluster with the lowest thickness (cluster 0) will be assumed to be the vacuum/background,             and gets the value of the background refractive index.</p>
+<p>If there are more specimen present in the image, it is wise to check by hand what cluster belongs             to what specimen, and set the values by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">image</span><span class="o">.</span><span class="n">n</span><span class="p">[</span><span class="n">cluster_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_i</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – refractive index of sample.</p></li>
+<li><p><strong>n_background</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – if defined: the refractive index of the background/vacuum. This value will automatically be             assigned to pixels belonging to the thinnest cluster.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.shape">
+<em class="property">property </em><code class="sig-name descname">shape</code><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 3D-shape of <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.smooth">
+<code class="sig-name descname">smooth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window_len</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">'hanning'</span></em>, <em class="sig-param"><span class="n">keep_original</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooth the data using a window length <code class="docutils literal notranslate"><span class="pre">window_len</span></code>.</p>
+<p>This method is based on the convolution of a scaled window with the signal.
+The signal is prepared by introducing reflected copies of the signal
+(with the window size) in both ends so that transient parts are minimized
+in the beginning and end part of the output signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window_len</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – The dimension of the smoothing window; should be an odd integer.</p></li>
+<li><p><strong>window</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – the type of window from <code class="docutils literal notranslate"><span class="pre">&quot;flat&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hanning&quot;</span></code>,  <code class="docutils literal notranslate"><span class="pre">&quot;bartlett&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;blackman&quot;</span></code>.
+<code class="docutils literal notranslate"><span class="pre">&quot;flat&quot;</span></code> will produce a moving average smoothing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="EELSFitter.core.spectral_image.SpectralImage.train_zlp">
+<code class="sig-name descname">train_zlp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_clusters</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">conf_interval</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">clusters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">signal</span><span class="o">=</span><span class="default_value">'EELS'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/spectral_image.html#SpectralImage.train_zlp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.spectral_image.SpectralImage.train_zlp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the ZLP on the spectral image.</p>
+<p>The spectral image is clustered in <code class="docutils literal notranslate"><span class="pre">n_clusters</span></code> clusters, according to e.g. the integrated intensity or thickness.
+A random spectrum is then taken from each cluster, which together defines one replica. The training is initiated
+by calling <a class="reference internal" href="#EELSFitter.core.training.train_zlp_scaled" title="EELSFitter.core.training.train_zlp_scaled"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_zlp_scaled()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – number of clusters</p></li>
+<li><p><strong>conf_interval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Default is 1</p></li>
+<li><p><strong>clusters</strong> – </p></li>
+<li><p><strong>signal</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Type of spectrum. Set to EELS by default.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments that are passed to the method <a class="reference internal" href="#EELSFitter.core.training.train_zlp_scaled" title="EELSFitter.core.training.train_zlp_scaled"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_zlp_scaled()</span></code></a> in the <code class="xref py py-mod docutils literal notranslate"><span class="pre">training</span></code> module.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-EELSFitter.core.training">
+<span id="eelsfitter-core-training-module"></span><h2>EELSFitter.core.training module<a class="headerlink" href="#module-EELSFitter.core.training" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="EELSFitter.core.training.CI_high">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">CI_high</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">confidence</span><span class="o">=</span><span class="default_value">0.68</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#CI_high"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.CI_high" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the upper 68% confidence level (by default) of <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – arbitrary array</p></li>
+<li><p><strong>confidence</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Confidence level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>high_a</strong> – confidence level set by <code class="docutils literal notranslate"><span class="pre">confidence</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.CI_low">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">CI_low</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">confidence</span><span class="o">=</span><span class="default_value">0.68</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#CI_low"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.CI_low" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the lower 68% confidence level (by default) of <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – arbitrary array</p></li>
+<li><p><strong>confidence</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Confidence level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>low_a</strong> – confidence level set by <code class="docutils literal notranslate"><span class="pre">confidence</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="EELSFitter.core.training.MLP">
+<em class="property">class </em><code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">MLP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_inputs</span></em>, <em class="sig-param"><span class="n">num_outputs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#MLP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.MLP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Multilayer Perceptron (MLP) class. It uses the following architecture</p>
+<div class="math notranslate nohighlight">
+\[[n_i, 10, 15, 5, n_f],\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_i\)</span> and <span class="math notranslate nohighlight">\(n_f\)</span> denote the number of input features and output target values respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_inputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – number of input features</p></li>
+<li><p><strong>num_outputs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – dimension of the target output.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="EELSFitter.core.training.MLP.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#MLP.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.MLP.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Propagates the input features <code class="docutils literal notranslate"><span class="pre">x</span></code> through the MLP.
+:param x: input features
+:type x: torch.tensor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>x</strong> – MLP outcome</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>torch.tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="EELSFitter.core.training.MLP.training">
+<code class="sig-name descname">training</code><em class="property">: <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></em><a class="headerlink" href="#EELSFitter.core.training.MLP.training" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.derivative_clusters">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">derivative_clusters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">clusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#derivative_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.derivative_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the derivative of the spectral image in each cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><em>SpectralImage</em></a>) – <code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code> object</p></li>
+<li><p><strong>clusters</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – An array with size the number of clusters Each entry is a 2D array that contains all the spectra within the cluster.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>der_clusters</strong> – Slope of the intensity spectrum for all clusters.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.determine_de1">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">determine_de1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">dy_dx_clusters</span></em>, <em class="sig-param"><span class="n">y_smooth_clusters</span></em>, <em class="sig-param"><span class="n">shift_de1</span><span class="o">=</span><span class="default_value">0.7</span></em>, <em class="sig-param"><span class="n">perc_de1</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">plot_de1</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">prob</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#determine_de1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.determine_de1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the hyperparamter <span class="math notranslate nohighlight">\(\Delta E_I\)</span> for every cluster in two ways:</p>
+<ul class="simple">
+<li><p>Take a certain fraction of the location of the first local minimum. The fraction is tuned by <code class="docutils literal notranslate"><span class="pre">shift_de1</span></code>.</p></li>
+<li><p>Take <span class="math notranslate nohighlight">\(\Delta E_I\)</span> such that only 16% of the replicas have a positive slope.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><em>SpectralImage</em></a>) – <code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code> object.</p></li>
+<li><p><strong>dy_dx_clusters</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – An array that contains an array for each cluster, which subsequently contains the slope of the spectrum at each
+pixel within the cluster.</p></li>
+<li><p><strong>y_smooth_clusters</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – An array that contains an array for each cluster, which subsequently contains the smoothed spectrum at each
+pixel within the cluster.</p></li>
+<li><p><strong>shift_de1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Shift the location of <span class="math notranslate nohighlight">\(\Delta E_I\)</span> by a factor of <code class="docutils literal notranslate"><span class="pre">shift_dE1</span></code> w.r.t. to the first local minimum.</p></li>
+<li><p><strong>perc_de1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Percentage of replicas that is allowed to have a positive slope at <span class="math notranslate nohighlight">\(\Delta E_I\)</span>.</p></li>
+<li><p><strong>plot_de1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – When set to <cite>True</cite>, the location of <span class="math notranslate nohighlight">\(\Delta E_I\)</span> is plotted. Set to <cite>False</cite> by default.</p></li>
+<li><p><strong>prob</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – When set to <cite>True</cite>, the location of <span class="math notranslate nohighlight">\(\Delta E_I\)</span> is determined by demanding that <a href="#id7"><span class="problematic" id="id8">``</span></a>perc_de1``% of the EELS replicas should
+have a positive slope.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>dE1_clusters</strong> – Array with the value of <span class="math notranslate nohighlight">\(\Delta E_I\)</span> for each cluster.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.ewd">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">ewd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">nbins</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#ewd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.ewd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply Equal Width Discretization (EWD) to <code class="docutils literal notranslate"><span class="pre">x</span></code> to determine variances</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – input data</p></li>
+<li><p><strong>nbins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – number of bins</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>cuts1</strong> (<em>numpy.ndarray, shape=(M,)</em>)</p></li>
+<li><p><strong>cuts2</strong> (<em>numpy.ndarray, shape=(M,)</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.filter_bad_bins">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">filter_bad_bins</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">spectra</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#filter_bad_bins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.filter_bad_bins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter out experimental hiccups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><em>SpectralImage</em></a>) – <code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code> object.</p></li>
+<li><p><strong>spectra</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Spectral image with experimental hiccups removed.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>output</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.find_min_de1">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">find_min_de1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">dy_dx</span></em>, <em class="sig-param"><span class="n">y_smooth</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#find_min_de1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.find_min_de1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the location of the first local minimum of the intensity spectrum</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><em>SpectralImage</em></a>) – <a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object</p></li>
+<li><p><strong>dy_dx</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – Derivative of the intensity spectrum</p></li>
+<li><p><strong>y_smooth</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – Smoothed intensity spectrum</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>pos_der</strong> – Position of first local minimum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.find_scale_var">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">find_scale_var</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inp</span></em>, <em class="sig-param"><span class="n">min_out</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">max_out</span><span class="o">=</span><span class="default_value">0.9</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#find_scale_var"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.find_scale_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the scaling parameters needed to rescale the training data to lie between <code class="docutils literal notranslate"><span class="pre">min_out</span></code> and <code class="docutils literal notranslate"><span class="pre">max_out</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inp</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – training data to be rescaled</p></li>
+<li><p><strong>min_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – lower limit. Set to 0.1 by default.</p></li>
+<li><p><strong>max_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – upper limit. Set to 0.9 by default</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>a, b</strong> – list of rescaling parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.get_mean">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">get_mean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#get_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.get_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the mean of <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – data to average</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>mean</strong> – The mean of <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.loss_fn">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">loss_fn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">error</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#loss_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.loss_fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>The loss function to train the ZLP takes the model <code class="docutils literal notranslate"><span class="pre">output</span></code>, the raw spectrum <code class="docutils literal notranslate"><span class="pre">target</span></code> and
+the associated <code class="docutils literal notranslate"><span class="pre">error</span></code>. The latter corresponds to the one sigma spread within a given cluster
+at fixed <span class="math notranslate nohighlight">\(\Delta E\)</span>. It returns the cost function <span class="math notranslate nohighlight">\(C_{\mathrm{ZLP}}^{(m)}\)</span> associated with the replica <span class="math notranslate nohighlight">\(m\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[C_{\mathrm{ZLP}}^{(m)} = \frac{1}{n_{E}}\sum_{k=1}^K \sum_{\ell_k=1}^{n_E^{(k)}} \frac{\left[ I^{(i_{m,k},
+j_{m,k})}(E_{\ell_k}) - I_{\rm ZLP}^{({\mathrm{ NN}})(m)} \left(E_{\ell_k},\ln \left( N_{\mathrm{ tot}}^{(i_{
+m,k},j_{m,k})}\right) \right) \right]^2}{\sigma^2_k \left( E_{\ell_k}\right) }.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<em>torch.tensor</em>) – Neural Network output</p></li>
+<li><p><strong>target</strong> (<em>torch.tensor</em>) – Raw EELS spectrum</p></li>
+<li><p><strong>error</strong> (<em>torch.tensor</em>) – Uncertainty on <span class="math notranslate nohighlight">\(\log I_{\mathrm{EELS}}(\Delta E)\)</span>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>loss</strong> – Loss associated with the model <code class="docutils literal notranslate"><span class="pre">output</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.scale">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inp</span></em>, <em class="sig-param"><span class="n">ab</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rescale the training data to lie between 0.1 and 0.9</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inp</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – training data to be rescaled, e.g. <span class="math notranslate nohighlight">\(\Delta E\)</span></p></li>
+<li><p><strong>ab</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – scaling parameters, which can be find with <a class="reference internal" href="#EELSFitter.core.training.find_scale_var" title="EELSFitter.core.training.find_scale_var"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find_scale_var()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Rescaled training data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.smooth">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">smooth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">window_len</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">window</span><span class="o">=</span><span class="default_value">'hanning'</span></em>, <em class="sig-param"><span class="n">keep_original</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>smooth the data using a window with requested size.</p>
+<p>This method is based on the convolution of a scaled window with the signal.
+The signal is prepared by introducing reflected copies of the signal
+(with the window size) in both ends so that transient parts are minimized
+in the begining and end part of the output signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – The input signal</p></li>
+<li><p><strong>window_len</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – The dimension of the smoothing window; should be an odd integer. Set to 10 by default.</p></li>
+<li><p><strong>window</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – the type of window from <code class="docutils literal notranslate"><span class="pre">&quot;flat&quot;</span></code>, ‘<code class="docutils literal notranslate"><span class="pre">&quot;hanning&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hamming&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bartlett&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;blackman&quot;</span></code>
+<code class="docutils literal notranslate"><span class="pre">&quot;flat&quot;</span></code> window will produce a moving average smoothing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>smoothed_signal</strong> – The smoothed spectrum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.smooth_clusters">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">smooth_clusters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">clusters</span></em>, <em class="sig-param"><span class="n">window_len</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#smooth_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.smooth_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooth the spectrum for all clusters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><em>SpectralImage</em></a>) – <code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code> object</p></li>
+<li><p><strong>clusters</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – </p></li>
+<li><p><strong>window_len</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Smoothing window length</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>smoothed_clusters</strong> – The smoothed spectra for all clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)">numpy.ndarray</a>, shape=(M,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.train_zlp_scaled">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">train_zlp_scaled</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">spectra</span></em>, <em class="sig-param"><span class="n">n_rep</span><span class="o">=</span><span class="default_value">500</span></em>, <em class="sig-param"><span class="n">n_epochs</span><span class="o">=</span><span class="default_value">30000</span></em>, <em class="sig-param"><span class="n">lr</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">shift_dE1</span><span class="o">=</span><span class="default_value">0.7</span></em>, <em class="sig-param"><span class="n">shift_dE2</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">path_to_models</span><span class="o">=</span><span class="default_value">'models'</span></em>, <em class="sig-param"><span class="n">display_step</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">bs_rep_num</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">perc_de1</span><span class="o">=</span><span class="default_value">16</span></em>, <em class="sig-param"><span class="n">plot_de1</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">prob</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#train_zlp_scaled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.train_zlp_scaled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the ZLP on the (clustered) spectral image.</p>
+<p>One should train on two input features: the (scaled) log intensity <span class="math notranslate nohighlight">\(\log I_{\mathrm{EELS}}\)</span> and the (scaled) <span class="math notranslate nohighlight">\(\Delta E\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference internal" href="#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><em>SpectralImage</em></a>) – <code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code> object.</p></li>
+<li><p><strong>spectra</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – An array of size <code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>, with each entry being a 2D array that contains all the spectra within the cluster.</p></li>
+<li><p><strong>n_rep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Number of replicas to train on. Each replica consists of one spectrum from each cluster. Set to 500 by default.</p></li>
+<li><p><strong>n_epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Number of epochs. Set to 30000 by default</p></li>
+<li><p><strong>lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Learning rate. Set to <span class="math notranslate nohighlight">\(10^{-3}\)</span> by default.</p></li>
+<li><p><strong>shift_dE1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Set to 0.7 by default. When given, <span class="math notranslate nohighlight">\(\Delta E_I\)</span> is located at <code class="docutils literal notranslate"><span class="pre">shift_dE1</span></code> times the first local minimum in the spectrum.</p></li>
+<li><p><strong>path_to_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Path to where the trained models should be stored.</p></li>
+<li><p><strong>display_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – Number of epochs after which to print output.</p></li>
+<li><p><strong>bs_rep_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em>, </em><em>optional</em>) – For cluster users only: labels the parallel run.</p></li>
+<li><p><strong>perc_de1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – Percentage of replicas that is allowed to have a positive slope at <span class="math notranslate nohighlight">\(\Delta E_I\)</span>.</p></li>
+<li><p><strong>plot_de1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – When set to <cite>True</cite>, the location of <span class="math notranslate nohighlight">\(\Delta E_I\)</span> is plotted. Set to <cite>False</cite> by default.</p></li>
+<li><p><strong>prob</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – When set to <cite>True</cite>, the location of <span class="math notranslate nohighlight">\(\Delta E_I\)</span> is determined by demanding that 16% of the EELS replicas should
+have a positive slope.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>To train the ZLP, one can run the following lines of code:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dm4_path</span> <span class="o">=</span> <span class="s1">&#39;path to dm4 file&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">im</span> <span class="o">=</span> <span class="n">SpectralImage</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">dm4_path</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">training_data</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">get_cluster_spectra</span><span class="p">(</span><span class="n">conf_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train_zlp_scaled</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">training_data</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_rep</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">n_epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">path_to_models</span><span class="o">=</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="n">display_step</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.training_report">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">training_report</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">loss_train</span></em>, <em class="sig-param"><span class="n">loss_test</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#training_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.training_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a training report: evolution of the training and validation loss per epoch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – location where to store the evolution plots</p></li>
+<li><p><strong>loss_train</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – Training loss</p></li>
+<li><p><strong>loss_test</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – Validation loss</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="EELSFitter.core.training.weight_reset">
+<code class="sig-prename descclassname">EELSFitter.core.training.</code><code class="sig-name descname">weight_reset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">m</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/core/training.html#weight_reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#EELSFitter.core.training.weight_reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the weights and biases associated with the model <code class="docutils literal notranslate"><span class="pre">m</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>m</strong> (<a class="reference internal" href="#EELSFitter.core.training.MLP" title="EELSFitter.core.training.MLP"><em>MLP</em></a>) – Model of type <a class="reference internal" href="#EELSFitter.core.training.MLP" title="EELSFitter.core.training.MLP"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MLP</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="EELSFitter.plotting.html" class="btn btn-neutral float-right" title="EELSFitter.plotting package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="EELSFitter.clustering.html" class="btn btn-neutral float-left" title="EELSFitter.clustering package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, EELSfitter developer team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
