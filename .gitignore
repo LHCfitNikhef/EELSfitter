@@ -1,3 +1,4 @@
 .idea/
 *.DS_Store
-/EELSfitter_v1_0/docs_old/
+dist/
+*.egg-info/
