@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training models in parallel &mdash; EELSFitter 3.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=6f954d08" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=acc74ff5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pooling and clustering" href="../theory/clustering_pooling.html" />
+    <link rel="prev" title="EELSfitter tutorial" href="eelsfitter_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Training models in parallel</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/installation/cluster.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="training-models-in-parallel">
+<h1>Training models in parallel<a class="headerlink" href="#training-models-in-parallel" title="Link to this heading"></a></h1>
+<p><em>Please note the following steps are specific when working on the Nikhef Stoomboot computing cluster, running
+CentOS 7 Linux distribution as of writing this. Other setups may require an alternate script configuration.</em></p>
+<p>Training models on different replicas can be done in parallel, for example on a computing cluster.
+EELSFitter supports parallel training provided the user specifies some parameters.
+These are the number of batch jobs <code class="docutils literal notranslate"><span class="pre">n_batches</span></code> that are sent to the cluster (same value for all batches),
+the number of replicas <code class="docutils literal notranslate"><span class="pre">n_replica</span></code> that are trained per batch (same value for all batches),
+and an index corresponding to a particular batch <code class="docutils literal notranslate"><span class="pre">n_batch_of_replica</span></code> (different value for all batches).
+These can be for example be passed by command line to the script.
+If you are running the code on your own machine on a single core <code class="docutils literal notranslate"><span class="pre">n_batches=1</span></code> and <code class="docutils literal notranslate"><span class="pre">n_batch_of_replica=1</span></code>.</p>
+<p>An example setup for submitting code to a cluster is shown below.
+First a bash script executes commands to submit tasks to a job scheduler.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nv">pbs_file</span><span class="o">=</span>/path/to/pbs_file.pbs
+
+<span class="nv">path_to_image</span><span class="o">=</span><span class="s2">&quot;/path/to/dm4_file.dm4&quot;</span>
+<span class="nv">path_to_models</span><span class="o">=</span><span class="s2">&quot;/path/to/output of models/&quot;</span>
+
+<span class="nv">n_batches</span><span class="o">=</span><span class="m">100</span>
+<span class="k">for</span><span class="w"> </span>n_batch_of_replica<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sb">`</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="nv">$n_batches</span><span class="sb">`</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span>&lt;cluster_specific_submission_code&gt;<span class="w"> </span><span class="nv">ARG</span><span class="o">=</span><span class="nv">$path_image</span>,ARG2<span class="o">=</span><span class="nv">$path_models</span>,ARG3<span class="o">=</span><span class="nv">$n_batch_of_replica</span>,ARG4<span class="o">=</span><span class="nv">$n_batches</span><span class="w"> </span><span class="nv">$pbs_file</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>A .pbs file specifies where the Python installation is located such that the system can actually execute the code.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>source /path/to/miniconda3/etc/profile.d/conda.sh
+conda activate &lt;environmentname&gt;
+python /path/to/python_file.py ${ARG} ${ARG2} ${ARG3} ${ARG4}
+</pre></div>
+</div>
+<p>Finally the Python file contains that which you want to execute.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">EELSFitter</span> <span class="k">as</span> <span class="nn">ef</span>
+
+<span class="n">path_to_image</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">path_to_models</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">n_batch_of_replica</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">n_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">ef</span><span class="o">.</span><span class="n">SpectralImage</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">path_to_image</span><span class="p">)</span>
+<span class="n">im</span><span class="o">.</span><span class="n">train_zlp_models</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
+                    <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                    <span class="n">based_on</span><span class="o">=</span><span class="n">based_on</span><span class="p">,</span>
+                    <span class="n">n_replica</span><span class="o">=</span><span class="n">n_replica</span><span class="p">,</span>
+                    <span class="n">n_epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
+                    <span class="n">n_batch_of_replica</span><span class="o">=</span><span class="n">n_batch_of_replica</span><span class="p">,</span>
+                    <span class="n">n_batches</span><span class="o">=</span><span class="n">n_batches</span><span class="p">,</span>
+                    <span class="n">shift_de1</span><span class="o">=</span><span class="n">shift_dE1</span><span class="p">,</span>
+                    <span class="n">shift_de2</span><span class="o">=</span><span class="n">shift_dE2</span><span class="p">,</span>
+                    <span class="n">regularisation_constant</span><span class="o">=</span><span class="n">regularisation_constant</span><span class="p">,</span>
+                    <span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_models</span><span class="p">,</span>
+                    <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="eelsfitter_tutorial.html" class="btn btn-neutral float-left" title="EELSfitter tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../theory/clustering_pooling.html" class="btn btn-neutral float-right" title="Pooling and clustering" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

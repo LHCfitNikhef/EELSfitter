@@ -1,97 +1,55 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>EELSfitter tutorial &mdash; EELSfitter 1.0.0 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSfitter tutorial &mdash; EELSFitter 3.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=6f954d08" />
 
   
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=acc74ff5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="EELSFitter package" href="../modules/EELSFitter.html" />
+    <link rel="next" title="Training models in parallel" href="cluster.html" />
     <link rel="prev" title="&lt;no title&gt;" href="tutorial.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../index.html" class="icon icon-home"> EELSfitter
           
-
-          
+          <a href="../index.html" class="icon icon-home">
+            EELSFitter
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Theory</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../theory/bandgap_analysis.html">Bandgap analysis</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="instructions.html">Instructions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">EELSfitter tutorial</a><ul>
@@ -103,460 +61,178 @@
 <li class="toctree-l2"><a class="reference internal" href="#Training-report">Training report</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="cluster.html">Training models in parallel</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Code</span></p>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Bibliography</span></p>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">EELSfitter</a>
-        
+          <a href="../index.html">EELSFitter</a>
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
-          <li><a href="tutorial.html">&lt;no title&gt;</a> &raquo;</li>
-        
-      <li>EELSfitter tutorial</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="tutorial.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">EELSfitter tutorial</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../_sources/installation/eelsfitter_tutorial.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  
-<style>
-/* CSS for nbsphinx extension */
-
-/* remove conflicting styling from Sphinx themes */
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt *,
-div.nbinput.container div.input_area pre,
-div.nboutput.container div.output_area pre,
-div.nbinput.container div.input_area .highlight,
-div.nboutput.container div.output_area .highlight {
-    border: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
-}
-
-div.nbinput.container > div[class*=highlight],
-div.nboutput.container > div[class*=highlight] {
-    margin: 0;
-}
-
-div.nbinput.container div.prompt *,
-div.nboutput.container div.prompt * {
-    background: none;
-}
-
-div.nboutput.container div.output_area .highlight,
-div.nboutput.container div.output_area pre {
-    background: unset;
-}
-
-div.nboutput.container div.output_area div.highlight {
-    color: unset;  /* override Pygments text color */
-}
-
-/* avoid gaps between output lines */
-div.nboutput.container div[class*=highlight] pre {
-    line-height: normal;
-}
-
-/* input/output containers */
-div.nbinput.container,
-div.nboutput.container {
-    display: -webkit-flex;
-    display: flex;
-    align-items: flex-start;
-    margin: 0;
-    width: 100%;
-}
-@media (max-width: 540px) {
-    div.nbinput.container,
-    div.nboutput.container {
-        flex-direction: column;
-    }
-}
-
-/* input container */
-div.nbinput.container {
-    padding-top: 5px;
-}
-
-/* last container */
-div.nblast.container {
-    padding-bottom: 5px;
-}
-
-/* input prompt */
-div.nbinput.container div.prompt pre {
-    color: #307FC1;
-}
-
-/* output prompt */
-div.nboutput.container div.prompt pre {
-    color: #BF5B3D;
-}
-
-/* all prompts */
-div.nbinput.container div.prompt,
-div.nboutput.container div.prompt {
-    width: 4.5ex;
-    padding-top: 5px;
-    position: relative;
-    user-select: none;
-}
-
-div.nbinput.container div.prompt > div,
-div.nboutput.container div.prompt > div {
-    position: absolute;
-    right: 0;
-    margin-right: 0.3ex;
-}
-
-@media (max-width: 540px) {
-    div.nbinput.container div.prompt,
-    div.nboutput.container div.prompt {
-        width: unset;
-        text-align: left;
-        padding: 0.4em;
-    }
-    div.nboutput.container div.prompt.empty {
-        padding: 0;
-    }
-
-    div.nbinput.container div.prompt > div,
-    div.nboutput.container div.prompt > div {
-        position: unset;
-    }
-}
-
-/* disable scrollbars on prompts */
-div.nbinput.container div.prompt pre,
-div.nboutput.container div.prompt pre {
-    overflow: hidden;
-}
-
-/* input/output area */
-div.nbinput.container div.input_area,
-div.nboutput.container div.output_area {
-    -webkit-flex: 1;
-    flex: 1;
-    overflow: auto;
-}
-@media (max-width: 540px) {
-    div.nbinput.container div.input_area,
-    div.nboutput.container div.output_area {
-        width: 100%;
-    }
-}
-
-/* input area */
-div.nbinput.container div.input_area {
-    border: 1px solid #e0e0e0;
-    border-radius: 2px;
-    /*background: #f5f5f5;*/
-}
-
-/* override MathJax center alignment in output cells */
-div.nboutput.container div[class*=MathJax] {
-    text-align: left !important;
-}
-
-/* override sphinx.ext.imgmath center alignment in output cells */
-div.nboutput.container div.math p {
-    text-align: left;
-}
-
-/* standard error */
-div.nboutput.container div.output_area.stderr {
-    background: #fdd;
-}
-
-/* ANSI colors */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-default-inverse-fg { color: #FFFFFF; }
-.ansi-default-inverse-bg { background-color: #000000; }
-
-.ansi-bold { font-weight: bold; }
-.ansi-underline { text-decoration: underline; }
-
-
-div.nbinput.container div.input_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight] > pre,
-div.nboutput.container div.output_area div[class*=highlight].math,
-div.nboutput.container div.output_area.rendered_html,
-div.nboutput.container div.output_area > div.output_javascript,
-div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 5px;
-    margin: 0;
-}
-
-/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
-div.nbinput.container div.input_area > div[class^='highlight'],
-div.nboutput.container div.output_area > div[class^='highlight']{
-    overflow-y: hidden;
-}
-
-/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
-    display: none;
-}
-
-/* Some additional styling taken form the Jupyter notebook CSS */
-div.rendered_html table {
-  border: none;
-  border-collapse: collapse;
-  border-spacing: 0;
-  color: black;
-  font-size: 12px;
-  table-layout: fixed;
-}
-div.rendered_html thead {
-  border-bottom: 1px solid black;
-  vertical-align: bottom;
-}
-div.rendered_html tr,
-div.rendered_html th,
-div.rendered_html td {
-  text-align: right;
-  vertical-align: middle;
-  padding: 0.5em 0.5em;
-  line-height: normal;
-  white-space: normal;
-  max-width: none;
-  border: none;
-}
-div.rendered_html th {
-  font-weight: bold;
-}
-div.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-div.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
-
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<p><a class="reference external" href="https://colab.research.google.com/github/LHCfitNikhef/EELSfitter/blob/documentation/tutorials/tutorial_eelsfitter.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<div class="section" id="EELSfitter-tutorial">
-<h1>EELSfitter tutorial<a class="headerlink" href="#EELSfitter-tutorial" title="Permalink to this headline">¶</a></h1>
+             
+  <p><a class="reference external" href="https://colab.research.google.com/github/LHCfitNikhef/EELSfitter/blob/documentation/tutorials/tutorial_eelsfitter.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<section id="EELSfitter-tutorial">
+<h1>EELSfitter tutorial<a class="headerlink" href="#EELSfitter-tutorial" title="Link to this heading"></a></h1>
 <p>In this tutorial, we are going to train a model of the zero-loss peak (ZLP) background of polytopic WS<span class="math notranslate nohighlight">\(_2\)</span> nanoflowers. Individiual spectra are first classified as a function of the local thickness with <span class="math notranslate nohighlight">\(K\)</span>-means clustering before serving as input to a feedforward neural network.</p>
 <p>The ZLP models can be used to obtain a ZLP-subtracted spectral image (SI), which in turn gives access to the dielectric function through the Kramers-Krönig analysis. One can also find the bandgap energy from the subtracted spectrum.</p>
-<div class="section" id="Installing-EELSfitter">
-<h2>Installing EELSfitter<a class="headerlink" href="#Installing-EELSfitter" title="Permalink to this headline">¶</a></h2>
+<section id="Installing-EELSfitter">
+<h2>Installing EELSfitter<a class="headerlink" href="#Installing-EELSfitter" title="Link to this heading"></a></h2>
 <p>To install EELSFitter, if not done already, one should run the following command.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>pip install EELSFitter
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>EELSFitter
 </pre></div>
 </div>
 </div>
 <p>This is a necessary step if one chooses to run from google colab. This step can be skipped if one is running locally and EELSFitter has already been installed.</p>
-</div>
-<div class="section" id="Loading-the-SI">
-<h2>Loading the SI<a class="headerlink" href="#Loading-the-SI" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Loading-the-SI">
+<h2>Loading the SI<a class="headerlink" href="#Loading-the-SI" title="Link to this heading"></a></h2>
 <p>First of all, let us import the EELSFitter package:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">wget</span>
 
 <span class="kn">import</span> <span class="nn">EELSFitter</span> <span class="k">as</span> <span class="nn">ef</span>
-<span class="kn">from</span> <span class="nn">EELSFitter.core.spectral_image</span> <span class="kn">import</span> <span class="n">SpectralImage</span> <span class="k">as</span> <span class="n">spectim</span>
-<span class="kn">from</span> <span class="nn">EELSFitter.plotting.zlp</span> <span class="kn">import</span> <span class="n">plot_zlp_signal</span>
+<span class="kn">from</span> <span class="nn">EELSFitter.plotting.zlp</span> <span class="kn">import</span> <span class="n">plot_zlp_per_pixel</span><span class="p">,</span> <span class="n">plot_zlp_per_cluster</span>
 <span class="kn">from</span> <span class="nn">EELSFitter.plotting.heatmaps</span> <span class="kn">import</span> <span class="n">plot_heatmap</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
 
-<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;family&#39;</span><span class="p">:</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">:[</span><span class="s1">&#39;Helvetica&#39;</span><span class="p">],</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
-<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># If you want to use LaTeX for typesetting, use this.</span>
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;family&#39;</span><span class="p">:</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Computer Modern&#39;</span><span class="p">],</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <p>Next, we download and load the spectral image and specify the location where we would like to store our output, such as plots.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dm4_url</span><span class="o">=</span><span class="s1">&#39;https://github.com/LHCfitNikhef/EELSfitter/blob/documentation/tutorials/area03-eels-SI-aligned.dm4?raw=true&#39;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dm4_url</span><span class="o">=</span><span class="s1">&#39;https://github.com/LHCfitNikhef/EELSfitter/blob/documentation/tutorials/area03-eels-SI-aligned.dm4?raw=true&#39;</span>
 <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">dm4_url</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;area03-eels-SI-aligned.dm4&#39;
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">dm4_path</span> <span class="o">=</span> <span class="s2">&quot;area03-eels-SI-aligned.dm4&quot;</span>
-<span class="n">im</span> <span class="o">=</span> <span class="n">spectim</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">dm4_path</span><span class="p">)</span>
-<span class="n">im</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;output&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_to_image</span> <span class="o">=</span> <span class="s2">&quot;area03-eels-SI-aligned.dm4&quot;</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ef</span><span class="o">.</span><span class="n">SpectralImage</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">path_to_image</span><span class="p">)</span>
+<span class="n">im</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;output</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">output_path</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">output_path</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>The below specifies some of our plot settings:</p>
+<p>In case the metadata doesn’t contain the correct information (as with this data file), run the following cell to put the correct beam energy, collection angle and convergence angle.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span>
-<span class="n">npix_xtick</span><span class="o">=</span><span class="mf">26.25</span>
-<span class="n">npix_ytick</span><span class="o">=</span><span class="mf">26.25</span>
-<span class="n">sig_ticks</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">scale_ticks</span> <span class="o">=</span> <span class="mf">1E-3</span>
-<span class="n">tick_int</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="n">cb_scale</span><span class="o">=</span><span class="mf">0.85</span>
-<span class="n">title_specimen</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{WS_2\;nanoflower\;}$&#39;</span>
-<span class="n">save_title_specimen</span> <span class="o">=</span> <span class="s1">&#39;WS2_nanoflower_flake&#39;</span>
-<span class="n">save_loc</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">output_path</span>
-
-<span class="n">im</span><span class="o">.</span><span class="n">e0</span>       <span class="o">=</span> <span class="mi">200</span>                           <span class="c1"># keV</span>
-<span class="n">im</span><span class="o">.</span><span class="n">beta</span>     <span class="o">=</span> <span class="mf">67.2</span>                          <span class="c1"># mrad</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">200</span>            <span class="c1"># KeV</span>
+<span class="n">im</span><span class="o">.</span><span class="n">collection_angle</span> <span class="o">=</span> <span class="mf">67.2</span>      <span class="c1"># mrad</span>
+<span class="n">im</span><span class="o">.</span><span class="n">convergence_angle</span> <span class="o">=</span> <span class="mf">67.2</span>     <span class="c1"># mrad</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="Visualising-the-SI">
-<h2>Visualising the SI<a class="headerlink" href="#Visualising-the-SI" title="Permalink to this headline">¶</a></h2>
-<p>With the spectral image loaded, we can take a first look at what our image actually looks like. We decide to produce a heatmap of the integrated intensity, which is a measure of the local thickness.</p>
-<div class="nbinput docutils container">
+<p>The below specifies some of our plot settings:</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">im</span><span class="o">.</span><span class="n">calc_axes</span><span class="p">()</span>
-<span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">save_as</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_loc</span><span class="p">,</span> <span class="s2">&quot;integrated_intensity.pdf&quot;</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_heatmap</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="n">title_specimen</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$\rm{-\;Integrated\;intensity\;}$&#39;</span><span class="p">,</span>
-                <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[-]\;}$&#39;</span><span class="p">,</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span><span class="n">cb_scale</span><span class="p">},</span> <span class="n">discrete_colormap</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                <span class="n">xlab</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[nm]\;}$&#39;</span><span class="p">,</span> <span class="n">ylab</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[nm]\;}$&#39;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">,</span>
-                <span class="n">sig_ticks</span> <span class="o">=</span> <span class="n">sig_ticks</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="o">=</span><span class="n">scale_ticks</span><span class="p">,</span> <span class="n">npix_xtick</span> <span class="o">=</span> <span class="n">npix_xtick</span><span class="p">,</span> <span class="n">npix_ytick</span> <span class="o">=</span> <span class="n">npix_ytick</span><span class="p">,</span> <span class="n">tick_int</span> <span class="o">=</span> <span class="n">tick_int</span><span class="p">,</span>
-                <span class="n">save_as</span> <span class="o">=</span> <span class="n">save_as</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Colormap</span>
+<span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span>
+
+<span class="c1"># Tick settings</span>
+<span class="n">npix_xtick</span> <span class="o">=</span> <span class="mf">99.25</span> <span class="o">/</span> <span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">y_axis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">y_axis</span><span class="p">))</span>
+<span class="n">npix_ytick</span> <span class="o">=</span> <span class="mf">99.25</span> <span class="o">/</span> <span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">y_axis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">y_axis</span><span class="p">))</span>
+<span class="n">sig_ticks</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">tick_int</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">cb_scale</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+<span class="c1"># Title and save location settings</span>
+<span class="n">title_specimen</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{WS_2\;nanoflower\;}$&#39;</span>
+<span class="n">save_title_specimen</span> <span class="o">=</span> <span class="s1">&#39;WS2_nanoflower_flake&#39;</span>
+<span class="n">save_loc</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">output_path</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualising-the-SI">
+<h2>Visualising the SI<a class="headerlink" href="#Visualising-the-SI" title="Link to this heading"></a></h2>
+<p>With the spectral image loaded, we can take a first look at what our image actually looks like. We decide to produce a heatmap of the integrated intensity, which is a measure of the local thickness.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">save_as</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_loc</span><span class="p">,</span> <span class="s2">&quot;Integrated_Intensity&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_heatmap</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span>
+                   <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$\rm{-\;Integrated\;intensity\;}$&#39;</span><span class="p">,</span>
+                   <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[-]\;}$&#39;</span><span class="p">,</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span><span class="n">cb_scale</span><span class="p">},</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+                   <span class="n">sig_ticks</span><span class="o">=</span><span class="n">sig_ticks</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="n">npix_xtick</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="n">npix_ytick</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="n">tick_int</span><span class="p">,</span>
+                   <span class="n">save_as</span><span class="o">=</span><span class="n">save_as</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -564,34 +240,21 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_18_0.png" src="../_images/installation_eelsfitter_tutorial_18_0.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_20_0.png" src="../_images/installation_eelsfitter_tutorial_20_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Clustering">
-<h2>Clustering<a class="headerlink" href="#Clustering" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Clustering">
+<h2>Clustering<a class="headerlink" href="#Clustering" title="Link to this heading"></a></h2>
 <p>Since the ZLP intensity depends strongly on the local thickness of the specimen, first of all we group individual spectra as a function of their thickness by means of unsupervised machine learning, specifically by means of the K-means clustering algorithm:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">im</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">)</span>
-<span class="n">im</span><span class="o">.</span><span class="n">set_n</span><span class="p">(</span><span class="mf">4.1462</span><span class="p">,</span> <span class="n">n_background</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_heatmap</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">clustered</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="n">title_specimen</span> <span class="o">+</span>  <span class="sa">r</span><span class="s1">&#39;$\rm{-\;K=</span><span class="si">%d</span><span class="s1">\;clusters\;}$&#39;</span> <span class="o">%</span> <span class="n">n_clusters</span><span class="p">,</span>
-                <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[-]\;}$&#39;</span><span class="p">,</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span><span class="n">cb_scale</span><span class="p">},</span> <span class="n">discrete_colormap</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="n">xlab</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[nm]\;}$&#39;</span><span class="p">,</span> <span class="n">ylab</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[nm]\;}$&#39;</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">,</span>
-                <span class="n">sig_ticks</span> <span class="o">=</span> <span class="n">sig_ticks</span><span class="p">,</span> <span class="n">scale_ticks</span> <span class="o">=</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">npix_xtick</span> <span class="o">=</span> <span class="n">npix_xtick</span><span class="p">,</span> <span class="n">npix_ytick</span> <span class="o">=</span> <span class="n">npix_ytick</span><span class="p">,</span> <span class="n">tick_int</span> <span class="o">=</span> <span class="n">tick_int</span><span class="p">,</span>
-                <span class="n">save_as</span> <span class="o">=</span> <span class="n">save_loc</span> <span class="o">+</span> <span class="n">save_title_specimen</span> <span class="o">+</span> <span class="s1">&#39;_Clustered&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">based_on</span> <span class="o">=</span> <span class="s1">&#39;log_zlp&#39;</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">12345678</span>
+<span class="n">im</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">based_on</span><span class="o">=</span><span class="n">based_on</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -599,36 +262,79 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_22_0.png" src="../_images/installation_eelsfitter_tutorial_22_0.png" />
+<div class="highlight"><pre>
+Seed: 12345678 finished after 11 iterations and has cost: 284.1100204608507
+Seed: 12345678 has the lowest cost
+# of spectra per cluster is [1419 6002 1193  209 3209]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_heatmap</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">,</span>
+                   <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span>  <span class="sa">r</span><span class="s1">&#39;$\rm{-\;K=</span><span class="si">%d</span><span class="s1">\;clusters\;}$&#39;</span> <span class="o">%</span> <span class="n">n_clusters</span><span class="p">,</span>
+                   <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;$\rm{[-]\;}$&#39;</span><span class="p">,</span><span class="s1">&#39;shrink&#39;</span><span class="p">:</span><span class="n">cb_scale</span><span class="p">},</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">discrete_colormap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                   <span class="n">sig_ticks</span><span class="o">=</span><span class="n">sig_ticks</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="n">npix_xtick</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="n">npix_ytick</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="n">tick_int</span><span class="p">,</span>
+                   <span class="n">save_as</span><span class="o">=</span><span class="n">save_loc</span> <span class="o">+</span> <span class="n">save_title_specimen</span> <span class="o">+</span> <span class="s1">&#39;_Clustered&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="section" id="Training-of-the-ZLP">
-<h2>Training of the ZLP<a class="headerlink" href="#Training-of-the-ZLP" title="Permalink to this headline">¶</a></h2>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_24_0.png" src="../_images/installation_eelsfitter_tutorial_24_0.png" />
+</div>
+</div>
+</section>
+<section id="Training-of-the-ZLP">
+<h2>Training of the ZLP<a class="headerlink" href="#Training-of-the-ZLP" title="Link to this heading"></a></h2>
 <p>The ZLP can be trained with the following lines of code. It produces a couple of plots: 1. The raw signal per cluster, including the position of the hyperparamter <span class="math notranslate nohighlight">\(E_I\)</span> 2. The slow of the raw signal per cluster 3. The value of the loss per epoch on both training and validation set</p>
 <p>The more replicas one uses to train the ZLP, the more accurate the model becomes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">n_rep</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># number of replicas</span>
-<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># number of epochs</span>
-<span class="n">display_step</span> <span class="o">=</span> <span class="mi">200</span> <span class="c1"># show training report after display_step steps</span>
-<span class="n">path_to_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;models/tutorial&quot;</span><span class="p">)</span> <span class="c1"># where to store the trained models</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_replica</span> <span class="o">=</span> <span class="mi">1</span>                   <span class="c1"># number of replicas</span>
+<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">1000</span>                 <span class="c1"># number of epochs</span>
+<span class="n">regularisation_constant</span> <span class="o">=</span> <span class="mf">1.</span>    <span class="c1"># Penalty term to prevent models from going up in region II, set to 0 to disable. This will increase training time significantly if enabled.</span>
+<span class="n">display_step</span> <span class="o">=</span> <span class="mi">200</span>              <span class="c1"># show training report after display_step steps</span>
 
+<span class="c1"># Choose to shift the hyperparameters a bit</span>
+<span class="n">shift_dE1</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">shift_dE2</span> <span class="o">=</span> <span class="mf">1.</span>
+
+<span class="n">signal_type</span> <span class="o">=</span> <span class="s1">&#39;EELS&#39;</span>
+
+<span class="n">path_to_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;models&quot;</span><span class="p">)</span> <span class="c1"># where to store the trained models</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_models</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_to_models</span><span class="p">)</span>
 
-<span class="n">im</span><span class="o">.</span><span class="n">train_zlp</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
-            <span class="n">n_rep</span><span class="o">=</span><span class="n">n_rep</span><span class="p">,</span>
-            <span class="n">bs_rep_num</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_models</span><span class="p">,</span>
-            <span class="n">display_step</span><span class="o">=</span><span class="n">display_step</span><span class="p">,</span>
-            <span class="n">n_epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
-            <span class="n">plot_de1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">perc_de1</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">im</span><span class="o">.</span><span class="n">train_zlp_models</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
+                    <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                    <span class="n">based_on</span><span class="o">=</span><span class="n">based_on</span><span class="p">,</span>
+                    <span class="n">n_replica</span><span class="o">=</span><span class="n">n_replica</span><span class="p">,</span>
+                    <span class="n">n_epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
+                    <span class="n">shift_de1</span><span class="o">=</span><span class="n">shift_dE1</span><span class="p">,</span>
+                    <span class="n">shift_de2</span><span class="o">=</span><span class="n">shift_dE2</span><span class="p">,</span>
+                    <span class="n">regularisation_constant</span><span class="o">=</span><span class="n">regularisation_constant</span><span class="p">,</span>
+                    <span class="n">display_step</span><span class="o">=</span><span class="n">display_step</span><span class="p">,</span>
+                    <span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_models</span><span class="p">,</span>
+                    <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">)</span>
+
+<span class="n">fig1</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">train_zlps</span><span class="o">.</span><span class="n">plot_hp_cluster</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Position\;of\;dE1\;\&amp;\;dE2\;per\;cluster\;}$&#39;</span><span class="p">,</span>
+                                     <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Energy\;loss\;[eV]\;}$&#39;</span><span class="p">,</span>
+                                     <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Intensity\;[a.u.]\;}$&#39;</span><span class="p">,</span>
+                                     <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                                     <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">],</span>
+                                     <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">train_zlps</span><span class="o">.</span><span class="n">plot_hp_cluster_slope</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Position\;of\;dE1\;\&amp;\;dE2\;per\;slope\;of\;cluster\;}$&#39;</span><span class="p">,</span>
+                                           <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Energy\;loss\;[eV]\;}$&#39;</span><span class="p">,</span>
+                                           <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{dI/dE\;[a.u.]\;}$&#39;</span><span class="p">,</span>
+                                           <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                                           <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -637,54 +343,79 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Plotting choice of dE1...
-Plots stored in /Users/jaco/Documents/CBL-ML/EELS_KK/output
-dE1 &amp; dE2: [2.4   2.15  2.075 1.75  1.3  ] [7.20000011 6.4500001  6.22500009 5.25000008 3.90000006]
-Started training on replica number 0, at time  2021-09-29 22:20:05.556830
-Rep 0, Epoch 200, Training loss 685.33, Testing loss 1346.172
-Rep 0, Epoch 400, Training loss 248.844, Testing loss 446.924
-Rep 0, Epoch 600, Training loss 175.853, Testing loss 238.318
-Rep 0, Epoch 800, Training loss 174.208, Testing loss 224.643
-Rep 0, Epoch 1000, Training loss 173.342, Testing loss 223.135
+Seed: 12345678 finished after 11 iterations and has cost: 284.1100204608507
+Seed: 12345678 has the lowest cost
+# of spectra per cluster is [1419 6002 1193  209 3209]
+preparing hyperparameters!
+No crossing found in gain region cluster 0, finding minimum of absolute of dydx
+No crossing found in gain region cluster 1, finding minimum of absolute of dydx
+No crossing found in gain region cluster 2, finding minimum of absolute of dydx
+No crossing found in gain region cluster 3, finding minimum of absolute of dydx
+Log10 fit cluster  0  does not cross a single count, setting intersect index to second eaxis index
+Log10 fit cluster  1  does not cross a single count, setting intersect index to second eaxis index
+Log10 fit cluster  2  does not cross a single count, setting intersect index to second eaxis index
+Log10 fit cluster  3  does not cross a single count, setting intersect index to second eaxis index
+Log10 fit cluster  4  does not cross a single count, setting intersect index to second eaxis index
+dE1: [4.95  1.725 1.7   1.725 1.65 ]
+dE2: [44.25   9.     9.125  9.275  6.875]
+I&#39;m saving hyperparameters.txt so hang on...
+clusters centroids=[13.85190143 13.50152474 13.04813684 11.50411317  9.21495881] size (5,)
+dE1=[4.95000007 1.72500003 1.70000003 1.72500003 1.65000002] has size (5,)
+dE2=[44.25000066  9.00000013  9.12500014  9.27500014  6.8750001 ] has size (5,)
+FWHM=[0.72500001 0.72500001 0.72500001 0.77500001 0.80000001] has size (5,)
+Saved hyperparameters.txt!
+Hyperparameters prepared!
+Started training on replica number 1, at time  2023-11-08 11:03:48.041238
+----------------------
+Rep 1, Epoch 200
+Training loss 1257.004
+Testing loss 373.023
+----------------------
+Rep 1, Epoch 400
+Training loss 233.223
+Testing loss 142.353
+----------------------
+Rep 1, Epoch 600
+Training loss 196.958
+Testing loss 170.732
+----------------------
+Rep 1, Epoch 800
+Training loss 195.666
+Testing loss 170.797
+----------------------
+Rep 1, Epoch 1000
+Training loss 193.478
+Testing loss 168.744
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;Figure size 720x648 with 0 Axes&gt;
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_25_2.png" src="../_images/installation_eelsfitter_tutorial_25_2.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_27_1.png" src="../_images/installation_eelsfitter_tutorial_27_1.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_25_3.png" src="../_images/installation_eelsfitter_tutorial_25_3.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_27_2.png" src="../_images/installation_eelsfitter_tutorial_27_2.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_25_4.png" src="../_images/installation_eelsfitter_tutorial_25_4.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_27_3.png" src="../_images/installation_eelsfitter_tutorial_27_3.png" />
 </div>
 </div>
-<p>Since the actual training time that is needed to obtain a fair ammount of models (~5000) takes a couple of hourse, we provide a set of <em>pretrained</em> models to experiment with. We will use these in what follows.</p>
+<p>Since the actual training time that is needed to obtain a fair amount of models (~1000) takes a couple of hours, we provide a set of <em>pretrained</em> models to experiment with. We will use these in what follows.</p>
 <p>They can be downloaded by</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/LHCfitNikhef/EELSfitter/blob/documentation/Models/tutorial/models_E1_p16_k5.zip?raw=true&#39;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/LHCfitNikhef/EELSfitter/blob/documentation/Models/tutorial/models_ws2_E1_s09_E2_s1_k5_r10.zip?raw=true&#39;</span>
 <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -693,30 +424,27 @@ Rep 0, Epoch 1000, Training loss 173.342, Testing loss 223.135
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">!</span>unzip models_E1_p16_k5.zip
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>unzip<span class="w"> </span>models_E1_p16_k5.zip
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_to_pretrained_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;models_ws2_E1_s09_E2_s1_k5_r10&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Training-report">
+<h2>Training report<a class="headerlink" href="#Training-report" title="Link to this heading"></a></h2>
+<p>The pretaind models have now been downloaded, so let us see what they look like. The cell immediately below loads the models, plots the cost distribution on the training and validation sets and plots how the predicted ZLPs behave as a function of the total integrated intensity per cluster:</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">path_to_pretrained_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;models_E1_p16_k5&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="Training-report">
-<h2>Training report<a class="headerlink" href="#Training-report" title="Permalink to this headline">¶</a></h2>
-<p>The pretaind models have now been downloaded, so let us see what they look like. The cell immediately below loads the models and plots the cost distribution on the training and validation sets.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">im</span><span class="o">.</span><span class="n">load_zlp_models</span><span class="p">(</span><span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_pretrained_models</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{WS_2\;nanoflower-Cost\;function}$&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span><span class="o">.</span><span class="n">load_zlp_models</span><span class="p">(</span><span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_pretrained_models</span><span class="p">,</span> <span class="n">based_on</span><span class="o">=</span><span class="s1">&#39;log_zlp&#39;</span><span class="p">,</span> <span class="n">plot_chi2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_pred</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -725,41 +453,45 @@ Rep 0, Epoch 1000, Training loss 173.342, Testing loss 223.135
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
+Loading hyper-parameters complete
+Loading scale variables for zlp models complete
+# of spectra per cluster is [6416 2057  261  132 3166]
+Clustering based on cluster centroids complete
+Loading models complete
+Chi2 plot saved at C:\Users\abelbrokkelkam\OneDrive - Delft University of Technology\PhD\Programming\Python\CBL-ML\sphinx\source\installation\output\
+Cluster predictions plot saved at C:\Users\abelbrokkelkam\OneDrive - Delft University of Technology\PhD\Programming\Python\CBL-ML\sphinx\source\installation\output\
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_33_1.png" src="../_images/installation_eelsfitter_tutorial_33_1.png" />
-</div>
-</div>
-<p>Besides the distribution of the costs, we can also plot how the predicted ZLPs behave as a function of the total integrated intensity per cluster:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">ef</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">zlp</span><span class="o">.</span><span class="n">plot_zlp_ntot</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
-</pre></div>
+<img alt="../_images/installation_eelsfitter_tutorial_35_1.png" src="../_images/installation_eelsfitter_tutorial_35_1.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/installation_eelsfitter_tutorial_35_0.png" src="../_images/installation_eelsfitter_tutorial_35_0.png" />
+<img alt="../_images/installation_eelsfitter_tutorial_35_2.png" src="../_images/installation_eelsfitter_tutorial_35_2.png" />
 </div>
 </div>
-<p>This shows that the clustering has been effective, since the ZLPs do not overlap before <span class="math notranslate nohighlight">\(E_I\)</span>. Let us consider a specific pixel, say (30, 90), to see how the subtacted spectrum compares to the raw spectrum.</p>
+<p>This shows that the clustering has been effective, since the ZLPs do not overlap before <span class="math notranslate nohighlight">\(E_I\)</span>. Let us consider a specific pixel, say (30, 90), to see how the subtracted spectrum compares to the raw spectrum.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">im</span><span class="o">.</span><span class="n">pool</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">ef</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">zlp</span><span class="o">.</span><span class="n">plot_inel_pred</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pixx</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">pixy</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="n">signal_type</span> <span class="o">=</span> <span class="s1">&#39;pool&#39;</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_zlp_per_pixel</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">pixx</span><span class="p">,</span> <span class="n">pixy</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span>
+                          <span class="n">zlp_gen</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">zlp_match</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                          <span class="n">subtract</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">deconv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                          <span class="n">hyper_par</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_zlp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$\rm{ZLP\;matching\;result\;at\;pixel[</span><span class="si">%d</span><span class="s2">,</span><span class="si">%d</span><span class="s2">]}$&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pixx</span><span class="p">,</span> <span class="n">pixy</span><span class="p">),</span>
+                          <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Energy\;loss\;[eV]}$&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Intensity\;[a.u.]}$&quot;</span><span class="p">,</span>
+                          <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">im</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -775,8 +507,14 @@ chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_zlp_signal</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">signal_type</span> <span class="o">=</span> <span class="s1">&#39;EELS&#39;</span>
+<span class="k">for</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_zlp_per_cluster</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span>
+                               <span class="n">zlp_gen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hyper_par</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$\rm{\;ZLPs\;at\;cluster\;</span><span class="si">%d</span><span class="s2">}$&quot;</span> <span class="o">%</span> <span class="n">cluster</span><span class="p">,</span>
+                               <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Energy\;loss\;[eV]}$&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Intensity\;[a.u.]}$&quot;</span><span class="p">,</span>
+                               <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span>
+                               <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">im</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -784,71 +522,77 @@ chi2 plot saved at /Users/jaco/Documents/CBL-ML/EELS_KK/output
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-0
-1
-2
-3
-4
-</pre></div></div>
+<img alt="../_images/installation_eelsfitter_tutorial_39_0.png" src="../_images/installation_eelsfitter_tutorial_39_0.png" />
 </div>
-<div class="nboutput nblast docutils container">
+</div>
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <img alt="../_images/installation_eelsfitter_tutorial_39_1.png" src="../_images/installation_eelsfitter_tutorial_39_1.png" />
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_39_2.png" src="../_images/installation_eelsfitter_tutorial_39_2.png" />
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_39_3.png" src="../_images/installation_eelsfitter_tutorial_39_3.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_39_4.png" src="../_images/installation_eelsfitter_tutorial_39_4.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../modules/EELSFitter.html" class="btn btn-neutral float-right" title="EELSFitter package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="tutorial.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cluster.html" class="btn btn-neutral float-right" title="Training models in parallel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2021, EELSfitter developer team
-
-    </p>
+    <p>&#169; Copyright 2023, EELSFitter developer team.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
