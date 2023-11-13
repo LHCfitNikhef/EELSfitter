@@ -13,8 +13,8 @@ This installs all the missing dependencies and enables easy import statements in
 
    import EELSFitter
 
-   # example of loading spectral image
-   dm4_path = "path_to_dm4"
+   # example of loading spectral image .dm4 file
+   path_to_image = "path_to_image"
    image = EELSFitter.SpectralImage.load_data(dm4_path)
 
 

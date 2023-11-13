@@ -23,9 +23,11 @@ With each spectra constructed as
 
 where :math:`I^{(i,j)}_{\rm EELS}(E_\ell)` indicates the recorded total
 electron energy loss intensity for an energy loss :math:`E_\ell` for a location
-in the specimen (pixel) labelled by :math:`(i,j)`, and :math:`n_E` is the number of
-bins that compose each spectrum. :math:`I^{(i,j)}_{\rm ZLP}(E_\ell)` indicates the ZLP contributions and :math:`I^{(i,j)}_{\rm inel}(E_\ell)` the inelastic scattering contribution. The spatial resolution of the EELS-SI in
-the :math:`x` and :math:`y` directions is usually taken to be the same, implying that
+in the specimen (pixel) labelled by :math:`(i,j)`, and :math:`n_E` is the number
+of bins that compose each spectrum. :math:`I^{(i,j)}_{\rm ZLP}(E_\ell)` indicates
+the ZLP contributions and :math:`I^{(i,j)}_{\rm inel}(E_\ell)` the inelastic scattering contribution.
+The spatial resolution of the EELS-SI in the :math:`x` and :math:`y` directions is
+usually taken to be the same, implying that
 
 .. math::
 
@@ -65,13 +67,14 @@ and the pooling normalisation is determined by the sum of the relevant weights,
 
 By increasing the pooling range :math:`d`, one combines the local information
 from a higher number of spectra and thus reduces statistical fluctuations,
-at the price of some loss on the spatial resolution of the measurement. For
-instance, :math:`d=3/2` averages the information contained on a :math:`3\times 3` square
-centered on the pixel :math:`(i,j)`. Given that there is no unique choice for the
-pooling parameters, one has to verify that the interpretation of the information
-contained on the spectral images does not depend sensitively on their value.
-In this work, we consider uniform weights, :math:`\omega_{|i'-i|,|j'-j|}=1`, but
-other options such as Gaussian weights
+at the price of some loss on the spatial resolution of the measurement.
+For instance, :math:`d=3/2` averages the information contained on a
+:math:`3\times 3` square centered on the pixel :math:`(i,j)`.
+Given that there is no unique choice for the pooling parameters,
+one has to verify that  the interpretation of the information contained
+on the spectral images does not depend sensitively on their value.
+In this work, we consider uniform weights, :math:`\omega_{|i'-i|,|j'-j|}=1`,
+but other options such as Gaussian weights
 
 .. math::
 
@@ -145,7 +148,7 @@ the integrated intensity will vary by orders of magnitude.
     :figwidth: 90%
     :figclass: align-center
 
-    *The outcome of the* :math:`K`*-means clustering procedure applied to the
+    *The outcome of the* :math:`K` *-means clustering procedure applied to the
     InSe specimen, where each color represents one of the* :math:`K=10` *thickness
     clusters. It can be compared with the thickness map of* :numref:`InSeThicknessfig` *.*
 

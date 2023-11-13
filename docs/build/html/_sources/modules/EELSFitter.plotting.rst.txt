@@ -18,7 +18,7 @@ EELSFitter.plotting.zlp module
    :show-inheritance:
 
 EELSFitter.plotting.training_perf module
-------------------------------
+----------------------------------------
 
 .. automodule:: EELSFitter.plotting.training_perf
    :members:
@@ -26,7 +26,7 @@ EELSFitter.plotting.training_perf module
    :show-inheritance:
 
 EELSFitter.plotting.heatmaps module
-------------------------------
+-----------------------------------
 
 .. automodule:: EELSFitter.plotting.heatmaps
    :members:

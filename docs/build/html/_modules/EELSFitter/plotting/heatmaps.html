@@ -1,197 +1,134 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>EELSFitter.plotting.heatmaps &mdash; EELSfitter 1.0.0 documentation</title>
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSFitter.plotting.heatmaps &mdash; EELSFitter 3.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=6f954d08" />
 
   
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=acc74ff5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> EELSfitter
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            EELSFitter
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Theory</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../theory/bandgap_analysis.html">Bandgap analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/band_gap_analysis.html">Band gap analysis</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Code</span></p>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Bibliography</span></p>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">EELSfitter</a>
-        
+          <a href="../../../index.html">EELSFitter</a>
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>EELSFitter.plotting.heatmaps</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">EELSFitter.plotting.heatmaps</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for EELSFitter.plotting.heatmaps</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">..core.spectral_image</span> <span class="kn">import</span> <span class="n">round_scientific</span><span class="p">,</span> <span class="n">trunc</span>
 
-<span class="kn">from</span> <span class="nn">..core.spectral_image</span> <span class="kn">import</span> <span class="n">round_scientific</span>
 
-
-<div class="viewcode-block" id="plot_heatmap"><a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.heatmaps.plot_heatmap">[docs]</a><span class="k">def</span> <span class="nf">plot_heatmap</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlab</span><span class="o">=</span><span class="s1">&#39;[nm]&#39;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s1">&#39;[nm]&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span>
-                 <span class="n">discrete_colormap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sig_cbar</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color_bin_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">equal_axis</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                 <span class="n">sig_ticks</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">save_as</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="plot_heatmap">
+<a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.heatmaps.plot_heatmap">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_heatmap</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{[nm]\;}$&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{[nm]\;}$&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span>
+                 <span class="n">discrete_colormap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sig_cbar</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color_bin_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">scale_ticks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_as</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plots a heatmap for given data input.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    image: SpectralImage</span>
+<span class="sd">    image : SpectralImage</span>
 <span class="sd">        :py:meth:`spectral_image.SpectralImage &lt;EELSFitter.core.spectral_image.SpectralImage&gt;` object</span>
-<span class="sd">    data : numpy.ndarray, shape=(M,)</span>
-<span class="sd">        Input data for heatmap, but be 2 dimensional.</span>
+<span class="sd">    data : numpy.ndarray, shape=(M,N)</span>
+<span class="sd">        Input data for heatmap, but be 2D.</span>
+<span class="sd">    dpi : int, optional</span>
+<span class="sd">        Set the dpi of the heatmap. The default is 100</span>
 <span class="sd">    title : str, optional</span>
 <span class="sd">        Set the title of the heatmap. The default is None.</span>
-<span class="sd">    xlab : str, optional</span>
+<span class="sd">    xlabel : str, optional</span>
 <span class="sd">        Set the label of the x-axis. Nanometer ([nm]) is assumed as standard scale. The default is &#39;[nm]&#39;.</span>
-<span class="sd">    ylab : str, optional</span>
+<span class="sd">    ylabel : str, optional</span>
 <span class="sd">        Set the label of the y-axis. Nanometer ([nm]) is assumed as standard scale. The default is &#39;[nm]&#39;.</span>
 <span class="sd">    cmap : str, optional</span>
 <span class="sd">        Set the colormap of the heatmap. The default is &#39;coolwarm&#39;.</span>
@@ -201,8 +138,6 @@
 <span class="sd">        Set the amount of significant numbers displayed in the colorbar. The default is 3.</span>
 <span class="sd">    color_bin_size : float, optional</span>
 <span class="sd">        Set the size of the bins used for discretisation. Best used in conjuction discrete_colormap. The default is None.</span>
-<span class="sd">    equal_axis : bool, optional</span>
-<span class="sd">        Enables the pixels to look square or not. The default is True.</span>
 <span class="sd">    sig_ticks : int, optional</span>
 <span class="sd">        Set the amount of significant numbers displayed in the ticks. The default is 2.</span>
 <span class="sd">    npix_xtick : float, optional</span>
@@ -218,9 +153,13 @@
 <span class="sd">    **kwargs : dictionary</span>
 <span class="sd">        Additional keyword arguments.</span>
 
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fig: Seaborn.figure.Figure</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -235,11 +174,8 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">equal_axis</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
-
+    <span class="c1"># Create the discretization using the given discretized data</span>
     <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
-
         <span class="n">unique_data_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">])</span>
         <span class="k">if</span> <span class="s1">&#39;vmax&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">[</span><span class="n">unique_data_points</span> <span class="o">&gt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -261,10 +197,11 @@
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span> <span class="o">+</span> <span class="n">spacing</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span> <span class="o">-</span> <span class="n">spacing</span>
 
-    <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">pixelsize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">xticks</span><span class="p">,</span> <span class="n">yticks</span><span class="p">,</span> <span class="n">xticks_labels</span><span class="p">,</span> <span class="n">yticks_labels</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">(</span><span class="n">sig_ticks</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="p">,</span>
-                                                                      <span class="n">tick_int</span><span class="p">)</span>
+    <span class="c1"># Creat the heatmap</span>
+    <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">pixel_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">xticks</span><span class="p">,</span> <span class="n">yticks</span><span class="p">,</span> <span class="n">xticks_labels</span><span class="p">,</span> <span class="n">yticks_labels</span> <span class="o">=</span> <span class="n">get_ticks</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="p">,</span>
+                                                                 <span class="n">npix_ytick</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">tick_int</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">xticks</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">yticks</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">xticks_labels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -272,23 +209,35 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlab</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylab</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
 
+    <span class="c1"># Create the discretized colorbar from the discretized data</span>
     <span class="n">colorbar</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">colorbar</span>
     <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="n">colorbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]))</span>
+            <span class="n">colorbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">colorbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]))</span>
+            <span class="n">colorbar</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">unique_data_points</span><span class="p">)</span>
             <span class="n">cbar_ticks_labels</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">tick</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">tick</span> <span class="ow">in</span> <span class="n">unique_data_points</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">tick</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">cbar_ticks_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">round_scientific</span><span class="p">(</span><span class="n">tick</span><span class="p">,</span> <span class="n">sig_cbar</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">tick</span><span class="p">)))))))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">cbar_ticks_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">round_scientific</span><span class="p">(</span><span class="n">tick</span><span class="p">,</span> <span class="n">sig_cbar</span><span class="p">))</span>
             <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_ticks_labels</span><span class="p">)</span>
 
+    <span class="c1"># Adds equal or greater than symbol to max color value</span>
+    <span class="k">if</span> <span class="s1">&#39;vmax&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]:</span>
+            <span class="n">cbar_ticks</span> <span class="o">=</span> <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
+                <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">spacing</span><span class="p">))</span>
+            <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\geq$&#39;</span> <span class="o">+</span> <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
+            <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_ticks</span><span class="p">)</span>
+
+    <span class="c1"># Adds equal or less than symbol to min color value</span>
     <span class="k">if</span> <span class="s1">&#39;vmin&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]:</span>
             <span class="n">cbar_ticks</span> <span class="o">=</span> <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()</span>
@@ -296,16 +245,6 @@
             <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
                 <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmin&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">spacing</span><span class="p">))</span>
             <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\leq$&#39;</span> <span class="o">+</span> <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
-            <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_ticks</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="s1">&#39;vmax&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]:</span>
-            <span class="n">cbar_ticks</span> <span class="o">=</span> <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()</span>
-            <span class="n">cbar_ticks_values</span> <span class="o">=</span> <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span>
-            <span class="n">loc</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="k">if</span> <span class="n">discrete_colormap</span><span class="p">:</span>
-                <span class="n">loc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">cbar_ticks_values</span> <span class="o">&lt;=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;vmax&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">spacing</span><span class="p">))</span>
-            <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\geq$&#39;</span> <span class="o">+</span> <span class="n">cbar_ticks</span><span class="p">[</span><span class="n">loc</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span>
             <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">cbar_ticks</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">save_as</span><span class="p">:</span>
@@ -317,45 +256,77 @@
         <span class="n">save_as</span> <span class="o">+=</span> <span class="s1">&#39;.pdf&#39;</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_as</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="get_ticks">
+<a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.heatmaps.get_ticks">[docs]</a>
+<span class="k">def</span> <span class="nf">get_ticks</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">npix_xtick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">npix_ytick</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale_ticks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tick_int</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets the proper tick labels and tick positions for the heatmap plots.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sig_ticks : int, optional</span>
+<span class="sd">        Set the amount of significant numbers displayed in the ticks. The default is 2.</span>
+<span class="sd">    npix_xtick : float, optional</span>
+<span class="sd">        Display a tick per n pixels in the x-axis. Note that this value can be a float. The default is 10.</span>
+<span class="sd">    npix_ytick : float, optional</span>
+<span class="sd">        Display a tick per n pixels in the y-axis. Note that this value can be a float. The default is 10.</span>
+<span class="sd">    scale_ticks : float, optional</span>
+<span class="sd">        Change the scaling of the numbers displayed in the ticks. Microns ([\u03BCm]) are assumed as standard scale, adjust scaling from there. The default is 1.</span>
+<span class="sd">    tick_int : bool, optional</span>
+<span class="sd">        Set whether you only want the ticks to display as integers instead of floats. The default is False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    xticks : numpy.ndarray, shape=(M,)</span>
+<span class="sd">        Array of the xticks positions.</span>
+<span class="sd">    yticks : numpy.ndarray, shape=(M,)</span>
+<span class="sd">        Array of the yticks positions.</span>
+<span class="sd">    xticks_labels : numpy.ndarray, shape=(M,)</span>
+<span class="sd">        Array with strings of the xtick labels.</span>
+<span class="sd">    yticks_labels : numpy.ndarray, shape=(M,)</span>
+<span class="sd">        Array with strings of the ytick labels.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image</span><span class="o">.</span><span class="n">calc_axes</span><span class="p">()</span>
+    <span class="n">xticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">x_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">npix_xtick</span><span class="p">)</span>
+    <span class="n">yticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">y_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">npix_ytick</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tick_int</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">xticks_labels</span> <span class="o">=</span> <span class="p">(</span><span class="n">xticks</span> <span class="o">*</span> <span class="n">round_scientific</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">pixel_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">yticks_labels</span> <span class="o">=</span> <span class="p">(</span><span class="n">yticks</span> <span class="o">*</span> <span class="n">round_scientific</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">pixel_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">xticks_labels</span> <span class="o">=</span> <span class="n">trunc</span><span class="p">(</span><span class="n">xticks</span> <span class="o">*</span> <span class="n">round_scientific</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">pixel_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="p">),</span> <span class="n">sig_ticks</span><span class="p">)</span>
+        <span class="n">yticks_labels</span> <span class="o">=</span> <span class="n">trunc</span><span class="p">(</span><span class="n">yticks</span> <span class="o">*</span> <span class="n">round_scientific</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">pixel_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_ticks</span><span class="p">,</span> <span class="n">sig_ticks</span><span class="p">),</span> <span class="n">sig_ticks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xticks</span><span class="p">,</span> <span class="n">yticks</span><span class="p">,</span> <span class="n">xticks_labels</span><span class="p">,</span> <span class="n">yticks_labels</span></div>
+
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2021, EELSfitter developer team
-
-    </p>
+    <p>&#169; Copyright 2023, EELSFitter developer team.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
