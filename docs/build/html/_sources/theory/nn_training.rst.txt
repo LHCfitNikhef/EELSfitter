@@ -6,11 +6,11 @@ principles, in this work we deploy supervised machine learning combined
 with Monte Carlo methods to construct a neural network parameterisation
 of the ZLP. Within this approach, one can faithfully model the ZLP dependence
 on both the electron energy loss and on the local specimen thickness. Our approach,
-first presented in :cite:p:`Roest:2020kqy`, is here extended to model the thickness
+first presented in :cite:p:`Roest2021`, is here extended to model the thickness
 dependence and to the simultaneous interpretation of the :math:`\mathcal{O}(10^4)` spectra
 that constitute a typical EELS-SI. One key advantage is the robust estimate of the
 uncertainties associated to the ZLP modelling and subtraction procedures using the
-Monte Carlo replica method :cite:p:`DelDebbio:2007ee`.
+Monte Carlo replica method :cite:p:`DelDebbio2007`.
 
 .. _architecture:
 
@@ -72,7 +72,7 @@ each one characterised by a different total integrated intensity evaluated from 
 such that :math:`(i_k,j_k)` belongs to the :math:`k`-th cluster. To ensure that the neural network
 model accounts only for the energy loss :math:`E` dependence in the region where the ZLP
 dominates the recorded spectra, we remove from the training dataset those bins with
-:math:`E \ge  E_{{\rm I},k}` with :math:`E_{{\rm I},k}` being a model hyperparameter :cite:p:`Roest:2020kqy`
+:math:`E \ge  E_{{\rm I},k}` with :math:`E_{{\rm I},k}` being a model hyperparameter :cite:p:`Roest2021`
 which varies in each thickness cluster. The cost function :math:`C_{\rm ZLP}` used to train
 the NN model is then
 
@@ -96,7 +96,7 @@ For such a random choice of representative cluster spectra, Eq. :eq:`eq:random_c
 the parameters (weights and thresholds) of the neural network model are obtained
 from the minimisationof :eq:`eq:costfunction_NNtraining_appendix` until a
 suitable convergence criterion is achieved. Here this training is carried out using
-stochastic gradient descent (SGD) as implemented in the {\tt PyTorch} library :cite:p:`NEURIPS2019_9015`,
+stochastic gradient descent (SGD) as implemented in the {\tt PyTorch} library :cite:p:`Paszke2019`,
 specifically by means of the ADAM minimiser. The optimal training length is determined
 by means of the look-back cross-validation stopping. In this method, the training data is
 divided :math:`80\%/20\%`  into training and validation subsets, with the best training point
@@ -104,7 +104,7 @@ given by the absolute minimum of the validation cost function :math:`C_{\rm ZLP}
 evaluated over a sufficiently large number of iterations.
 
 In order to estimate and propagate uncertainties associated to the ZLP parametrisation
-and subtraction procedure, here we adopt a variant of the Monte Carlo replica method :cite:p:`Roest:2020kqy`
+and subtraction procedure, here we adopt a variant of the Monte Carlo replica method :cite:p:`Roest2021`
 benefiting from the high statistics (large number of pixels) provided by an EELS-SI.
 The starting point is selecting :math:`N_{\rm rep}\simeq \mathcal{O}\left( 5000\right)` subsets of
 spectra such as the one in Eq. :eq:`eq:random_choice_spectra_app` containing one
@@ -178,7 +178,7 @@ independent of the replica. The resulting Monte Carlo distribution of ZLP models
 
 
 makes possible subtracting the ZLP from the measured EELS spectra following the
-matching procedure described in :cite:p:`Roest:2020kqy` and hence  isolating the inelastic
+matching procedure described in :cite:p:`Roest2021` and hence  isolating the inelastic
 contribution in each pixel,
 
 .. math::
@@ -205,18 +205,12 @@ As mentioned above, the cluster-dependent hyperparameters :math:`E_{{\rm I},k}` 
 model is trained only in the  energy loss data region where ZLP dominates total intensity.
 This is illustrated by the scheme of :numref:`EELStoyfig`, showing a toy simulation of
 the ZLP and inelastic scattering contributions adding up to the total recorded EELS intensity.
-The neural network model for the ZLP is then trained on the data corresponding to region I,
+The neural network model for the ZLP is then trained on the data corresponding to region I and region III,
 while region II is obtained entirely from model predictions. To determine the values of
-:math:`E_{{\rm I},k}`, we evaluate the first derivative of the total recording intensity,
-:math:`dI_{\rm EELS}(E)/dE`, for each of the members of the :math:`k`-th cluster. When this derivative
-crosses zero, the contribution from :math:`I_{\rm inel}` will already be dominant. There are then
-two options. First, one sets :math:`E_{{\rm I},k} = f \times E_{{\rm min},k}`, where :math:`f < 1`
-and :math:`E_{{\rm min},k}` is the energy where the median of :math:`dI_{\rm EELS}/dE` crosses zero
-(first local minimum) for cluster :math:`k`. Second, one sets :math:`E_{{\rm I},k}` to be  the value
-where at most :math:`f\%` of the models have crossed :math:`dI_{\rm EELS}/dE=0`, with :math:`f\simeq 10\%`.
-This choice implies that 90\% of the models still exhibit a negative derivative. We have
-verified that compatible results are obtained with the two choices, indicating that results
-are reasonably stable with respect to the value of the hyperparameter :math:`E_{{\rm I},k}`.
+:math:`E_{{\rm I},k}`, we determine the point of highest curvature between the Full Width at Half Maximum on
+the log values of the signal and the local minimum. From there, :math:`E_{{\rm I},k}` is shifted to the desired
+value. This ensures :math:`E_{{\rm I},k}` is always located near the ZLP in case the sample signal is unable
+to overcome the signal of the ZLP tail + noise floor (this could occure in aloof areas of the spectral image).
 
 The second model hyperparameter, denoted by :math:`E_{{\rm II},k}` in :numref:`EELStoyfig`,
 indicates the region for which the ZLP can be considered as fully negligible. Hence in
@@ -224,10 +218,29 @@ this region III we impose that :math:`I_{\rm ZLP}(E)\to 0` by means of the Lagra
 method. This condition fixes the model behaviour in the large energy loss limit, which
 otherwise would remain unconstrained. Since the ZLP is known to be a steeply-falling
 function, :math:`E_{{\rm II},k}` should not chosen not too far from :math:`E_{{\rm I},k}` to avoid
-an excessive interpolation region. In this work we use :math:`E_{{\rm II},k}=3\times E_{{\rm I},k}`,
-though this choice can be adjusted by the user.
+an excessive interpolation region. We determine :math:`E_{{\rm II},k}` by fitting a log10 function through
+the point of highest curvature and the local minimum. The point where this fit crosses with a single count is
+where we put :math:`E_{{\rm II},k}`, with shift it for fine tuning. This approach puts :math:`E_{{\rm II},k}`
+in a similar location as the signal-to-noise method presented in :cite:p:`Roest2021`.
+
+To ensure our models are monotomically decreasing in the region of :math:`E_{{\rm I},k}` and
+:math:`E_{{\rm II},k`, we add a penalty term to the cost function :math:`\lambda`,
+improving the output of our neural network,
+
+.. math:: :label: eq:costfunction_NNtraining_v3
+
+    C_{\rm ZLP}^{(m)} = \frac{1}{n_{E_\text{I}}}\sum_{k=1}^K \sum_{\ell_k=1}^{n_{E_\text{I}^{(k)}}} \frac{\left[
+    I_{\rm EELS}^{(i_{m,k},j_{m,k})}(E_{\ell_k}) -
+    I_{\rm ZLP}^{({\rm NN})(m)} \left(
+    E_{\ell_k},\ln \left( N_{\rm tot}^{(i_{m,k},j_{m,k})}\right) \right) \right]^2}{\sigma^2_k \left(
+    E_{\ell_k}\right) } \\
+    + \lambda \sum_{k=1}^K \sum_{r_k=1}^{n_{E_\text{II}}^{(k)}} \mathrm{ReLU}\left( \frac{\mathrm{d}
+    I_{\mathrm{ZLP}}^{(\mathrm{NN})(m)}\left(\Delta E_{r_k}, \ln \left(
+    N_{\text{peak}}^{\left(i_{m, k}, j_{m, k}\right)}\right)\right)}{\mathrm{d}\Delta E} \right), \\
+    \Delta E_{\ell_k} \leq \Delta E_{\mathrm{I}, k},
+    \quad \Delta E_{\mathrm{I}, k} \leq \Delta E_{r_k} \leq \Delta E_{\mathrm{II}, k},
 
 Finally, we mention that the model hyperparameters :math:`E_{{\rm I},k}` and :math:`E_{{\rm II},k}`
 could eventually be determined by means of an automated hyper-optimisation procedure as
-proposed in :cite:p:`ball2021path`, hence further reducing the need for human-specific input
+proposed in :cite:p:`Ball2022`, hence further reducing the need for human-specific input
 in the whole procedure.

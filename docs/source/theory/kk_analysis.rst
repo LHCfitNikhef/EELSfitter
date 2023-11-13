@@ -3,13 +3,13 @@ Kramers-Kronig analysis of EEL spectra
 
 
 Here we provide an overview of the theoretical formalism adopted in this 
-work :cite:p:`Egerton:2007` to evaluate the single-scattering distribution, local
-thickness, bandgap energy and type and complex dielectric function from  EELS spectra.
+work :cite:p:`Egerton2007` to evaluate the single-scattering distribution,
+local thickness, band gap energy and type and complex dielectric function from  EELS spectra.
 Electron energy loss spectra  measured experimentally are composed by three contributions:
 the one from inelastic single scatterings off the electrons in the specimen, 
 the one  associated to multiple inelastic scatterings, and then the Zero-Loss Peak (ZLP) 
-arising from both elastic scatterings and from instrumental broadening. Hence, a
-given spectrum :math:`I_{\rm EELS}(E)` can be decomposed as
+arising from both elastic scatterings and from instrumental broadening.
+Hence, a given spectrum :math:`I_{\rm EELS}(E)` can be decomposed as
 
 .. math:: :label: eq:EELSmaster
 
@@ -34,7 +34,7 @@ The normalisation factor :math:`N_0` thus corresponds to the integrated intensit
 the zero-loss peak. In the following we assume that the ZLP intensity :math:`I_{\rm ZLP}(E)`
 is known and can be reliably subtracted from :math:`I_{\rm EELS}(E)` in order to isolate
 the inelastic scattering contribution :math:`I_{\rm inel}(E)`. In EELSfitter, the ZLP
-subtraction is achieved using a machine learning method developed in :cite:p:`Roest:2020kqy`
+subtraction is achieved using a machine learning method developed in :cite:p:`Roest2021`
 and extended to spectral images.
 
 
@@ -71,10 +71,9 @@ is such that
    N_n = \frac{N_{\rm inel}}{\left( 1-e^{-t/\lambda} \right)}\frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda} \, ,
 
 
-in terms of the normalisation :math:`N_{\rm inel}` of the full inelastic scattering 
-distribution, the sample thickness :math:`t` and the mean free path :math:`\lambda`.
-Note also that the ZLP normalisation factor :math:`N_0` is then given in terms of
-the inelastic one as
+in terms of the normalisation :math:`N_{\rm inel}` of the full inelastic scattering distribution,
+the sample thickness :math:`t` and the mean free path :math:`\lambda`.
+Note also that the ZLP normalisation factor :math:`N_0` is then given in terms of the inelastic one as
 
 .. math::
 
@@ -88,8 +87,8 @@ and hence one has the following relations between integrated inelastic scatterin
     \frac{N_1^n}{N_k}=n!N_0^{n-1} \, ,\qquad \forall ~n \ge 1 \, .
 
 
-In order to evaluate the local thickness of the specimen and the corresponding 
-dielectric function, it is necessary to deconvolute the measured spectra and 
+In order to evaluate the local thickness of the specimen and the corresponding dielectric function,
+it is necessary to perform a deconvoluation of the measured spectra and
 extract from them the single-scattering distribution (SSD), :math:`I_{\rm SSD}(E)`.
 The SSD is related to the experimentally measured :math:`n=1` distribution,
 :math:`I^{(1)}_{\rm inel}(E)` by the finite resolution of our measurement apparatus:
@@ -496,6 +495,21 @@ to determine the surface contributions converges provided that the local sample
 thickness satisfies :math:`t \gtrsim 20` nm. For thinner samples the iterative approach
 fails to converge and another strategy would be needed. Hence in this work we disentangle the
 bulk from the surface contributions to the EELS spectra only when the thickness is above this threshold.
+
+
+The role of relativistic contributions
+--------------------------------------
+
+
+When an incoming charged particle moves inside a medium, while having a higher velocity than the phase velocity of light
+inside that medium, Cerenkov radiation can be emitted. The magnetic and electric fields that come with the charge
+excite the atoms of the medium. These excited atoms then radiate their energy at a fixed angle with respect to the
+trajectory of the particle. The influence of cerenkov radiation is not to be understated as it contributes most in
+the low loss region between 0 and 5 eV depending on the medium, therefore impacting the dielectric function from
+Kramers-Kronig analysis and band gap determination
+:cite:p:`VonFestenberg1968, Moreau1997, StogerPollach2006, StogerPollach2008, Erni2008, StogerPollach2014, Horak2015, Erni2016, Sakaguchi2016`.
+
+
 
 .. [#f1] Here :math:`E` indicates the energy lost by EELS electrons, with :math:`E` for elastic scatterings.
 .. [#f2] The following derivation assumes that the specimen is not too thin, that is, :math:`t \gtrsim \lambda`.

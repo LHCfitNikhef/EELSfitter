@@ -17,3 +17,11 @@ EELSFitter.core.training module
    :members:
    :undoc-members:
    :show-inheritance:
+
+EELSFitter.core.gainpeakfitter module
+--------------------------------------
+
+.. automodule:: EELSFitter.core.gainpeakfitter
+
+    .. autoclass:: GainPeakFitter
+       :members:
