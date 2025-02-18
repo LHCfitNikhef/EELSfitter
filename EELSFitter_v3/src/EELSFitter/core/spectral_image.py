@@ -9,16 +9,19 @@ import bz2
 import pickle
 import _pickle as cPickle
 import matplotlib.pyplot as plt
+import ncempy.io as nio
 
 from scipy.fft import next_fast_len, fft, ifft
 from scipy.optimize import curve_fit
+from scipy.signal import savgol_filter
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA, NMF
-from ncempy.io import dm
+from sklearn.mixture import GaussianMixture
 
 from .training import MultilayerPerceptron, TrainZeroLossPeak
 from ..plotting.training_perf import plot_cost_dist
 from ..plotting.zlp import plot_zlp_cluster_predictions
+from ..plotting.mva_perf import plot_pca_variance
 
 # Where is this used?
 plt.rcParams.update({'font.size': 16})  # pyplot style
@@ -170,7 +173,6 @@ class SpectralImage:
         """
         # Image properties
         self.data = data
-        self.data_subtracted = None
         self.deltaE = deltaE  # eV, energy bin width
         self.set_eaxis()  # Sets the shifted energy axis (E = 0 corresponds to peak of ZLP)
         self.pixel_size = pixel_size  # nm, real world size of the pixel
@@ -192,11 +194,23 @@ class SpectralImage:
         self.FWHM = None  # Full Width at Half Maximum for each cluster
 
         # Additional image properties for calculations and data modification
+        self.data_pool = None  # SI data is enhanced by pooling a pixel with surrounding pixels
+        self.data_pca = None  # SI data is enhanced by performing PCA on the data
+        self.data_nmf = None  # SI data is enhanced by performing NMF on the data
+        
+        self.data_zlpsub = None
+        self.data_zlpsub_pool = None
+        self.data_zlpsub_pca = None
+        self.data_zlpsub_nmf = None
+
+        self.data_deconv = None
+        self.data_deconv_pool = None
+        self.data_deconv_pca = None
+        self.data_deconv_nmf = None
+        
         self.n = None  # Refractive index, set per cluster
         self.rho = None  # Mass density, set per cluster
-        self.pooled = None  # SI data is enhanced by pooling center pixel with surrounding pixels
-        self.pca = None  # SI data is enhanced by performing PCA on the data
-        self.nmf = None  # SI data is enhanced by performing NMF on the data
+
 
         # Other
         self.output_path = os.getcwd()
@@ -233,7 +247,7 @@ class SpectralImage:
 
     # METHODS ON SAVING AND LOADING DATA
     @classmethod
-    def load_data(cls, path_to_dmfile, load_survey_data=False):
+    def load_dmfile(cls, path_to_dmfile, load_survey_data=False):
         r"""
         Load the .dm4 (or .dm3) data and return a
         :py:meth:`spectral_image.SpectralImage <EELSFitter.core.spectral_image.SpectralImage>` instance.
@@ -253,7 +267,7 @@ class SpectralImage:
 
         """
 
-        dmfile = dm.fileDM(path_to_dmfile)
+        dmfile = nio.dm.fileDM(path_to_dmfile)
 
         dmobjects = dmfile.numObjects
         eels_dict = dmfile.getDataset(dmobjects - 2)
@@ -578,7 +592,7 @@ class SpectralImage:
             self.y_axis *= self.pixel_size[0]
             self.x_axis *= self.pixel_size[1]
 
-    def get_pixel_signal(self, i, j, signal_type='EELS', **kwargs):
+    def get_pixel_signal(self, i, j, signal_type='EELS', data_type='EELS', **kwargs):
         r"""
         Retrieves the spectrum at pixel (``i``, ``j``).
 
@@ -591,6 +605,9 @@ class SpectralImage:
         signal_type: str, optional
             The type of signal that is requested, should comply with the defined
             names. Set to `EELS` by default.
+        subtract_zlps: bool, optional
+            If `True`, subtract the zlps from the signal, only possible if zlp models are available. Note that the
+            median will be taken from the zlps. Set to `False` by default.
 
         Returns
         -------
@@ -598,87 +615,70 @@ class SpectralImage:
             Array with the requested signal from the requested pixel
         """
 
-        if signal_type in self.EELS_NAMES:
-            if self.data_subtracted is not None and isinstance(self.data_subtracted[i, j], np.ndarray):
-                return np.copy(self.data_subtracted[i, j])
+        if data_type == 'EELS':
+            if signal_type in self.POOLED_ADDITION:
+                if self.data_pool is not None:
+                    signal = np.copy(self.data_pool[i, j, :])
+                else:
+                    signal = self.pool_pixel(data=self.data, i=i, j=j, **kwargs)
+            elif signal_type in self.PCA_ADDITION:
+                if self.data_pca is not None:
+                    signal = np.copy(self.data_pca[i, j, :])
+                else:
+                    signal = self.pca_pixel(data=self.data, i=i, j=j, **kwargs)
+            elif signal_type in self.NMF_ADDITION:
+                if self.data_nmf is not None:
+                    signal = np.copy(self.data_nmf[i, j, :])
+                else:
+                    signal = self.nmf_pixel(data=self.data, i=i, j=j, **kwargs)
             else:
-                return np.copy(self.data[i, j, :])
-        elif signal_type in self.POOLED_ADDITION:
-            if self.pooled is None:
-                return self.pool_pixel(i, j, **kwargs)
+                signal = np.copy(self.data[i, j, :])
+
+        elif data_type == 'deconv' and self.data_deconv is not None:
+            if signal_type in self.POOLED_ADDITION:
+                if self.data_deconv_pool is not None and isinstance(self.data_deconv_pool[i, j], np.ndarray):
+                    signal = np.copy(self.data_deconv_pool[i, j, :])
+                else:
+                    signal = self.pool_pixel(data=self.data_deconv, i=i, j=j, **kwargs)
+            elif signal_type in self.PCA_ADDITION:
+                if self.data_deconv_pca is not None and isinstance(self.data_deconv_pca[i, j], np.ndarray):
+                    signal = np.copy(self.data_deconv_pca[i, j, :])
+                else:
+                    signal = self.pca_pixel(data=self.data_deconv, i=i, j=j, **kwargs)
+            elif signal_type in self.NMF_ADDITION:
+                if self.data_deconv_nmf is not None and isinstance(self.data_deconv_nmf[i, j], np.ndarray):
+                    signal = np.copy(self.data_deconv_nmf[i, j, :])
+                else:
+                    signal = self.nmf_pixel(data=self.data_deconv, i=i, j=j, **kwargs)
             else:
-                return np.copy(self.pooled[i, j, :])
-        elif signal_type in self.PCA_ADDITION:
-            if self.pca is None:
-                return self.pca_pixel(i, j, **kwargs)
+                signal = np.copy(self.data_deconv[i, j, :])
+
+        elif data_type == 'subtract' and self.data_zlpsub is not None:
+            if signal_type in self.POOLED_ADDITION:
+                if self.data_zlpsub_pool is not None and isinstance(self.data_zlpsub_pool[i, j], np.ndarray):
+                    signal = np.copy(self.data_zlpsub_pool[i, j, :])
+                else:
+                    signal = self.pool_pixel(data=self.data_zlpsub, i=i, j=j, **kwargs)
+            elif signal_type in self.PCA_ADDITION:
+                if self.data_zlpsub_pca is not None and isinstance(self.data_zlpsub_pca[i, j], np.ndarray):
+                    signal = np.copy(self.data_zlpsub_pca[i, j, :])
+                else:
+                    signal = self.pca_pixel(data=self.data_zlpsub, i=i, j=j, **kwargs)
+            elif signal_type in self.NMF_ADDITION:
+                if self.data_zlpsub_nmf is not None and isinstance(self.data_zlpsub_nmf[i, j], np.ndarray):
+                    signal = np.copy(self.data_zlpsub_nmf[i, j, :])
+                else:
+                    signal = self.nmf_pixel(data=self.data_zlpsub, i=i, j=j, **kwargs)
             else:
-                return np.copy(self.pca[i, j, :])
-        elif signal_type in self.NMF_ADDITION:
-            if self.nmf is None:
-                return self.nmf_pixel(i, j, **kwargs)
-            else:
-                return np.copy(self.nmf[i, j, :])
+                signal = np.copy(self.data_zlpsub[i, j, :])
+
         else:
-            print("no such signal", signal_type, ", returned general EELS signal.")
-            return np.copy(self.data[i, j, :])
+            print("Either no such signal or the signal shape has not been calculated yet, "
+                  "returned general EELS signal.")
+            signal = np.copy(self.data[i, j, :])
+        return signal
 
-    def get_pixel_signal_subtracted(self, i, j, signal_type='EELS', **kwargs):
-        r"""
-        Retrieves the spectrum at pixel (``i``, ``j``) after subtraction of the ZLP.
-
-        Parameters
-        ----------
-        i: int
-            y-coordinate of the pixel
-        j: int
-            x-coordinate of the pixel
-        signal_type: str, optional
-            The type of signal that is requested, should comply with the defined
-            names. Set to `EELS` by default.
-
-        Returns
-        -------
-        signal_subtracted : numpy.ndarray, shape=(M,)
-            Array with the requested subtracted signal from the requested pixel
-        """
-
-        zlps = self.get_pixel_matched_zlp_models(i, j, signal_type=signal_type, **kwargs)
-        signal_subtracted = self.get_pixel_signal(i, j, signal_type=signal_type, **kwargs) - zlps
-        return signal_subtracted
-
-    def get_pixel_signal_subtracted_or_not(self, i, j, signal_type='EELS', zlp=False, **kwargs):
-        r"""
-        Function to retrieve non-subtracted data or data after subtraction of the ZLP.
-
-        Parameters
-        ----------
-        i: int
-            y-coordinate of the pixel
-        j: int
-            x-coordinate of the pixel
-        signal_type: str, optional
-            The type of signal that is requested, should comply with the defined
-            names. Set to `EELS` by default
-        zlp : bool
-            If True, return the subtracted spectrum. Else, return the non-subtracted spectrum
-        kwargs: dict, optional
-            Additional keyword arguments, which are passed to self.get_pixel_signal
-        """
-
-        def _summary_distribution(data, mean=50, lower=16, upper=84):
-            median = np.nanpercentile(data, mean, axis=0)
-            low = np.nanpercentile(data, lower, axis=0)
-            high = np.nanpercentile(data, upper, axis=0)
-            return [median, low, high]
-        if zlp:
-            if self.data_subtracted is None:
-                self.data_subtracted = np.zeros(self.shape[:2], dtype=object)
-            if not isinstance(self.data_subtracted[i, j], np.ndarray):
-                self.data_subtracted[i, j] = _summary_distribution(
-                    self.get_pixel_signal_subtracted(i, j, signal_type=signal_type, **kwargs))[0]
-        return self.get_pixel_signal(i, j, signal_type=signal_type, **kwargs)
-    
-    def get_image_signals(self, signal_type='EELS', **kwargs):
+    def get_image_signals(self, signal_type='EELS', data_type='EELS', **kwargs):
         r"""
         Get all the signals of the image.
 
@@ -693,31 +693,78 @@ class SpectralImage:
         image_signals : numpy.ndarray, shape=(M,N)
         """
 
-        if signal_type in self.EELS_NAMES:
-            return np.copy(self.data)
-        elif signal_type in self.POOLED_ADDITION:
-            if self.pooled is None:
-                self.pool_image(**kwargs)
-                return np.copy(self.pooled)
+        if data_type == 'EELS':
+            if signal_type in self.POOLED_ADDITION:
+                if self.data_pool is not None:
+                    image_signals = np.copy(self.data_pool)
+                else:
+                    image_signals = self.pool_image(data=self.data, **kwargs)
+            elif signal_type in self.PCA_ADDITION:
+                if self.data_pca is not None:
+                    image_signals = np.copy(self.data_pca)
+                else:
+                    image_signals = self.pca_image(data=self.data, **kwargs)
+            elif signal_type in self.NMF_ADDITION:
+                if self.data_nmf is not None:
+                    image_signals = np.copy(self.data_nmf)
+                else:
+                    image_signals = self.nmf_image(data=self.data, **kwargs)
             else:
-                return np.copy(self.pooled)
-        elif signal_type in self.PCA_ADDITION:
-            if self.pca is None:
-                self.pca_image(**kwargs)
-                return np.copy(self.pca)
-            else:
-                return np.copy(self.pca)
-        elif signal_type in self.NMF_ADDITION:
-            if self.nmf is None:
-                self.nmf_image(**kwargs)
-                return np.copy(self.nmf)
-            else:
-                return np.copy(self.nmf)
-        else:
-            print("no such signal", signal_type, ", returned general EELS data.")
-            return np.copy(self.data)
+                image_signals = np.copy(self.data)
 
-    def get_cluster_signals(self, conf_interval=1, signal_type='EELS'):
+        elif data_type == 'deconv':
+            if self.data_deconv is None:
+                print("Deconvoluted image not available, calculating now, this might take a while")
+                self.deconv_image()
+                print("Deconvolution done!")
+            if signal_type in self.POOLED_ADDITION:
+                if self.data_deconv_pool is not None:
+                    image_signals = np.copy(self.data_deconv_pool)
+                else:
+                    image_signals = self.pool_image(data=self.data_deconv, **kwargs)
+            elif signal_type in self.PCA_ADDITION:
+                if self.data_deconv_pca is not None:
+                    image_signals = np.copy(self.data_deconv_pca)
+                else:
+                    image_signals = self.pca_image(data=self.data_deconv, **kwargs)
+            elif signal_type in self.NMF_ADDITION:
+                if self.data_deconv_nmf is not None:
+                    image_signals = np.copy(self.data_deconv_nmf)
+                else:
+                    image_signals = self.nmf_image(data=self.data_deconv, **kwargs)
+            else:
+                image_signals = np.copy(self.data_deconv)
+
+        elif data_type == 'subtract':
+            if self.data_deconv is None:
+                print("Subtracted image not available, calculating now, this might take a while")
+                self.subtract_image()
+                print("Subtraction done!")
+            if signal_type in self.POOLED_ADDITION:
+                if self.data_zlpsub_pool is not None:
+                    image_signals = np.copy(self.data_zlpsub_pool)
+                else:
+                    image_signals = self.pool_image(data=self.data_zlpsub, **kwargs)
+            elif signal_type in self.PCA_ADDITION:
+                if self.data_zlpsub_pca is not None:
+                    image_signals = np.copy(self.data_zlpsub_pca)
+                else:
+                    image_signals = self.pca_image(data=self.data_zlpsub, **kwargs)
+            elif signal_type in self.NMF_ADDITION:
+                if self.data_zlpsub_nmf is not None:
+                    image_signals = np.copy(self.data_zlpsub_nmf)
+                else:
+                    image_signals = self.nmf_image(data=self.data_zlpsub, **kwargs)
+            else:
+                image_signals = np.copy(self.data_zlpsub)
+
+        else:
+            print("Either no such signal or the signal shape has not been calculated yet, "
+                  "returned general EELS signal.")
+            image_signals = np.copy(self.data)
+        return image_signals
+
+    def get_cluster_signals(self, conf_interval=1, signal_type='EELS', data_type='EELS', data=None, **kwargs):
         r"""
         Get the signals ordered per cluster. Cluster signals are stored in attribute ``self.cluster_signals``.
         Note that the pixel location information is lost.
@@ -739,10 +786,12 @@ class SpectralImage:
 
         integrated_int = np.sum(self.data, axis=2)
         cluster_signals = np.zeros(self.n_clusters, dtype=object)
+        if data is None:
+            data = self.get_image_signals(signal_type=signal_type, data_type=data_type, **kwargs)
 
         j = 0
         for i in range(self.n_clusters):
-            cluster_signal = self.get_image_signals(signal_type)[self.cluster_labels == i]
+            cluster_signal = data[self.cluster_labels == i]
             if conf_interval < 1:
                 intensities_cluster = integrated_int[self.cluster_labels == i]
                 arg_sort_int = np.argsort(intensities_cluster)
@@ -799,12 +848,72 @@ class SpectralImage:
         self.y_axis = self.y_axis[range_height[0]:range_height[1]]
         self.x_axis = self.x_axis[range_width[0]:range_width[1]]
 
-    def pool_image(self, area=9, **kwargs):
+    def deconv_image(self, save_data=True, signal_type='EELS', **kwargs):
+        r"""
+        Deconvolute the signals of all pixels. Only the median value of the ZLP models is taken.
+
+        Parameters
+        ----------
+        kwargs
+
+        Returns
+        -------
+
+        """
+        data_deconv = np.zeros(self.shape)
+        print("Start deconvolution")
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                signal = self.get_pixel_signal(i, j, signal_type=signal_type)
+                zlp_median = np.nanpercentile(
+                    self.get_pixel_matched_zlp_models(i, j, signal_type=signal_type, signal=signal, **kwargs),
+                    50, axis=0)
+                data_deconv[i, j, :] = self.deconvolution(signal, zlp_median)
+            print("row ", i,"done")
+        self.data_deconv = data_deconv
+        print("Finished deconvolution")
+        if save_data is True:
+            filename = self.output_path + 'data_deconv.npy'
+            np.save(filename, data_deconv)
+
+    def subtract_image(self, save_data=True, signal_type='EELS', **kwargs):
+        r"""
+        Subtract the ZLP from the signals of all pixels. Only the median value of the ZLP models is taken.
+
+        Parameters
+        ----------
+        kwargs
+
+        Returns
+        -------
+
+        """
+        data_zlpsub = np.zeros(self.shape)
+        print("Start subtraction")
+        for i in range(self.shape[0]):
+            for j in range(self.shape[1]):
+                signal = self.get_pixel_signal(i, j, signal_type=signal_type)
+                zlp_median = np.nanpercentile(
+                    self.get_pixel_matched_zlp_models(i, j, signal_type=signal_type, signal=signal, **kwargs),
+                    50, axis=0)
+                data_zlpsub[i, j, :] = self.subtract_zlp(signal, zlp_median)
+            print("row ", i,"done")
+        self.data_zlpsub = data_zlpsub
+        print("Finished subtraction")
+        if save_data is True:
+            filename = self.output_path + 'data_zlpsub.npy'
+            np.save(filename, data_zlpsub)
+
+    # METHODS ON DATA MODIFICATION
+    #TO DO remove pca_pixel, nmf_pixel, pca_cluster and nmf_cluster, these are not a correct application of the technique
+    def pool_image(self, data, area=9, **kwargs):
         r"""
         Pools spectral image using a squared window of size ``area`` around each pixel
 
         Parameters
         ----------
+        data: numpy.ndarray (M,N)
+            2D data set.
         area: int
             Pooling parameter: area around the pixel, must be an odd number
         kwargs: dict, optional
@@ -818,18 +927,22 @@ class SpectralImage:
         if area % 2 == 0:
             print("Unable to pool with even number " + str(area) + ", continuing with n_p=" + str(area + 1))
             area += 1
-        if area > self.shape[0] or area > self.shape[1]:
+        if area > data.shape[0] or area > data.shape[1]:
             raise ValueError("Your pooling area is too large for one or both of the image axes, "
                              "please choose a number smaller than these values")
         print("Pooling of data started")
-        pooled_im = np.zeros(self.shape)
-        for i in range(self.shape[0]):
-            for j in range(self.shape[1]):
-                pooled_im[i, j] = self.pool_pixel(i=i, j=j, area=area, **kwargs)
-        self.pooled = pooled_im
+        data_pool = np.zeros(data.shape)
+        for i in range(data.shape[0]):
+            for j in range(data.shape[1]):
+                data_pool[i, j] = self.pool_pixel(data=data, i=i, j=j, area=area, **kwargs)
+        if self.data_zlpsub is not None:
+            self.data_pool_zlpsub = data_pool
+        else:
+            self.data_pool = data_pool
         print("Pooling of data complete")
+        return data_pool
 
-    def pool_pixel(self, i, j, area=9, gaussian=True, **kwargs):
+    def pool_pixel(self, data, i, j, area=9, gaussian=True, **kwargs):
         r"""
         Pools the data of a squared window of size ``area`` around pixel (``i``, ``j``).
 
@@ -855,7 +968,7 @@ class SpectralImage:
         if area % 2 == 0:
             print("Unable to pool with even number " + str(area) + ", continuing with n_p=" + str(area + 1))
             area += 1
-        if area > self.shape[0] or area > self.shape[1]:
+        if area > data.shape[0] or area > data.shape[1]:
             raise ValueError("Your pooling area is too large for one or both of the image axes, "
                              "please choose a number smaller than these values")
 
@@ -879,11 +992,11 @@ class SpectralImage:
             weights_x = z / np.max(z)
             x_max += np.abs(x_min)
             x_min = 0
-        elif x_max > self.shape[1]:
-            z = gauss1d(x, mx=(x_max - self.shape[1]), **kwargs)
+        elif x_max > data.shape[1]:
+            z = gauss1d(x, mx=(x_max - data.shape[1]), **kwargs)
             weights_x = z / np.max(z)
-            x_min -= (x_max - self.shape[1])
-            x_max = self.shape[1]
+            x_min -= (x_max - data.shape[1])
+            x_max = data.shape[1]
         else:
             weights_x = weights
         if y_min < 0:
@@ -891,24 +1004,23 @@ class SpectralImage:
             weights_y = z / np.max(z)
             y_max += np.abs(y_min)
             y_min = 0
-        elif y_max > self.shape[0]:
-            z = gauss1d(x, mx=(y_max - self.shape[0]), **kwargs)
+        elif y_max > data.shape[0]:
+            z = gauss1d(x, mx=(y_max - data.shape[0]), **kwargs)
             weights_y = z / np.max(z)
-            y_min -= (y_max - self.shape[0])
-            y_max = self.shape[0]
+            y_min -= (y_max - data.shape[0])
+            y_max = data.shape[0]
         else:
             weights_y = weights
-        if self.data_subtracted is not None:
-            # If not all subtracted spectra have been calculated, this output is incorrect
-            # because some entries in self.data_subtracted are 0
-            pooled_pixel = np.average(np.average(self.data_subtracted[y_min:y_max, x_min:x_max], axis=1, weights=weights_x),
-                                  axis=0, weights=weights_y)
+        if len(data.shape) == 2:
+            pooled_pixel = np.average(np.average(data[y_min:y_max, x_min:x_max], axis=1, weights=weights_x),
+                                      axis=0, weights=weights_y)
         else:
-            pooled_pixel = np.average(np.average(self.data[y_min:y_max, x_min:x_max, :], axis=1, weights=weights_x),
-                                  axis=0, weights=weights_y)
+            pooled_pixel = np.average(np.average(data[y_min:y_max, x_min:x_max, :], axis=1, weights=weights_x),
+                                      axis=0, weights=weights_y)
         return pooled_pixel
 
-    def pca_image(self, area_type='segment', n_components=0.9, segments_x=4, segments_y=4, **kwargs):
+    def pca_image(self, data, area_type='segment', n_components=30, segments_x=1, segments_y=1, norm_poisson=True,
+                  plot_variance=False, **kwargs):
         r"""
         Use principal component analysis on the spectral image.
 
@@ -923,9 +1035,9 @@ class SpectralImage:
             number components to calculate. If between 0 and 1 the amount of components will be determined based on the
             sum of the variance of the components below the given value. Default is 0.9.
         segments_x: int
-            For ``'segment'`` option, number of segments the x-axis is divided upon. Default is 4.
+            For ``'segment'`` option, number of segments the x-axis is divided upon. Default is 1.
         segments_y: int
-            For ``'segment'`` option, number of segments the y-axis is divided upon. Default is 4.
+            For ``'segment'`` option, number of segments the y-axis is divided upon. Default is 1.
         kwargs: dict, optional
             Additional keyword arguments.
 
@@ -933,55 +1045,66 @@ class SpectralImage:
         -------
 
         """
-
+        data = np.copy(data)
         if area_type == 'segment':
             print("PCA of segmented areas started")
-            segsize_x = self.shape[1] / segments_x
-            segsize_y = self.shape[0] / segments_y
-            data_pca = np.zeros(self.shape)
+            segsize_x = data.shape[1] / segments_x
+            segsize_y = data.shape[0] / segments_y
+            model_data = np.zeros(data.shape)
             for segment_y in np.arange(0, segments_y):
                 for segment_x in np.arange(0, segments_x):
                     x_min = round(segsize_x * segment_x)
                     x_max = round(segsize_x * (segment_x + 1))
                     y_min = round(segsize_y * segment_y)
                     y_max = round(segsize_y * (segment_y + 1))
-                    if self.data_subtracted is not None:
-                        # If not all subtracted spectra have been calculated, this output is incorrect
-                        # because some entries in self.data_subtracted are 0
-                        seg_data = self.data_subtracted[y_min:y_max, x_min:x_max]
-                    else:
-                        seg_data = self.data[y_min:y_max, x_min:x_max, :]
-                    seg_data_shape = seg_data.shape
+                    seg_data = data[y_min:y_max, x_min:x_max, :]
                     seg_data[seg_data < 0] = 0
-                    seg_data_flat = seg_data.reshape(np.prod(seg_data_shape[:2]), seg_data_shape[2])
+                    X = seg_data.reshape(np.prod(seg_data.shape[:2]), seg_data.shape[2])
+                    if norm_poisson:
+                        # Normalize for poissonian noise
+                        aG = X.sum(axis=1).squeeze()
+                        bH = X.sum(axis=0).squeeze()
+                        root_aG = np.sqrt(aG)[:, np.newaxis]
+                        root_bH = np.sqrt(bH)[np.newaxis, :]
+                        X /= root_aG * root_bH
+                        X = np.nan_to_num(X)
 
-                    seg_data_pca = PCA(n_components=n_components, svd_solver='full')
-                    seg_data_trans = seg_data_pca.fit_transform(seg_data_flat)
-                    # seg_data_maps_pca = seg_data_trans.reshape(seg_data_shape[:2] + (seg_data_pca.n_components_,))
-                    data_pca[y_min:y_max, x_min:x_max, :] = seg_data_pca.inverse_transform(seg_data_trans).reshape(
-                        seg_data_shape)
-            self.pca = data_pca
+                    model = PCA(n_components=n_components, svd_solver='full')
+                    loadings = model.fit_transform(X)
+                    factors = model.components_.T
+                    if norm_poisson:
+                        # rescale back the loadings and factors
+                        loadings[:] *= root_aG
+                        factors[:] *= root_bH.T
+                    if segments_x == 1 and segments_y == 1:
+                        # loadings_maps = loadings.reshape(seg_data_shape[:2] + (model.n_components_,))
+                        if plot_variance:
+                            fig = plot_pca_variance(components=model.n_components,
+                                                    eigenvalues_ratio=model.explained_variance_ratio_, figsize=(8, 4))
+                            fig.savefig(os.path.join(self.output_path, 'Scree_plot.pdf'))
+                    X_model = factors @ loadings.T + model.mean_[:, np.newaxis]
+                    model_data[y_min:y_max, x_min:x_max, :] = X_model.T.reshape(seg_data.shape)
 
         elif area_type == 'cluster':
             print("PCA of data per cluster started")
-            pca_im = np.zeros(self.shape)
+            model_data = np.zeros(data.shape)
             for cluster_idx in np.arange(0, len(self.cluster_centroids)):
-                pca_im[self.cluster_labels == cluster_idx] = self.pca_cluster(cluster=cluster_idx,
-                                                                              n_components=n_components)
-            self.pca = pca_im
-
+                model_data[self.cluster_labels == cluster_idx] = self.pca_cluster(data=data, cluster=cluster_idx,
+                                                                                  n_components=n_components,
+                                                                                  norm_poisson=norm_poisson, **kwargs)
         elif area_type == 'pixel':
             print("PCA of data per pixel started")
-            pca_im = np.zeros(self.shape)
-            for i in range(self.shape[0]):
-                for j in range(self.shape[1]):
-                    pca_im[i, j] = self.pca_pixel(i=i, j=j, n_components=n_components, **kwargs)
-            self.pca = pca_im
+            model_data = np.zeros(data.shape)
+            for i in range(data.shape[0]):
+                for j in range(data.shape[1]):
+                    model_data[i, j] = self.pca_pixel(data=data, i=i, j=j, n_components=n_components,
+                                                      norm_poisson=norm_poisson, **kwargs)
         else:
             print("please pick a valid area type")
         print("PCA of data complete")
+        return model_data
 
-    def pca_pixel(self, i, j, area=9, n_components=0.9):
+    def pca_pixel(self, data, i, j, area=9, n_components=30, norm_poisson=True, **kwargs):
         r"""
         Use principal component analysis on the spectral image, using the data of a squared window of size ``n_p``
         around pixel (``i``, ``j``).
@@ -1009,7 +1132,7 @@ class SpectralImage:
         if area % 2 == 0:
             print("Unable to PCA with even number " + str(area) + ", continuing with n_area=" + str(area + 1))
             area += 1
-        if area > self.shape[0] or area > self.shape[1]:
+        if area > data.shape[0] or area > data.shape[1]:
             raise ValueError("Your pixel area is too large for one or both of the image axes, "
                              "please choose a number smaller than these values")
 
@@ -1022,33 +1145,40 @@ class SpectralImage:
         if x_min < 0:
             x_max += np.abs(x_min)
             x_min = 0
-        if x_max > self.shape[1]:
-            x_min -= (x_max - self.shape[1])
-            x_max = self.shape[1]
+        if x_max > data.shape[1]:
+            x_min -= (x_max - data.shape[1])
+            x_max = data.shape[1]
         if y_min < 0:
             y_max += np.abs(y_min)
             y_min = 0
-        if y_max > self.shape[0]:
-            y_min -= (y_max - self.shape[0])
-            y_max = self.shape[0]
-        if self.data_subtracted is not None:
-            # If not all subtracted spectra have been calculated, this output is incorrect
-            # because some entries in self.data_subtracted are 0
-            seg_data = self.data_subtracted[y_min:y_max, x_min:x_max]
-        else:
-            seg_data = self.data[y_min:y_max, x_min:x_max, :]
-        seg_data_shape = seg_data.shape
+        if y_max > data.shape[0]:
+            y_min -= (y_max - data.shape[0])
+            y_max = data.shape[0]
+        seg_data = data[y_min:y_max, x_min:x_max, :]
         seg_data[seg_data < 0] = 0
-        seg_data_flat = seg_data.reshape(np.prod(seg_data_shape[:2]), seg_data_shape[2])
+        X = seg_data.reshape(np.prod(seg_data.shape[:2]), seg_data.shape[2])
+        if norm_poisson:
+            # Normalize for poissonian noise
+            aG = X.sum(axis=1).squeeze()
+            bH = X.sum(axis=0).squeeze()
+            root_aG = np.sqrt(aG)[:, np.newaxis]
+            root_bH = np.sqrt(bH)[np.newaxis, :]
+            X /= root_aG * root_bH
+            X = np.nan_to_num(X)
 
-        seg_data_pca = PCA(n_components=n_components, svd_solver='full')
-        seg_data_trans = seg_data_pca.fit_transform(seg_data_flat)
-        seg_data_projected = seg_data_pca.inverse_transform(seg_data_trans).reshape(seg_data_shape)
-        pca_pixel = seg_data_projected[int(i - y_min), int(j - x_min)]
+        model = PCA(n_components=n_components, svd_solver='full')
+        loadings = model.fit_transform(X)
+        factors = model.components_.T
+        if norm_poisson:
+            # rescale back the loadings and factors
+            loadings[:] *= root_aG
+            factors[:] *= root_bH.T
+        X_model = factors @ loadings.T + model.mean_[:, np.newaxis]
+        model_data = X_model.T.reshape(seg_data.shape)
+        model_pixel = model_data[int(i - y_min), int(j - x_min)]
+        return model_pixel
 
-        return pca_pixel
-
-    def pca_cluster(self, cluster, n_components=0.9):
+    def pca_cluster(self, data, cluster, n_components=30, norm_poisson=True, **kwargs):
         r"""
         Use principal component analysis on a cluster of the spectral image. The signals of the cluster are already
         in reduced format (pixel location is lost).
@@ -1067,13 +1197,31 @@ class SpectralImage:
 
         """
 
-        cluster_data = self.get_cluster_signals()[cluster]
-        cluster_pca = PCA(n_components=n_components, svd_solver='full')
-        cluster_data_trans = cluster_pca.fit_transform(cluster_data)
-        cluster_data_pca = cluster_pca.inverse_transform(cluster_data_trans)
-        return cluster_data_pca
+        cluster_data = self.get_cluster_signals(data=data, **kwargs)[cluster]
+        cluster_data[cluster_data < 0] = 0
+        X = np.copy(cluster_data)
+        if norm_poisson:
+            # Normalize for poissonian noise
+            aG = X.sum(axis=1).squeeze()
+            bH = X.sum(axis=0).squeeze()
+            root_aG = np.sqrt(aG)[:, np.newaxis]
+            root_bH = np.sqrt(bH)[np.newaxis, :]
+            X /= root_aG * root_bH
+            X = np.nan_to_num(X)
 
-    def nmf_image(self, area_type='segment', n_components=0.9, max_iter=100000, segments_x=4, segments_y=4, **kwargs):
+        model = PCA(n_components=n_components, svd_solver='full')
+        loadings = model.fit_transform(X)
+        factors = model.components_.T
+        if norm_poisson:
+            # rescale back the loadings and factors
+            loadings[:] *= root_aG
+            factors[:] *= root_bH.T
+        X_model = factors @ loadings.T + model.mean_[:, np.newaxis]
+        model_data = X_model
+        return model_data
+
+    def nmf_image(self, data, area_type='segment', n_components=30, max_iter=100000, segments_x=1, segments_y=1,
+                  norm_poisson=True, **kwargs):
         r"""
         Use non-negative matrix factorization on the spectral image.
 
@@ -1090,9 +1238,9 @@ class SpectralImage:
         max_iter: int,
             Default is 100000
         segments_x: int
-            For ``'segment'`` option, number of segments the x-axis is divided upon. Default is 4.
+            For ``'segment'`` option, number of segments the x-axis is divided upon. Default is 1.
         segments_y: int
-            For ``'segment'`` option, number of segments the y-axis is divided upon. Default is 4.
+            For ``'segment'`` option, number of segments the y-axis is divided upon. Default is 1.
         kwargs: dict, optional
             Additional keyword arguments.
 
@@ -1100,61 +1248,64 @@ class SpectralImage:
         -------
 
         """
-
+        data = np.copy(data)
         if area_type == 'segment':
             print("NMF of segmented areas started")
-            segsize_x = self.shape[1] / segments_x
-            segsize_y = self.shape[0] / segments_y
-            data_nmf = np.zeros(self.shape)
+            segsize_x = data.shape[1] / segments_x
+            segsize_y = data.shape[0] / segments_y
+            model_data = np.zeros(data.shape)
             for segment_y in np.arange(0, segments_y):
                 for segment_x in np.arange(0, segments_x):
                     x_min = round(segsize_x * segment_x)
                     x_max = round(segsize_x * (segment_x + 1))
                     y_min = round(segsize_y * segment_y)
                     y_max = round(segsize_y * (segment_y + 1))
-                    if self.data_subtracted is not None:
-                        # If not all subtracted spectra have been calculated, this output is incorrect
-                        # because some entries in self.data_subtracted are 0
-                        seg_data = self.data_subtracted[y_min:y_max, x_min:x_max]
-                    else:
-                        seg_data = self.data[y_min:y_max, x_min:x_max, :]
-                    seg_data_shape = seg_data.shape
+                    seg_data = data[y_min:y_max, x_min:x_max, :]
                     seg_data[seg_data < 0] = 0
-                    seg_data_flat = seg_data.reshape(np.prod(seg_data_shape[:2]), seg_data_shape[2])
+                    X = seg_data.reshape(np.prod(seg_data.shape[:2]), seg_data.shape[2])
+                    if norm_poisson:
+                        # Normalize for poissonian noise
+                        aG = X.sum(axis=1).squeeze()
+                        bH = X.sum(axis=0).squeeze()
+                        root_aG = np.sqrt(aG)[:, np.newaxis]
+                        root_bH = np.sqrt(bH)[np.newaxis, :]
+                        X /= root_aG * root_bH
+                        X = np.nan_to_num(X)
                     if n_components < 1:
-                        seg_data_pca = PCA(n_components=n_components, svd_solver='full').fit(seg_data_flat)
-                        n_components = seg_data_pca.n_components_
-                        if n_components < 2:
+                        model_pca = PCA(n_components=n_components, svd_solver='full').fit(X)
+                        if model_pca.n_components_ < 2:
                             n_components = 2
-                    seg_data_nmf = NMF(n_components=n_components, max_iter=max_iter)
-                    seg_data_trans = seg_data_nmf.fit_transform(seg_data_flat)
-                    # seg_data_maps_nmf = seg_data_trans_nmf.reshape(seg_data_shape[:2] + (seg_data_nmf.n_components_,))
-                    data_nmf[y_min:y_max, x_min:x_max, :] = seg_data_nmf.inverse_transform(seg_data_trans).reshape(
-                        seg_data_shape)
-            self.nmf = data_nmf
+                    model = NMF(n_components=n_components, max_iter=max_iter)
+                    loadings = model.fit_transform(X)
+                    factors = model.components_.T
+                    if norm_poisson:
+                        # rescale back the loadings and factors
+                        loadings[:] *= root_aG
+                        factors[:] *= root_bH.T
+                    # if segments_x == 1 and segments_y == 1:
+                    #     loadings_maps = loadings.reshape(seg_data_shape[:2] + (model.n_components_,))
+                    X_model = factors @ loadings.T
+                    model_data[y_min:y_max, x_min:x_max, :] = X_model.T.reshape(seg_data.shape)
 
         elif area_type == 'cluster':
             print("NMF of data per cluster started")
-            data_nmf = np.zeros(self.shape)
+            model_data = np.zeros(data.shape)
             for cluster_idx in np.arange(0, len(self.cluster_centroids)):
-                data_nmf[self.cluster_labels == cluster_idx] = self.nmf_cluster(cluster=cluster_idx,
-                                                                                n_components=n_components,
-                                                                                max_iter=max_iter)
-            self.nmf = data_nmf
-
+                model_data[self.cluster_labels == cluster_idx] = self.nmf_cluster(data=data, cluster=cluster_idx,
+                                                                                  n_components=n_components,
+                                                                                  max_iter=max_iter, **kwargs)
         elif area_type == 'pixel':
             print("NMF of data per pixel started")
-            data_nmf = np.zeros(self.shape)
-            for i in range(self.shape[0]):
-                for j in range(self.shape[1]):
-                    data_nmf[i, j] = self.nmf_pixel(i=i, j=j, n_components=n_components, **kwargs)
-            self.pca = data_nmf
-
+            model_data = np.zeros(data.shape)
+            for i in range(data.shape[0]):
+                for j in range(data.shape[1]):
+                    model_data[i, j] = self.nmf_pixel(data=data, i=i, j=j, n_components=n_components, **kwargs)
         else:
             print("please pick a valid area type")
         print("NMF of data complete")
+        return model_data
 
-    def nmf_cluster(self, cluster, n_components=0.9, max_iter=100000):
+    def nmf_cluster(self, data, cluster, n_components=30, max_iter=100000, norm_poisson=True, **kwargs):
         r"""
         Use non-negative matrix factorization on a cluster of the spectral image.
         The signals of the cluster are already in reduced format (pixel location is lost).
@@ -1175,19 +1326,33 @@ class SpectralImage:
 
         """
 
-        cluster_data = self.get_cluster_signals()[cluster]
+        cluster_data = self.get_cluster_signals(data=data, **kwargs)[cluster]
         cluster_data[cluster_data < 0] = 0
+        X = np.copy(cluster_data)
+        if norm_poisson:
+            # Normalize for poissonian noise
+            aG = X.sum(axis=1).squeeze()
+            bH = X.sum(axis=0).squeeze()
+            root_aG = np.sqrt(aG)[:, np.newaxis]
+            root_bH = np.sqrt(bH)[np.newaxis, :]
+            X /= root_aG * root_bH
+            X = np.nan_to_num(X)
         if n_components < 1:
-            cluster_pca = PCA(n_components=n_components, svd_solver='full').fit(cluster_data)
-            n_components = cluster_pca.n_components_
-            if n_components < 2:
+            model_pca = PCA(n_components=n_components, svd_solver='full').fit(X)
+            if model_pca.n_components_ < 2:
                 n_components = 2
-        cluster_nmf = NMF(n_components=n_components, max_iter=max_iter)
-        cluster_data_trans = cluster_nmf.fit_transform(cluster_data)
-        cluster_data_nmf = cluster_nmf.inverse_transform(cluster_data_trans)
-        return cluster_data_nmf
+        model = NMF(n_components=n_components, max_iter=max_iter)
+        loadings = model.fit_transform(X)
+        factors = model.components_.T
+        if norm_poisson:
+            # rescale back the loadings and factors
+            loadings[:] *= root_aG
+            factors[:] *= root_bH.T
+        X_model = factors @ loadings.T
+        model_data = X_model
+        return model_data
 
-    def nmf_pixel(self, i, j, area=9, n_components=0.9, max_iter=100000):
+    def nmf_pixel(self, data, i, j, area=9, n_components=30, max_iter=100000, norm_poisson=True, **kwargs):
         r"""
         Use principal component analysis on the spectral image, using the data of a squared window of size ``n_p``
         around pixel (``i``, ``j``).
@@ -1215,7 +1380,7 @@ class SpectralImage:
         if area % 2 == 0:
             print("Unable to NMF with even number " + str(area) + ", continuing with n_area=" + str(area + 1))
             area += 1
-        if area > self.shape[0] or area > self.shape[1]:
+        if area > data.shape[0] or area > data.shape[1]:
             raise ValueError("Your pixel area is too large for one or both of the image axes, "
                              "please choose a number smaller than these values")
 
@@ -1228,39 +1393,47 @@ class SpectralImage:
         if x_min < 0:
             x_max += np.abs(x_min)
             x_min = 0
-        if x_max > self.shape[1]:
-            x_min -= (x_max - self.shape[1])
-            x_max = self.shape[1]
+        if x_max > data.shape[1]:
+            x_min -= (x_max - data.shape[1])
+            x_max = data.shape[1]
         if y_min < 0:
             y_max += np.abs(y_min)
             y_min = 0
-        if y_max > self.shape[0]:
-            y_min -= (y_max - self.shape[0])
-            y_max = self.shape[0]
-        if self.data_subtracted is not None:
-            # If not all subtracted spectra have been calculated, this output is incorrect
-            # because some entries in self.data_subtracted are 0
-            seg_data = self.data_subtracted[y_min:y_max, x_min:x_max]
-        else:
-            seg_data = self.data[y_min:y_max, x_min:x_max, :]
-        seg_data_shape = seg_data.shape
+        if y_max > data.shape[0]:
+            y_min -= (y_max - data.shape[0])
+            y_max = data.shape[0]
+        seg_data = data[y_min:y_max, x_min:x_max, :]
         seg_data[seg_data < 0] = 0
-        seg_data_flat = seg_data.reshape(np.prod(seg_data_shape[:2]), seg_data_shape[2])
-        if n_components < 1:
-            seg_data_pca = PCA(n_components=n_components, svd_solver='full').fit(seg_data_flat)
-            n_components = seg_data_pca.n_components_
-            if n_components < 2:
-                n_components = 2
-        seg_data_nmf = NMF(n_components=n_components, max_iter=max_iter)
-        seg_data_trans = seg_data_nmf.fit_transform(seg_data_flat)
-        seg_data_projected = seg_data_nmf.inverse_transform(seg_data_trans).reshape(seg_data_shape)
-        pixel_nmf = seg_data_projected[int(i - y_min), int(j - x_min)]
+        X = seg_data.reshape(np.prod(seg_data.shape[:2]), seg_data.shape[2])
+        if norm_poisson:
+            # Normalize for poissonian noise
+            aG = X.sum(axis=1).squeeze()
+            bH = X.sum(axis=0).squeeze()
+            root_aG = np.sqrt(aG)[:, np.newaxis]
+            root_bH = np.sqrt(bH)[np.newaxis, :]
+            X /= root_aG * root_bH
+            X = np.nan_to_num(X)
 
-        return pixel_nmf
+        if n_components < 1:
+            model_pca = PCA(n_components=n_components, svd_solver='full').fit(X)
+            if model_pca.n_components_ < 2:
+                n_components = 2
+        model = NMF(n_components=n_components, max_iter=max_iter)
+        loadings = model.fit_transform(X)
+        factors = model.components_.T
+
+        if norm_poisson:
+            # rescale back the loadings and factors
+            loadings[:] *= root_aG
+            factors[:] *= root_bH.T
+        X_model = factors @ loadings.T
+        model_data = X_model.T.reshape(seg_data.shape)
+        model_pixel = model_data[int(i - y_min), int(j - x_min)]
+        return model_pixel
 
     # METHODS ON SIGNAL
     @staticmethod
-    def smooth_signal(signal, window_length=51, window_type='hanning'):
+    def smooth_signal(signal, window_length=51, window_type='hanning', beta=14.0, polyorder=2, **kwargs):
         r"""
         Smooth a signal using a window length ``window_length`` and a window type ``window_type``.
 
@@ -1277,8 +1450,10 @@ class SpectralImage:
             The dimension of the smoothing window; should be an odd integer. Default is 51.
         window_type: str, optional
             the type of window from ``'flat'``, ``'hanning'``, ``'hamming'``, ``'bartlett'``,
-            ``'blackman'`` and ``'kasier'``. ``'flat'`` window will produce a moving average smoothing.
-            Default is ``'hanning'``
+            ``'blackman'`` and ``'kaiser'``. ``'flat'`` window will produce a moving average smoothing.
+            Default is ``'hanning'``.
+        beta: float, optional
+            If using the kaiser window, beta determines the shape parameter for window.
 
         Returns
         -------
@@ -1292,15 +1467,20 @@ class SpectralImage:
         # extend the signal with the window length on both ends
         signal_padded = np.r_['-1', signal[window_length - 1:0:-1], signal, signal[-2:-window_length - 1:-1]]
 
-        # Pick the window type
-        if window_type == 'flat':  # moving average
-            window = np.ones(window_length, 'd')
+        if window_type == 'savgol':
+            signal_smooth = savgol_filter(x=signal, window_length=window_length, polyorder=polyorder)
         else:
-            window = eval('np.' + window_type + '(window_length)')
-
-        # Determine the smoothed signal and throw away the padded ends
-        surplus_data = int((window_length - 1) * 0.5)
-        signal_smooth = np.convolve(signal_padded, window / window.sum(), mode='valid')[surplus_data:-surplus_data]
+            # Pick the window type
+            if window_type == 'flat':  # moving average
+                window = np.ones(window_length, 'd')
+            elif window_type == 'kaiser':
+                (window) = np.kaiser(M=window_length, beta=beta)
+            else:
+                window = eval('np.' + window_type + '(window_length)')
+            # Determine the smoothed signal and throw away the padded ends
+            surplus_data = int((window_length - 1) * 0.5)
+            signal_smooth = np.convolve(signal_padded, window / window.sum(), mode='valid')[
+                                surplus_data:-surplus_data]
         return signal_smooth
 
     def deconvolution(self, signal, zlp, correction=True):
@@ -1352,7 +1532,7 @@ class SpectralImage:
 
             x_fit = np.array(x[dydx1_idx:dydx2_idx], dtype='float64')
             y_fit = np.array(J1_E[dydx1_idx:dydx2_idx], dtype='float64')
-            popt, pcov = curve_fit(f=linear_fit, xdata=x_fit, ydata=y_fit, bounds=([np.NINF, 0], [0, np.inf]))
+            popt, pcov = curve_fit(f=linear_fit, xdata=x_fit, ydata=y_fit, bounds=([-np.inf, 0], [0, np.inf]))
 
             deconv_corr = linear_fit(x, popt[0], popt[1])
             deconv_corr[deconv_corr < 0] = 0
@@ -1364,6 +1544,45 @@ class SpectralImage:
         J1_E[y_zlp == y_signal] = 0
 
         return J1_E[:self.shape[2]].flatten()
+
+    def rl_deconvolution(self, signal, zlp, iterations=15):
+        """
+        Richardson-lucy deconvolution
+        Parameters
+        ----------
+        signal
+        zlp
+        iterations
+
+        Returns
+        -------
+
+        """
+        zlp_ch = zlp.shape[0]
+        max_idx = zlp.argmax()
+        signal_rl = np.array(signal).copy()
+        mimax_idx = zlp_ch - 1 - max_idx
+        for _ in range(iterations):
+            first = np.convolve(zlp, signal_rl)[max_idx: max_idx + zlp_ch]
+            signal_rl *= np.convolve(zlp[::-1], signal / first)[mimax_idx: mimax_idx + zlp_ch]
+        return signal_rl
+
+    def subtract_zlp(self, signal, zlp):
+        r"""
+        Subtract the Zero Loss Peak from the signal
+
+        Parameters
+        ----------
+        signal: numpy.ndarray, shape=(M,)
+            Raw signal of length M
+        zlp: numpy.ndarray, shape=(M,)
+            zero-loss peak of length M
+
+        Returns
+        -------
+
+        """
+        return signal - zlp
 
     def get_extrp_param(self, signal, range_perc=0.1):
         r"""
@@ -1384,7 +1603,7 @@ class SpectralImage:
         x_fit = np.array(self.eaxis[idx_last:], dtype='float64')
         y_fit = np.array(signal[idx_last:], dtype='float64')
         try:
-            popt, pcov = curve_fit(power_fit, x_fit, y_fit, bounds=([0, np.NINF], [np.inf, -1]))
+            popt, pcov = curve_fit(power_fit, x_fit, y_fit, bounds=([0, -np.inf], [np.inf, -1]))
             r = popt[1]
         except:
             r = -1
@@ -1537,12 +1756,11 @@ class SpectralImage:
             Matched ZLP model
         """
 
-        if fwhm is None:
-            peak = np.max(signal)
-            fwhm_window = np.arghwere(signal > 0.5*peak)
-            fwhm_idx1 = fwhm_window.flatten()[0] - 1
-            fwhm_idx2 = fwhm_window.flatten()[-1] + 1
-            fwhm = self.eaxis[fwhm_idx2] - self.eaxis[fwhm_idx1]
+        peak = np.max(signal)
+        fwhm_window = np.argwhere(signal > 0.5*peak)
+        fwhm_idx1 = fwhm_window.flatten()[0] - 1
+        fwhm_idx2 = fwhm_window.flatten()[-1] + 1
+        fwhm = self.eaxis[fwhm_idx2] - self.eaxis[fwhm_idx1]
 
         de0 = (fwhm + de1) / 2
         de0_m = -1 * de0
@@ -1610,6 +1828,7 @@ class SpectralImage:
         self.train_zlps = TrainZeroLossPeak(spectra=self.training_data, eaxis=self.eaxis,
                                             cluster_centroids=self.cluster_centroids, **kwargs)
         self.train_zlps.train_zlp_models_scaled(lr=lr)
+
 
     def load_zlp_models(self, path_to_models, plot_chi2=False, plot_pred=False, idx=None, **kwargs):
         r"""
@@ -1697,7 +1916,7 @@ class SpectralImage:
 
         # plot the zlp predictions for each cluster
         if plot_pred:
-            fig = plot_zlp_cluster_predictions(image=self, xlim=[self.eaxis[0], np.median(self.dE2)], x=1,
+            fig = plot_zlp_cluster_predictions(image=self, dpi=500, xlim=[self.eaxis[0], np.median(self.dE2)], x=1,
                                                yscale='log', xlabel=r"$\rm{Energy\;loss\;[eV]}$",
                                                title=r"$\rm{Cluster\;predictions\;}$")
             fig.savefig(os.path.join(self.output_path, 'Cluster_predictions.pdf'))
@@ -1984,7 +2203,7 @@ class SpectralImage:
         eps = (eps_1 + eps_2 * 1j)
         return eps[x <= self.eaxis[-1]], te*1E9, y_srf[x <= self.eaxis[-1]]
 
-    def KK_pixel(self, i, j, signal_type='EELS', iterations=1, **kwargs):
+    def KK_pixel(self, i, j, signal_type='EELS', iterations=1, mat_prop='n', **kwargs):
         r"""
         Perform a Kramer-Krönig analysis on pixel (``i``, ``j``).
 
@@ -1995,11 +2214,14 @@ class SpectralImage:
         j : int
             x-coordinate of the pixel.
         signal_type: str, optional
-            Type of spectrum. Set to EELS by default.
+            Type of spectrum. Set to 'EELS' by default.
         iterations: int
             Number of the iterations for the internal loop to remove the
             surface plasmon contribution. If 1 the surface plasmon contribution
             is not estimated and subtracted (the default is 1).
+        mat_prop: str, optional
+            Material property to be used for calculations, 'n' refers to refractive index, 'rho' refers to mass density.
+            Set to 'n' by default
 
         Returns
         -------
@@ -2014,15 +2236,13 @@ class SpectralImage:
 
         """
 
-        # Check if user has learned to only provide one of these values
-        if self.n is not None and self.rho is None:
+        if mat_prop == 'n':
             n = self.n[self.cluster_labels[i, j]]
-            rho = self.rho
-        elif self.rho is not None and self.n is None:
+        elif mat_prop == 'rho':
             rho = self.rho[self.cluster_labels[i, j]]
-            n = self.n
         else:
-            raise ValueError("Please provide either the refractive index OR the mass density value")
+            raise ValueError("Please select either the refractive index by setting mat_prop = 'n' OR "
+                             "the mass density by setting mat_prop = 'rho'")
 
         # Get your signal ready
         signal = self.get_pixel_signal(i, j, signal_type=signal_type, **kwargs)
@@ -2048,17 +2268,17 @@ class SpectralImage:
                 signal_ssd_extrp = self.extrp_signal(signal=signal_ssds[k], r=r)
             else:
                 signal_ssd_extrp = self.extrp_signal(signal=signal_ssds[k], r=r)
-            if rho is not None:
+            if mat_prop == 'rho':
                 ts[k] = self.calc_thickness(signal=signal_extrp, rho=rho, n_zlp=n_zlp)
                 epss[k, :], ts[k], S_ss[k] = self.kramers_kronig_analysis(signal_ssd=signal_ssd_extrp, n_zlp=n_zlp,
                                                                           t=ts[k], iterations=iterations, **kwargs)
-            if n is not None:
+            if mat_prop == 'n':
                 epss[k, :], ts[k], S_ss[k] = self.kramers_kronig_analysis(signal_ssd=signal_ssd_extrp, n_zlp=n_zlp,
                                                                           n=n, iterations=iterations, **kwargs)
         return epss, ts, S_ss, signal_ssds, max_signal_ssds
 
     # METHODS ON CLUSTERING
-    def cluster(self, n_clusters=5, based_on='log_zlp', init='k-means++', n_times=10, max_iter=300, seed=None,
+    def cluster(self, n_clusters=3, based_on='log_zlp', init='k-means++', n_times=10, max_iter=300, seed=None,
                 save_seed=False, algorithm='lloyd', **kwargs):
         r"""
         Clusters the spectral image into clusters according to the (log)
@@ -2109,33 +2329,33 @@ class SpectralImage:
         if self.n_spectra == 1:
             print("Not much to cluster on with a single spectrum")
             n_clusters = 1
-            seed = 11111111
+            seed = 12345678
             max_iter = 1
 
-        image_data = self.get_image_signals(**kwargs)
+        image_data = np.copy(self.get_image_signals(**kwargs))
 
         if based_on == 'sum':
-            values = image_data.sum(axis=2)
+            intensities = image_data.sum(axis=2)
         elif based_on == 'log_sum':
-            values = np.log(np.maximum(image_data, 1e-14).sum(axis=2))
+            intensities = np.log(np.maximum(image_data, 1e-14).sum(axis=2))
         elif based_on == 'log_peak':
-            values = np.log(image_data[:, :, np.argwhere((self.eaxis > -1) & (self.eaxis < 1)).flatten()].max(axis=2))
+            intensities = np.log(image_data[:, :, np.argwhere((self.eaxis > -1) & (self.eaxis < 1)).flatten()].max(axis=2))
         elif based_on == 'log_zlp':
-            values = np.zeros([self.shape[0], self.shape[1]])
+            intensities = np.zeros([self.shape[0], self.shape[1]])
             max_idx = np.argmax(image_data, axis=2)
             for i in np.arange(self.shape[0]):
                 for j in np.arange(self.shape[1]):
-                    values[i, j] = np.log(image_data[i, j, max_idx[i, j] - 1:max_idx[i, j] + 2].sum())
+                    intensities[i, j] = np.log(image_data[i, j, max_idx[i, j] - 1:max_idx[i, j] + 2].sum())
         elif based_on == 'log_bulk':
-            values = np.log(np.maximum(image_data[:, :, np.argwhere(self.eaxis > 5).flatten()], 1e-14).sum(axis=2))
+            intensities = np.log(np.maximum(image_data[:, :, np.argwhere(self.eaxis > 5).flatten()], 1e-14).sum(axis=2))
         elif based_on == 'thickness':
-            values = self.t[:, :, 0]
+            intensities = self.t[:, :, 0]
         elif type(based_on) == np.ndarray:
-            values = based_on
-            if values.size != self.n_spectra:
+            intensities = based_on
+            if intensities.size != self.n_spectra:
                 raise IndexError("The size of values on which to cluster does not match the image size.")
         else:
-            values = np.sum(image_data, axis=2)
+            intensities = np.sum(image_data, axis=2)
             print("provide either sum, log or thickness as clustering base, reverting back to sum")
 
         if seed is not None:
@@ -2143,11 +2363,12 @@ class SpectralImage:
             n_times = 1
 
         cost_min = np.inf
+        X = intensities.reshape(-1, 1)
         for _ in range(n_times):
             if seed is None:
                 seed_init = get_seed()
             kmeans = KMeans(n_clusters=n_clusters, init=init, n_init=1, max_iter=max_iter,
-                            random_state=seed_init, algorithm=algorithm).fit(values.reshape(-1, 1))
+                            random_state=seed_init, algorithm=algorithm).fit(X)
             if cost_min > kmeans.inertia_:
                 cost_min = kmeans.inertia_
                 min_cluster_centroids = kmeans.cluster_centers_.flatten()
@@ -2156,8 +2377,8 @@ class SpectralImage:
             print("Seed: " + str(seed_init) + " finished after " + str(
                 kmeans.n_iter_) + " iterations and has cost: " + str(kmeans.inertia_))
         print("Seed: " + str(min_seed) + " has the lowest cost")
-
         self.cluster_centroids = np.sort(min_cluster_centroids)[::-1]
+        print("cluster centroids are", self.cluster_centroids)
         self.cluster_on_centroids(self.cluster_centroids, based_on=based_on)
 
         if save_seed is True:
@@ -2225,72 +2446,65 @@ class SpectralImage:
                 "it seems like the clustered values of dE1 are not clustered on \
                     this image/on log or sum. Please check clustering.")
 
-    def find_optimal_amount_of_clusters(self, cluster_start=None, sigma=0.05, n_models=1000,
-                                        conf_interval=1, signal_type='EELS', **kwargs):
+    def find_optimal_amount_of_clusters(self, n_clusters=3, bins=100, based_on='log_zlp', **kwargs):
         r"""
-        Finds the optimal amount of clusters based on the amount of models that need to be trained.
+        Find the optimal amount of clusters by performing a Gaussian Mixture model on the specific data intensities.
+        The user will need to judge what is best
 
         Parameters
         ----------
-        cluster_start
-        sigma
-        n_models
-        conf_interval
-        signal_type
+        n_clusters
+        bins
+        based_on
         kwargs
 
         Returns
         -------
-
+        fig
         """
 
-        int_log_I = np.log(np.sum(self.data, axis=2)).flatten()
-        if cluster_start is None:
-            cluster_start = int(0.5 * (self.n_spectra / n_models))
-            print("Start with", cluster_start, "clusters")
-        scale_factors = find_scale_var(inp=int_log_I, min_out=0, max_out=1)
-        optimal = False
-        n_clusters = cluster_start
-        prev_smallest = int(0.2 * n_models)
-        while optimal is False:
-            print("Currently at", n_clusters, "clusters")
-            self.cluster(n_clusters=n_clusters, **kwargs)
-            self.get_cluster_signals(signal_type=signal_type)
-            sigma_per_cluster = np.zeros(n_clusters)
-            n_spectra_per_cluster = np.zeros(n_clusters)
-            for cluster_label in range(n_clusters):
-                signals_in_cluster = self.cluster_signals[cluster_label]
-                signals_in_cluster[signals_in_cluster <= 0] = 1
-                if len(signals_in_cluster) <= 1:
-                    print("You have reached a cluster of only 1 spectrum!")
-                    optimal = True
-                    break
-                ci_low = scale(np.nanpercentile(
-                    np.log(np.sum(signals_in_cluster, axis=1)), conf_interval, axis=0), scale_factors)
-                ci_high = scale(np.nanpercentile(
-                    np.log(np.sum(signals_in_cluster, axis=1)), 100 - conf_interval, axis=0), scale_factors)
-                sigma_per_cluster[cluster_label] = np.absolute(ci_high - ci_low)
-                n_spectra_per_cluster[cluster_label] = int(len(signals_in_cluster))
-            if np.median(n_spectra_per_cluster) < n_models:
-                if np.median(n_spectra_per_cluster) < int(0.9 * n_models):
-                    optimal = True
-                    print("Warning! Median # of spectra is getting too small, breaking off early")
-                elif np.min(n_spectra_per_cluster) < int(0.3 * n_models):
-                    if np.min(n_spectra_per_cluster) < int(0.9 * prev_smallest):
-                        optimal = True
-                        print("Warning! # of spectra in smallest cluster is getting too small, breaking off early")
-                        prev_smallest = np.min(n_spectra_per_cluster)
-            if np.max(sigma_per_cluster) <= sigma:
-                optimal = True
-            if optimal is False:
-                n_clusters += 1
-            else:
-                break
-        print("Finished! Note that this is just a suggestion.")
-        print("# of clusters =", n_clusters)
-        print("Spread is", np.round(sigma_per_cluster, 4))
-        print("# of spectra per cluster is", n_spectra_per_cluster)
-        print("median is", int(np.median(n_spectra_per_cluster)))
+        image_data = self.get_image_signals(**kwargs)
+
+        if based_on == 'sum':
+            intensities = image_data.sum(axis=2)
+        elif based_on == 'log_sum':
+            intensities = np.log(np.maximum(image_data, 1e-14).sum(axis=2))
+        elif based_on == 'log_peak':
+            intensities = np.log(
+                image_data[:, :, np.argwhere((self.eaxis > -1) & (self.eaxis < 1)).flatten()].max(axis=2))
+        elif based_on == 'log_zlp':
+            intensities = np.zeros([self.shape[0], self.shape[1]])
+            max_idx = np.argmax(image_data, axis=2)
+            for i in np.arange(self.shape[0]):
+                for j in np.arange(self.shape[1]):
+                    intensities[i, j] = np.log(image_data[i, j, max_idx[i, j] - 1:max_idx[i, j] + 2].sum())
+        elif based_on == 'log_bulk':
+            intensities = np.log(np.maximum(image_data[:, :, np.argwhere(self.eaxis > 5).flatten()], 1e-14).sum(axis=2))
+        elif based_on == 'thickness':
+            intensities = self.t[:, :, 0]
+        elif type(based_on) == np.ndarray:
+            intensities = based_on
+            if intensities.size != self.n_spectra:
+                raise IndexError("The size of values on which to cluster does not match the image size.")
+        else:
+            intensities = np.sum(image_data, axis=2)
+            print("provide either sum, log or thickness as clustering base, reverting back to sum")
+
+        X = intensities.reshape(-1, 1)
+        gm = GaussianMixture(n_components=n_clusters).fit(X)
+
+        # Evaluate GMM
+        gm_x = np.linspace(np.min(intensities), np.max(intensities), 256)
+        gm_y = np.exp(gm.score_samples(gm_x.reshape(-1, 1)))
+
+        fig, ax = plt.subplots()
+        ax.hist(X.flatten(), density=True, bins=bins, color='tab:blue')
+        ax.plot(gm_x, gm_y, color='tab:red', lw=2, label="GMM")
+        ax.set_ylabel("Frequency")
+        ax.set_xlabel("Pixel Intensity")
+        plt.legend(frameon=False)
+
+        return fig
 
     def get_key(self, key):
         if key.lower() in (string.lower() for string in self.EELS_NAMES):

@@ -72,7 +72,9 @@ def plot_zlp_per_pixel(image, pixx, pixy, signal_type='EELS', zlp_gen=False, zlp
 
     fig, ax = plot_figs(**kwargs)
     signal = image.get_pixel_signal(i=pixy, j=pixx, signal_type=signal_type)
-    ax.plot(image.eaxis, signal, label=r"$\rm{I_{total}}$", color='black')
+    # ax.plot(image.eaxis, signal, label=r"$\rm{I_{total}}$", color='black')
+    step = 'mid'
+    ax.step(x=image.eaxis, y=signal, where=step, label=r"$\rm{I_{total}}$", color='black')
 
     if (zlp_gen is True) or (random_zlp is not None):
         max_idx = np.argmax(signal)
@@ -88,8 +90,8 @@ def plot_zlp_per_pixel(image, pixx, pixy, signal_type='EELS', zlp_gen=False, zlp
                     ax.plot(image.eaxis, zlps_gen[zlp_idx], color='tab:gray', alpha=0.1)
         if zlp_gen is True:
             zlps_gen_dist = summary_distribution(zlps_gen)
-            ax.fill_between(image.eaxis, zlps_gen_dist[1], zlps_gen_dist[2], alpha=0.2, color='tab:blue')
-            ax.plot(image.eaxis, zlps_gen_dist[0], label=r"$\rm{I_{zlp_{model}}}$", color='tab:blue')
+            ax.fill_between(image.eaxis, zlps_gen_dist[1], zlps_gen_dist[2], alpha=0.2, color='tab:red')
+            ax.plot(image.eaxis, zlps_gen_dist[0], label=r"$\rm{I_{zlp_{model}}}$", color='tab:red')
 
     if (zlp_match is True) or (subtract is True):
         zlps_match = image.get_pixel_matched_zlp_models(i=pixy, j=pixx, signal_type=signal_type, signal=signal)
@@ -101,8 +103,9 @@ def plot_zlp_per_pixel(image, pixx, pixy, signal_type='EELS', zlp_gen=False, zlp
                 signal_ssd_k = image.deconvolution(signal=signal_extrp, zlp=zlp_k).flatten()
                 signal_ssds[k, :] = signal_ssd_k[:image.shape[2]]
             ssd = summary_distribution(signal_ssds)
-            ax.fill_between(image.eaxis, ssd[1], ssd[2], alpha=0.2, color='tab:red')
-            ax.plot(image.eaxis, ssd[0], label=r"$\rm{I_{inel_{deconvoluted}}}$", color='tab:red')
+            ax.fill_between(image.eaxis, ssd[1], ssd[2], step=step, alpha=0.2, color='tab:cyan')
+            # ax.plot(image.eaxis, ssd[0], label=r"$\rm{I_{inel_{deconvoluted}}}$", color='tab:cyan')
+            ax.step(x=image.eaxis, y=ssd[0], where=step, label=r"$\rm{I_{inel_{deconvoluted}}}$", color='tab:cyan')
 
         zlps_match_dist = summary_distribution(zlps_match)
         if zlp_match is True:
@@ -110,9 +113,11 @@ def plot_zlp_per_pixel(image, pixx, pixy, signal_type='EELS', zlp_gen=False, zlp
             ax.plot(image.eaxis, zlps_match_dist[0], label=r"$\rm{I_{zlp_{matched}}}$", color='tab:orange')
         if subtract is True:
             ax.fill_between(image.eaxis, signal - zlps_match_dist[1], signal - zlps_match_dist[2],
-                            alpha=0.2, color='tab:green')
-            ax.plot(image.eaxis, signal - zlps_match_dist[0],
-                    label=r"$\rm{I_{inel_{subtracted}}}$", color='tab:green')
+                            step=step, alpha=0.2, color='tab:blue')
+            # ax.plot(image.eaxis, signal - zlps_match_dist[0],
+            #         label=r"$\rm{I_{inel_{subtracted}}}$", color='tab:blue')
+            ax.step(x=image.eaxis, y=signal - zlps_match_dist[0],
+                    where=step, label=r"$\rm{I_{inel_{subtracted}}}$", color='tab:blue')
 
     if hyper_par is True:
         de1 = image.dE1[int(image.cluster_labels[pixy, pixx])]
@@ -122,7 +127,7 @@ def plot_zlp_per_pixel(image, pixx, pixy, signal_type='EELS', zlp_gen=False, zlp
         ax.axvspan(de1, de2, alpha=0.1, color='tab:olive')
         ax.axvline(de1, color='tab:olive', linestyle='--')
         ax.axvline(de2, color='tab:olive', linestyle='--')
-        ax.axvline(de0, color='tab:cyan', linestyle='--')
+        ax.axvline(de0, color='tab:brown', linestyle='--')
 
     ax.legend(frameon=False)
     return fig
@@ -175,13 +180,12 @@ def plot_zlp_per_cluster(image, cluster, signal_type='EELS', zlp_gen=True, hyper
     return fig
 
 
-def plot_figs(dpi=200, x=0, y=0, xlim=[0, 5], ylim=[-10, 3000], yscale='linear', **kwargs):
+def plot_figs(x=0, y=0, xlim=[0, 5], ylim=[-10, 3000], yscale='linear', **kwargs):
     r"""
     General parameters to plot figures
 
     Parameters
     ----------
-    dpi
     x
     y
     xlim
@@ -195,7 +199,7 @@ def plot_figs(dpi=200, x=0, y=0, xlim=[0, 5], ylim=[-10, 3000], yscale='linear',
 
     """
 
-    fig, ax = plt.subplots(figsize=kwargs.get('figsize'), dpi=dpi)
+    fig, ax = plt.subplots(figsize=kwargs.get('figsize'), dpi=kwargs.get('dpi'))
     ax.axhline(x, color='black')
     ax.axvline(y, color='black')
     ax.set_title(kwargs.get('title'))

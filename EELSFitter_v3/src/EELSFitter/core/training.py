@@ -1,4 +1,3 @@
-import math
 import numpy as np
 import random
 import os
@@ -10,7 +9,6 @@ import torch.optim as optim
 import datetime as dt
 import copy
 
-from scipy.fft import next_fast_len
 from sklearn.model_selection import train_test_split
 from kneed import KneeLocator
 
@@ -75,8 +73,18 @@ class TrainZeroLossPeak:
         self.n_replica = n_replica
         self.n_epochs = n_epochs
         self.n_batches = n_batches
-        self.shift_de1 = shift_de1
-        self.shift_de2 = shift_de2
+        if type(shift_de1) == float or type(shift_de1) == int:
+            self.shift_de1 = np.ones(len(self.cluster_centroids)) * shift_de1
+        elif len(shift_de1) == len(self.cluster_centroids):
+            self.shift_de1 = shift_de1
+        else:
+            print("Makes sure shift_de1 is of type float or int or an array of the same length as the clusters")
+        if type(shift_de2) == float or type(shift_de2) == int:
+            self.shift_de2 = np.ones(len(self.cluster_centroids)) * shift_de2
+        elif len(shift_de2) == len(self.cluster_centroids):
+            self.shift_de2 = shift_de2
+        else:
+            print("Makes sure shift_de2 is of type float or int or an array of the same length as the clusters")
         self.regularisation_constant = regularisation_constant
         self.remove_temp_files = remove_temp_files
 
@@ -107,6 +115,7 @@ class TrainZeroLossPeak:
         self.set_dydx_data()
         self.set_sigma()
         self.find_fwhm_idx()
+        self.find_difflog_local_minmax_idx()
         self.find_local_min_idx()
         self.find_kneedle_idx()
         self.de1, self.de2, self.mde1, self.mde2 = self.calculate_hyperparameters()
@@ -138,8 +147,7 @@ class TrainZeroLossPeak:
 
             # Split the replica into a train set and a test set
             self.train_test = train_test_split(self.data_x, self.data_y, self.data_sigma, test_size=0.25)
-            self.train_x_for_derivative, self.test_x_for_derivative = train_test_split(self.data_x_for_derivative,
-                                                                                       test_size=0.25)
+
             self.set_train_x_y_sigma()
             self.set_test_x_y_sigma()
 
@@ -185,19 +193,14 @@ class TrainZeroLossPeak:
         """
 
         y_raw = self.spectra
-        self.y_smooth = np.zeros(self.n_clusters, dtype=object)
-        self.y_smooth_log = np.zeros(self.n_clusters, dtype=object)
-        self.y_smooth_median = np.zeros(self.n_clusters, dtype=object)
-        self.y_smooth_median_log = np.zeros(self.n_clusters, dtype=object)
+        self.y_raw_median = np.zeros(self.n_clusters, dtype=object)
+        self.y_log_median = np.zeros(self.n_clusters, dtype=object)
         for i in range(self.n_clusters):
-            self.y_smooth[i] = smooth_signals_per_cluster(y_raw[i])
-            self.y_smooth_log[i] = np.log(self.y_smooth[i])
             if len(y_raw[i]) == 1:
-                self.y_smooth_median[i] = self.y_smooth[i][0]
-                self.y_smooth_median_log[i] = self.y_smooth_log[i][0]
+                self.y_raw_median[i] = y_raw[i][0]
             else:
-                self.y_smooth_median[i] = np.nanpercentile(self.y_smooth[i], 50, axis=0)
-                self.y_smooth_median_log[i] = np.nanpercentile(self.y_smooth_log[i], 50, axis=0)
+                self.y_raw_median[i] = np.nanpercentile(y_raw[i], 50, axis=0)
+            self.y_log_median[i] = np.log(self.y_raw_median[i])
 
     def set_dydx_data(self):
         r"""
@@ -205,21 +208,15 @@ class TrainZeroLossPeak:
 
         """
 
-        dydx = np.zeros(self.n_clusters, dtype=object)
-        dydx_log = np.zeros(self.n_clusters, dtype=object)
         self.dydx_median = np.zeros(self.n_clusters, dtype=object)
+        self.dydx_median_smooth_strong = np.zeros(self.n_clusters, dtype=object)
         self.dydx_median_log = np.zeros(self.n_clusters, dtype=object)
-        self.dydx_smooth = np.zeros(self.n_clusters, dtype=object)
+        self.dydx_median_smooth_light_log = np.zeros(self.n_clusters, dtype=object)
         for i in range(self.n_clusters):
-            dydx[i] = (self.y_smooth[i][:, 1:] - self.y_smooth[i][:, :-1]) / self.deltaE
-            dydx_log[i] = (self.y_smooth_log[i][:, 1:] - self.y_smooth_log[i][:, :-1]) / self.deltaE
-            if len(dydx[i]) == 1:
-                self.dydx_median[i] = smooth_signals_per_cluster(dydx[i])[0]
-                self.dydx_median_log[i] = smooth_signals_per_cluster(dydx_log[i])[0]
-            else:
-                self.dydx_median[i] = np.nanpercentile(dydx[i], 50, axis=0)
-                self.dydx_median_log[i] = np.nanpercentile(dydx_log[i], 50, axis=0)
-            self.dydx_smooth[i] = smooth_signals_per_cluster(dydx[i])
+            self.dydx_median[i] = np.diff(self.y_raw_median[i], axis=0)
+            self.dydx_median_smooth_strong[i] = smooth_signal(self.dydx_median[i], window_length=31)
+            self.dydx_median_log[i] = np.diff(self.y_log_median[i], axis=0)
+            self.dydx_median_smooth_light_log[i] = smooth_signal(self.dydx_median_log[i], window_length=11)
 
     def set_sigma(self):
         r"""
@@ -251,19 +248,37 @@ class TrainZeroLossPeak:
 
         """
 
-        self.fwhm_gain_idx = np.zeros(self.n_clusters, dtype=int)
-        self.fwhm_loss_idx = np.zeros(self.n_clusters, dtype=int)
-        self.fwhm_gain_log_idx = np.zeros(self.n_clusters, dtype=int)
-        self.fwhm_loss_log_idx = np.zeros(self.n_clusters, dtype=int)
+        self.hwhm_gain_idx = np.zeros(self.n_clusters, dtype=int)
+        self.hwhm_loss_idx = np.zeros(self.n_clusters, dtype=int)
         for i in range(self.n_clusters):
-            self.fwhm_gain_idx[i] = np.argmax(self.dydx_median[i]) - 1
-            self.fwhm_loss_idx[i] = np.argmin(self.dydx_median[i]) + 1
-            self.fwhm_gain_log_idx[i] = np.argmax(self.dydx_median_log[i]) - 1
-            self.fwhm_loss_log_idx[i] = np.argmin(self.dydx_median_log[i]) + 1
+            half_max = np.argwhere(
+                self.y_raw_median[i][:int((5+np.abs(self.eaxis[0]))/self.deltaE)] > np.max(self.y_raw_median[i])/2).flatten()
+            self.hwhm_gain_idx[i] = half_max[0] - 1
+            self.hwhm_loss_idx[i] = half_max[-1] + 1
 
         # Values of the FWHMs
-        self.fwhm = (self.eaxis[self.fwhm_loss_idx] - self.eaxis[self.fwhm_gain_idx])
-        self.fwhm_log = (self.eaxis[self.fwhm_loss_log_idx] - self.eaxis[self.fwhm_gain_log_idx])
+        self.fwhm = (self.eaxis[self.hwhm_loss_idx] - self.eaxis[self.hwhm_gain_idx])
+
+    def find_difflog_local_minmax_idx(self):
+        r"""
+        Determine the local minimum and maximum of the differential of the log of the signals per cluster
+
+        Returns
+        -------
+
+        """
+
+        self.difflog_localmin_idx = np.zeros(self.n_clusters, dtype=int)
+        self.difflog_localmax_idx = np.zeros(self.n_clusters, dtype=int)
+        for i in range(self.n_clusters):
+            if 10*self.fwhm[i] >= np.abs(self.eaxis[0]):
+                lower_bound_idx = 0
+            else:
+                lower_bound_idx = np.argwhere(self.eaxis < -10*self.fwhm[i]).flatten()[0]
+            self.difflog_localmin_idx[i] = np.argmin(
+                self.dydx_median_smooth_light_log[i][self.hwhm_gain_idx[i]:int((10*self.fwhm[i]+np.abs(self.eaxis[0]))/self.deltaE)]) + self.hwhm_gain_idx[i]
+            self.difflog_localmax_idx[i] = np.argmax(
+                self.dydx_median_smooth_light_log[i][lower_bound_idx:self.hwhm_loss_idx[i]]) + lower_bound_idx
 
     def find_local_min_idx(self):
         r"""
@@ -275,23 +290,23 @@ class TrainZeroLossPeak:
         self.local_min_loss_idx = np.zeros(self.n_clusters, dtype=int)
         self.local_min_gain_idx = np.zeros(self.n_clusters, dtype=int)
         for i in range(self.n_clusters):
-            crossing_loss = (self.dydx_median[i][self.fwhm_loss_log_idx[i]:] > 0)
+            crossing_loss = (self.dydx_median_smooth_strong[i][self.difflog_localmin_idx[i]:] > 0)
             if not crossing_loss.any():
                 print("No crossing found in loss region cluster " + str(i) + ", finding minimum of absolute of dydx")
                 self.local_min_loss_idx[i] = np.argmin(
-                    np.absolute(self.dydx_median[i])[self.fwhm_loss_log_idx[i]:]) + self.fwhm_loss_log_idx[i]
+                    np.absolute(self.dydx_median_smooth_strong[i])[self.difflog_localmin_idx[i]:]) + self.difflog_localmin_idx[i]
             else:
                 self.local_min_loss_idx[i] = np.argwhere(
-                    self.dydx_median[i][self.fwhm_loss_log_idx[i]:] > 0).flatten()[0] + self.fwhm_loss_log_idx[i]
+                    self.dydx_median_smooth_strong[i][self.difflog_localmin_idx[i]:] > 0).flatten()[0] + self.difflog_localmin_idx[i]
 
-            crossing_gain = (self.dydx_median[i][:self.fwhm_gain_log_idx[i]] < 0)
+            crossing_gain = (self.dydx_median_smooth_strong[i][:self.difflog_localmax_idx[i]] < 0)
             if not crossing_gain.any():
                 print("No crossing found in gain region cluster " + str(i) + ", finding minimum of absolute of dydx")
                 self.local_min_gain_idx[i] = np.argmin(
-                    np.absolute(self.dydx_median[i])[:self.fwhm_gain_log_idx[i]])
+                    np.absolute(self.dydx_median_smooth_strong[i])[:self.difflog_localmax_idx[i]])
             else:
                 self.local_min_gain_idx[i] = np.argwhere(
-                    self.dydx_median[i][:self.fwhm_gain_log_idx[i]] < 0).flatten()[-1]
+                    self.dydx_median_smooth_strong[i][:self.difflog_localmax_idx[i]] < 0).flatten()[-1]
 
     def find_kneedle_idx(self):
         r"""
@@ -303,14 +318,16 @@ class TrainZeroLossPeak:
         self.kneedle_loss_idx = np.zeros(self.n_clusters, dtype=int)
         self.kneedle_gain_idx = np.zeros(self.n_clusters, dtype=int)
         for i in range(self.n_clusters):
-            x_loss_range = self.eaxis[self.fwhm_loss_log_idx[i]:self.local_min_loss_idx[i]]
-            y_loss_range = self.y_smooth_median_log[i][self.fwhm_loss_log_idx[i]:self.local_min_loss_idx[i]]
+            x_loss_range = self.eaxis[self.difflog_localmin_idx[i]:self.local_min_loss_idx[i]]
+            y_loss_range = self.y_log_median[i][self.difflog_localmin_idx[i]:self.local_min_loss_idx[i]]
             kneedle_loss = KneeLocator(x=x_loss_range, y=y_loss_range, curve='convex', direction='decreasing')
             self.kneedle_loss_idx[i] = np.argwhere(self.eaxis > kneedle_loss.knee).flatten()[0]
 
-            x_gain_range = self.eaxis[self.local_min_gain_idx[i]:self.fwhm_gain_log_idx[i]]
-            y_gain_range = self.y_smooth_median_log[i][self.local_min_gain_idx[i]:self.fwhm_gain_log_idx[i]]
+            x_gain_range = self.eaxis[self.local_min_gain_idx[i]:self.difflog_localmax_idx[i]]
+            y_gain_range = self.y_log_median[i][self.local_min_gain_idx[i]:self.difflog_localmax_idx[i]]
             kneedle_gain = KneeLocator(x=x_gain_range, y=y_gain_range, curve='convex')
+            if kneedle_gain.knee is None:
+                kneedle_gain.knee = x_gain_range[0]
             self.kneedle_gain_idx[i] = np.argwhere(self.eaxis < kneedle_gain.knee).flatten()[-1]
 
     def calculate_hyperparameters(self):
@@ -351,8 +368,8 @@ class TrainZeroLossPeak:
         self.intersect_gain_idx = np.zeros(self.n_clusters, dtype=int)
         for i in range(self.n_clusters):
             # loss
-            de1[i] = self.eaxis[self.kneedle_loss_idx[i]] * self.shift_de1
-            log10_loss = _find_log10_fit(x=self.eaxis, y=self.y_smooth_median[i],
+            de1[i] = self.eaxis[self.kneedle_loss_idx[i]] * self.shift_de1[i]
+            log10_loss = _find_log10_fit(x=self.eaxis, y=self.y_raw_median[i],
                                          idx1=self.kneedle_loss_idx[i], idx2=self.local_min_loss_idx[i])
             intersect_loss_single_count = (log10_loss < 1)
             if not intersect_loss_single_count.any():
@@ -361,14 +378,14 @@ class TrainZeroLossPeak:
                 self.intersect_loss_idx[i] = int(len(self.eaxis) - 2)
             else:
                 self.intersect_loss_idx[i] = np.argwhere(log10_loss < 1).flatten()[0]
-            de2[i] = self.eaxis[self.intersect_loss_idx[i]] * self.shift_de2
+            de2[i] = self.eaxis[self.intersect_loss_idx[i]] * self.shift_de2[i]
             if de2[i] > self.eaxis[-2]:
                 print(de2[i], " is shifted beyond the eaxis, setting de2 to the second last value of the eaxis")
                 de2[i] = self.eaxis[-2]
 
             # gain
-            mde1[i] = self.eaxis[self.kneedle_gain_idx[i]] * self.shift_de1
-            log10_gain = _find_log10_fit(x=self.eaxis, y=self.y_smooth_median[i],
+            mde1[i] = self.eaxis[self.kneedle_gain_idx[i]] * self.shift_de1[i]
+            log10_gain = _find_log10_fit(x=self.eaxis, y=self.y_raw_median[i],
                                          idx1=self.local_min_gain_idx[i], idx2=self.kneedle_gain_idx[i])
             intersect_gain_single_count = (log10_gain < 1)
             if not intersect_gain_single_count.any():
@@ -377,7 +394,7 @@ class TrainZeroLossPeak:
                 self.intersect_gain_idx[i] = int(len(self.eaxis) - 2)
             else:
                 self.intersect_gain_idx[i] = np.argwhere(log10_gain < 1).flatten()[-1]
-            mde2[i] = self.eaxis[self.intersect_gain_idx[i]] * self.shift_de2
+            mde2[i] = self.eaxis[self.intersect_gain_idx[i]] * self.shift_de2[i]
             if mde2[i] < self.eaxis[1]:
                 print(mde2[i], " is shifted beyond the eaxis, setting de2 to the second value of the eaxis")
                 mde2[i] = self.eaxis[1]
@@ -570,7 +587,7 @@ class TrainZeroLossPeak:
             # Because self.train_x_for_derivative is a list of tensors
             # we need to explicitly loop over the entries to compute the outputs
             output_for_derivative_train = []
-            for input_tensor in self.train_x_for_derivative:
+            for input_tensor in self.data_x_for_derivative:
                 output_for_derivative_train.append(self.model(input_tensor.float()))
             loss_train = self.loss_function(output_train, output_for_derivative_train, self.train_y, self.train_sigma)
             self.loss_train_n.append(loss_train.item())
@@ -585,7 +602,7 @@ class TrainZeroLossPeak:
             with torch.no_grad():
                 output_test = self.model(self.test_x.float())
                 output_for_derivative_test = []
-                for input_tensor in self.test_x_for_derivative:
+                for input_tensor in self.data_x_for_derivative:
                     output_for_derivative_test.append(self.model(input_tensor.float()))
                 loss_test = self.loss_function(output_test, output_for_derivative_test, self.test_y, self.test_sigma)
                 self.loss_test_n.append(loss_test.item())
@@ -771,8 +788,12 @@ class TrainZeroLossPeak:
             Additional keyword arguments.
 
         """
-
-        fig = plot_hp(eaxis=self.eaxis, clusters_data=self.dydx_smooth, de1=self.de1, de2=self.de2, **kwargs)
+        spectra_dydx = np.zeros(self.n_clusters, dtype=object)
+        spectra_dydx_smooth = np.zeros(self.n_clusters, dtype=object)
+        for i in range(self.n_clusters):
+            spectra_dydx[i] = (self.spectra[i][:, 1:] - self.spectra[i][:, :-1]) / self.deltaE
+            spectra_dydx_smooth[i] = smooth_signals_per_cluster(spectra_dydx[i], window_length=31)
+        fig = plot_hp(eaxis=self.eaxis, clusters_data=spectra_dydx_smooth, de1=self.de1, de2=self.de2, **kwargs)
         return fig
 
     def plot_hp_cluster(self, **kwargs):
@@ -785,8 +806,10 @@ class TrainZeroLossPeak:
             Additional keyword arguments.
 
         """
-
-        fig = plot_hp(eaxis=self.eaxis, clusters_data=self.y_smooth, de1=self.de1, de2=self.de2, **kwargs)
+        spectra_smooth = np.zeros(self.n_clusters, dtype=object)
+        for i in range(self.n_clusters):
+            spectra_smooth[i] = smooth_signals_per_cluster(self.spectra[i], window_length=31)
+        fig = plot_hp(eaxis=self.eaxis, clusters_data=spectra_smooth, de1=self.de1, de2=self.de2, **kwargs)
         return fig
 
 
@@ -959,6 +982,54 @@ def smooth_signals_per_cluster(signals, window_length=51, window_type='hanning')
 
     signals_smooth = np.apply_along_axis(window_convolve, axis=1, arr=signals_padded)[:, surplus_data:-surplus_data]
     return signals_smooth
+
+
+def smooth_signal(signal, window_length=51, window_type='hanning', beta=14.0):
+    r"""
+    Smooth a signal using a window length ``window_length`` and a window type ``window_type``.
+
+    This method is based on the convolution of a scaled window with the signal.
+    The signal is prepared by introducing reflected copies of the signal
+    (with the window size) in both ends so that transient parts are minimized
+    in the beginning and end part of the output signal.
+
+    Parameters
+    ----------
+    signal: numpy.ndarray, shape=(M,)
+        Signal of length M
+    window_length: int, optional
+        The dimension of the smoothing window; should be an odd integer. Default is 51.
+    window_type: str, optional
+        the type of window from ``'flat'``, ``'hanning'``, ``'hamming'``, ``'bartlett'``,
+        ``'blackman'`` and ``'kaiser'``. ``'flat'`` window will produce a moving average smoothing.
+        Default is ``'hanning'``
+    beta: float, optional
+            If using the kaiser window, beta determines the shape parameter for window.
+
+    Returns
+    -------
+    signal_smooth: numpy.ndarray, shape=(M,)
+        The smoothed signal
+    """
+
+    # Set window length to uneven number
+    window_length += (window_length + 1) % 2
+
+    # extend the signal with the window length on both ends
+    signal_padded = np.r_['-1', signal[window_length - 1:0:-1], signal, signal[-2:-window_length - 1:-1]]
+
+    # Pick the window type
+    if window_type == 'flat':  # moving average
+        window = np.ones(window_length, 'd')
+    elif window_type == 'kaiser':
+        window = np.kaiser(M=window_length, beta=beta)
+    else:
+        window = eval('np.' + window_type + '(window_length)')
+
+    # Determine the smoothed signal and throw away the padded ends
+    surplus_data = int((window_length - 1) * 0.5)
+    signal_smooth = np.convolve(signal_padded, window / window.sum(), mode='valid')[surplus_data:-surplus_data]
+    return signal_smooth
 
 
 def log10_fit(x, a, b, order=1):

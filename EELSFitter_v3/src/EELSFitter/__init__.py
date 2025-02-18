@@ -12,3 +12,6 @@ from .plotting.zlp import (
 from .plotting.heatmaps import (
     plot_heatmap,
 )
+from .plotting.mva_perf import (
+    plot_pca_variance,
+)
