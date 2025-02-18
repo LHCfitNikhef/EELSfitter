@@ -1,5 +1,6 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 def plot_hp(eaxis, clusters_data, de1, de2, cmap='coolwarm', **kwargs):
     r"""
@@ -50,13 +51,12 @@ def plot_hp(eaxis, clusters_data, de1, de2, cmap='coolwarm', **kwargs):
         ax.legend(loc=kwargs.get('loc'), frameon=False)
     return fig
 
-def plot_figs(dpi=200, x=0, y=0, xlim=[0.4, 5], ylim=[-500, 500], yscale='linear', **kwargs):
+def plot_figs(x=0, y=0, xlim=[0.4, 5], ylim=[-500, 500], yscale='linear', **kwargs):
     r"""
     General parameters to plot figures
 
     Parameters
     ----------
-    dpi
     x
     y
     xlim
@@ -70,7 +70,7 @@ def plot_figs(dpi=200, x=0, y=0, xlim=[0.4, 5], ylim=[-500, 500], yscale='linear
 
     """
 
-    fig, ax = plt.subplots(figsize=kwargs.get('figsize'), dpi=dpi)
+    fig, ax = plt.subplots(figsize=kwargs.get('figsize'), dpi=kwargs.get('dpi'))
     ax.axhline(x, color='black')
     ax.axvline(y, color='black')
     ax.set_title(kwargs.get('title'))
@@ -81,5 +81,3 @@ def plot_figs(dpi=200, x=0, y=0, xlim=[0.4, 5], ylim=[-500, 500], yscale='linear
     ax.set_yscale(yscale)
     ax.set_yticklabels([])
     return fig, ax
-
-
