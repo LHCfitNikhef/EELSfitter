@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kramers-Kronig analysis of EEL spectra &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Band gap analysis" href="band_gap_analysis.html" />
+    <link rel="prev" title="NN training" href="nn_training.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nn_training.html">NN training</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Kramers-Kronig analysis of EEL spectra</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-single-scattering-distribution">The single-scattering distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ssd-deconvolution">SSD deconvolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#discrete-fourier-transforms">Discrete Fourier transforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thickness-calculation">Thickness calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-dielectric-function-from-kramers-kronig-analysis">The dielectric function from Kramers-Kronig analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-role-of-surface-scatterings">The role of surface scatterings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-role-of-relativistic-contributions">The role of relativistic contributions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Kramers-Kronig analysis of EEL spectra</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/theory/kk_analysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kramers-kronig-analysis-of-eel-spectra">
+<h1>Kramers-Kronig analysis of EEL spectra<a class="headerlink" href="#kramers-kronig-analysis-of-eel-spectra" title="Link to this heading"></a></h1>
+<p>Here we provide an overview of the theoretical formalism adopted in this
+work <span id="id1">[<a class="reference internal" href="../bibliography.html#id10" title="R.F. Egerton. Limits to the spatial, energy and momentum resolution of electron energy-loss spectroscopy. Ultramicroscopy, 107(8):575-586, 2007. doi:https://doi.org/10.1016/j.ultramic.2006.11.005.">Egerton, 2007</a>]</span> to evaluate the single-scattering distribution,
+local thickness, band gap energy and type and complex dielectric function from  EELS spectra.
+Electron energy loss spectra  measured experimentally are composed by three contributions:
+the one from inelastic single scatterings off the electrons in the specimen,
+the one  associated to multiple inelastic scatterings, and then the Zero-Loss Peak (ZLP)
+arising from both elastic scatterings and from instrumental broadening.
+Hence, a given spectrum <span class="math notranslate nohighlight">\(I_{\rm EELS}(E)\)</span> can be decomposed as</p>
+<div class="math notranslate nohighlight" id="equation-eq-eelsmaster">
+<span class="eqno">(13)<a class="headerlink" href="#equation-eq-eelsmaster" title="Link to this equation"></a></span>\[I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) =
+I_{\rm ZLP}(E) + \sum_{n=1}^\infty
+I^{(n)}_{\rm inel}(E) \, ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(E\)</span> is the energy loss experienced by the electrons upon traversing the specimen <a class="footnote-reference brackets" href="#f1" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>,
+<span class="math notranslate nohighlight">\(I_{\rm ZLP}(E)\)</span> is the ZLP contribution, and <span class="math notranslate nohighlight">\(I^{(n)}_{\rm inel}(E)\)</span> indicates
+the contribution from <span class="math notranslate nohighlight">\(n\)</span> inelastic scatterings. The ZLP intensity can be further
+expressed as</p>
+<div class="math notranslate nohighlight" id="equation-eq-zlp-norm">
+<span class="eqno">(14)<a class="headerlink" href="#equation-eq-zlp-norm" title="Link to this equation"></a></span>\[I_{\rm ZLP}(E) = N_0 R(E) \, ,\qquad \int_{-\infty}^\infty dE \,R(E)=1 \, ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(R(E)\)</span> is known as the (normalised) resolution or instrumental response function,
+whose full width at half-maximum (FWHM) indicates the resolution of the instrument.
+The normalisation factor <span class="math notranslate nohighlight">\(N_0\)</span> thus corresponds to the integrated intensity under
+the zero-loss peak. In the following we assume that the ZLP intensity <span class="math notranslate nohighlight">\(I_{\rm ZLP}(E)\)</span>
+is known and can be reliably subtracted from <span class="math notranslate nohighlight">\(I_{\rm EELS}(E)\)</span> in order to isolate
+the inelastic scattering contribution <span class="math notranslate nohighlight">\(I_{\rm inel}(E)\)</span>. In EELSfitter, the ZLP
+subtraction is achieved using a machine learning method developed in <span id="id3">[<a class="reference internal" href="../bibliography.html#id2" title="Laurien I. Roest, Sabrya E. van Heijst, Louis Maduro, Juan Rojo, and Sonia Conesa-Boj. Charting the low-loss region in electron energy loss spectroscopy with machine learning. Ultramicroscopy, 222:113202, 2021. doi:https://doi.org/10.1016/j.ultramic.2021.113202.">Roest <em>et al.</em>, 2021</a>]</span>
+and extended to spectral images.</p>
+<section id="the-single-scattering-distribution">
+<h2>The single-scattering distribution<a class="headerlink" href="#the-single-scattering-distribution" title="Link to this heading"></a></h2>
+<p>If one denotes by <span class="math notranslate nohighlight">\(t\)</span> the local thickness of the specimen and by <span class="math notranslate nohighlight">\(\lambda\)</span> the
+mean free path of the electrons, then assuming that inelastic scatterings are
+uncorrelated it follows that the integral over the <span class="math notranslate nohighlight">\(n\)</span>-scatterings distribution
+<span class="math notranslate nohighlight">\(I^{(n)}_{\rm inel}\)</span> follow a Poisson distribution <a class="footnote-reference brackets" href="#f2" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<div class="math notranslate nohighlight" id="equation-eq-n-n">
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-n-n" title="Link to this equation"></a></span>\[N_n \equiv \int_{-\infty}^{\infty} dE\, I^{(n)}_{\rm inel}(E) =
+B \frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda} \, , \qquad n=1,2,\ldots,\infty \, ,\]</div>
+<p>with <span class="math notranslate nohighlight">\(B\)</span> a normalisation constant. From the combination of Eqns. <a class="reference internal" href="#equation-eq-eelsmaster">(13)</a>
+and <a class="reference internal" href="#equation-eq-n-n">(15)</a> it follows that</p>
+<div class="math notranslate nohighlight" id="equation-eq-norm-inelastic">
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-norm-inelastic" title="Link to this equation"></a></span>\[N_{\rm inel}\equiv \int_{-\infty}^{\infty} dE\,
+I_{\rm inel}(E) = \sum_{n=1}^\infty N_n = B \sum_{n=1}^\infty
+\frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda}=B\left( 1-e^{-t/\lambda}\right) \, ,\]</div>
+<p>and hence one finds that the integral over the <span class="math notranslate nohighlight">\(n\)</span>-scatterings distribution
+is such that</p>
+<div class="math notranslate nohighlight">
+\[N_n = \frac{N_{\rm inel}}{\left( 1-e^{-t/\lambda} \right)}\frac{\left( t/\lambda \right)^n}{n!}e^{-t/\lambda} \, ,\]</div>
+<p>in terms of the normalisation <span class="math notranslate nohighlight">\(N_{\rm inel}\)</span> of the full inelastic scattering distribution,
+the sample thickness <span class="math notranslate nohighlight">\(t\)</span> and the mean free path <span class="math notranslate nohighlight">\(\lambda\)</span>.
+Note also that the ZLP normalisation factor <span class="math notranslate nohighlight">\(N_0\)</span> is then given in terms of the inelastic one as</p>
+<div class="math notranslate nohighlight">
+\[N_0 = \frac{N_{\rm inel}}{e^{t/\lambda}-1} \, ,\]</div>
+<p>and hence one has the following relations between integrated inelastic scattering intensities</p>
+<div class="math notranslate nohighlight">
+\[\frac{N_1^n}{N_k}=n!N_0^{n-1} \, ,\qquad \forall ~n \ge 1 \, .\]</div>
+<p>In order to evaluate the local thickness of the specimen and the corresponding dielectric function,
+it is necessary to perform a deconvoluation of the measured spectra and
+extract from them the single-scattering distribution (SSD), <span class="math notranslate nohighlight">\(I_{\rm SSD}(E)\)</span>.
+The SSD is related to the experimentally measured <span class="math notranslate nohighlight">\(n=1\)</span> distribution,
+<span class="math notranslate nohighlight">\(I^{(1)}_{\rm inel}(E)\)</span> by the finite resolution of our measurement apparatus:</p>
+<div class="math notranslate nohighlight" id="equation-eq-def-convolution">
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-def-convolution" title="Link to this equation"></a></span>\[I^{(1)}_{\rm inel}(E) = R(E)\otimes
+I_{\rm SSD}(E) \equiv \int_{-\infty}^{\infty} dE'\, R(E-E')
+I_{\rm SSD}(E') \, ,\]</div>
+<p>where in the following <span class="math notranslate nohighlight">\(\otimes\)</span> denotes the convolution operation. It can
+be shown, again treating individual scatterings as uncorrelated, that the
+experimentally measured <span class="math notranslate nohighlight">\(n=2\)</span> and <span class="math notranslate nohighlight">\(n=3\)</span> multiple scattering
+distributions can be expressed in terms of the SSD as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}I^{(2)}_{\rm inel}(E) &amp;=&amp;  R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) \ ,
+\\
+I^{(3)}_{\rm inel}(E) &amp;=&amp;
+R(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 3! N^2_0\right) \ ,\end{split}\]</div>
+<p>and likewise for <span class="math notranslate nohighlight">\(n\ge 4\)</span>. Combining this information, one observes that an
+experimentally measured EELS spectrum, Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(13)</a> can be expressed in terms
+of the resolution function <span class="math notranslate nohighlight">\(R\)</span>, the ZLP normalisation <span class="math notranslate nohighlight">\(N_0\)</span>, and the single-scattering
+distribution <span class="math notranslate nohighlight">\(I_{\rm SSD}\)</span> as follows</p>
+<div class="math notranslate nohighlight" id="equation-eq-eelsmaster-2">
+<span class="eqno">(18)<a class="headerlink" href="#equation-eq-eelsmaster-2" title="Link to this equation"></a></span>\[\begin{split}&amp;&amp; I_{\rm EELS}(E) \nonumber = N_0 R(E) + R(E)\otimes I_{\rm SSD}(E) + R(E)\otimes
+I_{\rm SSD}(E)\otimes I_{\rm SSD}(E)/\left( 2! N_0\right) + \ldots\\ \nonumber
+&amp;&amp; =R(E) \otimes \left( N_0\delta(E) + I_{\rm SSD}(E) + I_{\rm SSD}(E)\otimes
+I_{\rm SSD}(E)/\left( 2! N_0\right) +\ldots \right) \\
+&amp;&amp; =N_0 R(E) \otimes \left( \delta(E) +\sum_{n=1}^{\infty} \left[
+I_{\rm SSD}(E)\otimes\right]^n \delta(E)/\left( n! N_0^{n}\right)  \right) \, ,\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta(E)\)</span> is the Dirac delta function. If the ZLP normalisation factor
+<span class="math notranslate nohighlight">\(N_0\)</span> and resolution function <span class="math notranslate nohighlight">\(R(E)\)</span> are known, then one can use Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(18)</a>
+to extract the SSD from the measured spectra by means of a deconvolution procedure.</p>
+</section>
+<section id="ssd-deconvolution">
+<h2>SSD deconvolution<a class="headerlink" href="#ssd-deconvolution" title="Link to this heading"></a></h2>
+<p>The structure of Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(18)</a> suggests that transforming to Fourier
+space will lead to an algebraic equation which can then be solved for the SSD.
+Here we define the Fourier transform <span class="math notranslate nohighlight">\(\widetilde{f}(\nu)\)</span> of a function <span class="math notranslate nohighlight">\(f(E)\)</span>
+as follows</p>
+<div class="math notranslate nohighlight" id="equation-eq-continuous-fourier-transform">
+<span class="eqno">(19)<a class="headerlink" href="#equation-eq-continuous-fourier-transform" title="Link to this equation"></a></span>\[\mathcal{F}\left[ f(E) \right](\nu)\equiv \widetilde{f}(\nu)\equiv \int_{-\infty}^\infty
+dE\,f(E) e^{-2\pi i E\nu}\, ,\]</div>
+<p>whose inverse is given by</p>
+<div class="math notranslate nohighlight" id="equation-eq-continuous-fourier-transform-inverse">
+<span class="eqno">(20)<a class="headerlink" href="#equation-eq-continuous-fourier-transform-inverse" title="Link to this equation"></a></span>\[\mathcal{F}^{-1}\left[ \widetilde{f}(\nu) \right](E) = f(E)\equiv \int_{-\infty}^\infty
+d\nu\,\widetilde{f}(\nu) e^{2\pi i E\nu}\, ,\]</div>
+<p>which has the useful property that convolutions such as  Eq. <a class="reference internal" href="#equation-eq-def-convolution">(17)</a>
+are transformed into products,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fourier-convolutions">
+<span class="eqno">(21)<a class="headerlink" href="#equation-eq-fourier-convolutions" title="Link to this equation"></a></span>\[{\rm if~}f(E)=g(E)\otimes h(E)\quad{\rm then}\quad \mathcal{F}\left[ f(E) \right] =
+\widetilde{f}(\nu) = \widetilde{g}(\nu)\widetilde{h}(\nu) \, .\]</div>
+<p>The Fourier transform of Eq. <a class="reference internal" href="#equation-eq-eelsmaster-2">(18)</a> leads to the Taylor expansion
+of the exponential and hence</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}_{\rm EELS}(\nu)=N_0\widetilde{R}(\nu)\exp\left(  \frac{\widetilde{I}_{\rm SSD}(\nu)}{N_0}\right) \, ,\]</div>
+<p>which can be solved for the Fourier transform of the single scattering distribution</p>
+<div class="math notranslate nohighlight">
+\[\widetilde{I}_{\rm SSD}(\nu)=N_0 \ln \frac{\widetilde{I}_{\rm EELS}(\nu)}{N_0\widetilde{R}(\nu)}
+= N_0 \ln \frac{\mathcal{F}\left[ I_{\rm EELS}(E)\right] (\nu)}{N_0 \mathcal{F}\left[ R(E)\right] (\nu)  } \, .\]</div>
+<p>By taking the  inverse Fourier transform, one obtains the sought-for expression
+for the single scattering distribution as a function of the electron energy loss</p>
+<div class="math notranslate nohighlight" id="equation-eq-deconvolution-procedure">
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-deconvolution-procedure" title="Link to this equation"></a></span>\[I_{\rm SSD}(E)=N_0 \mathcal{F}^{-1}\left[ \ln \frac{\mathcal{F}\left[
+I_{\rm EELS}\right] }{N_0 \mathcal{F}\left[  R\right]}\right] \, ,\]</div>
+<p>where the only required inputs are the experimentally measured EELS spectra,
+Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(13)</a>, with the corresponding ZLP.</p>
+</section>
+<section id="discrete-fourier-transforms">
+<h2>Discrete Fourier transforms<a class="headerlink" href="#discrete-fourier-transforms" title="Link to this heading"></a></h2>
+<p>In EELSfitter, Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(22)</a> is evaluated numerically by
+approximating the continuous transform Eq. <a class="reference internal" href="#equation-eq-continuous-fourier-transform">(19)</a>
+by its discrete Fourier transform equivalent. The same method will be used for the
+implementation of the Kramers-Kronig analysis. The discrete Fourier transform  of a
+discretised function <span class="math notranslate nohighlight">\(f(E)\)</span> defined at <span class="math notranslate nohighlight">\(E_n \in \{E_0, ..., E_{N-1}\}\)</span>
+is given by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-def-dft">
+<span class="eqno">(23)<a class="headerlink" href="#equation-eq-def-dft" title="Link to this equation"></a></span>\[\mathcal{F}_D \left[ f(E) \right] (\nu_k) = \widetilde{f}(\nu_k) = \sum^{N-1}_{n=0}
+\operatorname{e}^{-i2\pi kn/N} f(E_n), \qquad \forall\, k \in \{0, ..., N-1\} \, ,\]</div>
+<p>with the corresponding inverse transformation</p>
+<div class="math notranslate nohighlight" id="equation-eq-def-dft-inverse">
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-def-dft-inverse" title="Link to this equation"></a></span>\[\mathcal{F}_D^{-1} \left[ \widetilde{f}(\nu) \right] (E_n) = f(E_n) =\frac{1}{N}
+\sum^{N-1}_{k=0} \operatorname{e}^{i2\pi kn/N}  \widetilde{f}(\nu_k) \qquad
+\forall\, n \in \{0, ..., N-1\} \, .\]</div>
+<p>If one approximates the continuous function <span class="math notranslate nohighlight">\(f(E)\)</span> by its discretised version
+<span class="math notranslate nohighlight">\(f(E_0 + n\Delta E)\)</span> and likewise <span class="math notranslate nohighlight">\(\widetilde{f}(\nu)\)</span> by <span class="math notranslate nohighlight">\(\widetilde{f}(k\Delta \nu)\)</span>
+where <span class="math notranslate nohighlight">\(\Delta x \Delta \nu = N^{-1}\)</span> one finds that</p>
+<div class="math notranslate nohighlight" id="equation-eq-approx-cft">
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-approx-cft" title="Link to this equation"></a></span>\[\widetilde{f}(\nu) \approx \Delta x e^{-i 2\pi k \Delta \nu E_0}\mathcal{F}_D \left[ f(E)\right] \, ,\]</div>
+<p>and likewise for the inverse transform</p>
+<div class="math notranslate nohighlight">
+\[f(E) \approx \frac{1}{\Delta x} \mathcal{F}_D^{-1} \left[ \widetilde{g}(k\Delta\nu)
+\right] \, ,\qquad \widetilde{g}(k\Delta\nu) \equiv e^{i2\pi k \Delta\nu E_0}
+\widetilde{f}(k\Delta\nu) \, .\]</div>
+<p>In practice, the EELS spectra considered are characterised by a fine spacing in
+<span class="math notranslate nohighlight">\(E\)</span> and the discrete approximation for the Fourier transform produces results
+very close to the exact one.</p>
+</section>
+<section id="thickness-calculation">
+<h2>Thickness calculation<a class="headerlink" href="#thickness-calculation" title="Link to this heading"></a></h2>
+<p>Once the SSD has been determined by means of the deconvolution procedure summarised
+by Eq. <a class="reference internal" href="#equation-eq-deconvolution-procedure">(22)</a>, it can be used as input in order to
+evaluate the local sample thickness <span class="math notranslate nohighlight">\(t\)</span> from the experimentally measured spectra.
+Kramers-Kronig analysis  provides the following relation between the thickness <span class="math notranslate nohighlight">\(t\)</span>,
+the ZLP normalisation <span class="math notranslate nohighlight">\(N_0\)</span>, and the single-scattering distribution,</p>
+<div class="math notranslate nohighlight" id="equation-eq-thickness-calculation">
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-thickness-calculation" title="Link to this equation"></a></span>\[t = \frac{4a_0 F E_0}{N_0\left(  1-{\rm Re}\left[ 1/\epsilon(0)\right]\right)} \int_0^\infty
+dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,\]</div>
+<p>where we have assumed that the effects of surface scatterings can be neglected.
+In Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(26)</a>, <span class="math notranslate nohighlight">\(a_0=0.0529\)</span> nm is Bohr’s radius, <span class="math notranslate nohighlight">\(F\)</span>
+is a relativistic correction factor,</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{  1+E_0/(1022~{\rm keV})  }{\left[ 1+E_0/(511~{\rm keV})\right]^2  } \, ,\]</div>
+<p>with <span class="math notranslate nohighlight">\(E_0\)</span> being the incident electron energy, <span class="math notranslate nohighlight">\(\epsilon(E)\)</span> is the
+complex dielectric function, and <span class="math notranslate nohighlight">\(\theta_E\)</span> is the characteristic angle defined by</p>
+<div class="math notranslate nohighlight" id="equation-eq-characteristic-angle">
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-characteristic-angle" title="Link to this equation"></a></span>\[\theta_E = \frac{E}{\gamma m_0v^2} = \frac{E}{\left( E_0 + m_0c^2\right) (v/c)^2}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\gamma\)</span> being the usual relativistic dilation factor, <span class="math notranslate nohighlight">\(\gamma=\left( 1-v^2/c^2\right)^{-1/2}\)</span>,
+and <span class="math notranslate nohighlight">\(\beta\)</span> the collection semi-angle of the microscope. <a class="footnote-reference brackets" href="#f3" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
+<p>For either an  insulator or a semiconductor material
+with refractive index <span class="math notranslate nohighlight">\(n\)</span>, one has that</p>
+<div class="math notranslate nohighlight" id="equation-eq-refractive-index">
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-refractive-index" title="Link to this equation"></a></span>\[{\rm Re}\left[ 1/\epsilon(0)\right] = n^{-2} \, ,\]</div>
+<p>while <span class="math notranslate nohighlight">\({\rm Re}\left[ 1/\epsilon(0)\right]=0\)</span> for a metal or semi-metal.</p>
+<p>Hence, the determination of the dielectric function is not a pre-requisite to
+evaluate the specimen thickness, and for given microscope operation conditions
+we can express Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(26)</a> as</p>
+<div class="math notranslate nohighlight" id="equation-eq-thickness-calculation-v2">
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-thickness-calculation-v2" title="Link to this equation"></a></span>\[t = \frac{A}{N_0} \int_0^\infty dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \, ,\]</div>
+<p>with <span class="math notranslate nohighlight">\(A\)</span>  constant across the specimen.</p>
+<p>If the thickness of the specimen is already known at some location, then
+Eq. <a class="reference internal" href="#equation-eq-thickness-calculation-v2">(29)</a>  can be  used to calibrate <span class="math notranslate nohighlight">\(A\)</span>
+and evaluate this thickness elsewhere. Furthermore, if the thickness of the material
+has already been determined by means of an independent experimental technique, then
+Eq. <a class="reference internal" href="#equation-eq-thickness-calculation">(26)</a> can be inverted to determine the refractive index <span class="math notranslate nohighlight">\(n\)</span>
+of an insulator or semi-conducting material using</p>
+<div class="math notranslate nohighlight">
+\[n = \left[ 1-\frac{4a_0 FE_0}{N_0 t} \left( \int_0^\infty
+dE\frac{I_{\rm SSD}(E)}{E\ln \left( 1+\beta^2/\theta_E^2\right)} \right) \right]^{-1/2} \, .\]</div>
+</section>
+<section id="the-dielectric-function-from-kramers-kronig-analysis">
+<h2>The dielectric function from Kramers-Kronig analysis<a class="headerlink" href="#the-dielectric-function-from-kramers-kronig-analysis" title="Link to this heading"></a></h2>
+<p>The dielectric function of a material, also known as permittivity, is a measure
+of how easy or difficult it is to polarise a dielectric material such an insulator
+upon the application of an external electric field. In the case of oscillating electric
+fields such as those that constitute electromagnetic radiation, the dielectric response
+will have both a real and a complex part and will depend on the oscillation frequency <span class="math notranslate nohighlight">\(\omega\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\epsilon(\omega)={\rm Re}\left[ \omega\right]+i{\rm Im}\left[ \omega\right] \, ,\]</div>
+<p>which can also be expressed in terms of the energy <span class="math notranslate nohighlight">\(E=\hbar \omega\)</span> of the photons
+that constitute this electromagnetic radiation,</p>
+<div class="math notranslate nohighlight" id="equation-eq-dielectric-function-def">
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-dielectric-function-def" title="Link to this equation"></a></span>\[\epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \, .\]</div>
+<p>In the vacuum, the real and imaginary parts of the dielectric function reduce to
+<span class="math notranslate nohighlight">\({\rm Re}\left[ \epsilon(E)\right]=1\)</span> and <span class="math notranslate nohighlight">\({\rm Im}\left[ \epsilon(E)\right]=0\)</span>.
+Furthermore, the dielectric function is related to the susceptibility <span class="math notranslate nohighlight">\(\chi\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[\epsilon(E)=1-\nu\chi(E) \, ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\nu\)</span> is the so-called Coulomb matrix. The single scattering distribution
+<span class="math notranslate nohighlight">\(I_{\rm SSD}(E)\)</span> is related to the imaginary part of the  complex dielectric function
+<span class="math notranslate nohighlight">\(\epsilon(E)\)</span> by means the following relation</p>
+<div class="math notranslate nohighlight">
+\[I_{\rm SSD}(E) = \frac{N_0 t}{\pi a_0 m_0 v^2}{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]
+\ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right] \, ,\]</div>
+<p>in terms of the sample thickness <span class="math notranslate nohighlight">\(t\)</span>, the ZLP normalisation <span class="math notranslate nohighlight">\(N_0\)</span>, and
+the microscope operation parameters defined in Sect. <a class="reference internal" href="#thickness-calculation"><span class="std std-ref">Thickness calculation</span></a>.
+We can invert this relation to obtain</p>
+<div class="math notranslate nohighlight" id="equation-eq-im-diel-fun">
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-im-diel-fun" title="Link to this equation"></a></span>\[{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\pi a_0 m_0 v^2}{N_0 t}\frac{
+I_{\rm SSD}(E)}{\ln \left[ 1+\left( \frac{\beta}{\theta_E}\right)^2\right]} \, .\]</div>
+<p>Since the prefactor in Eq. <a class="reference internal" href="#equation-eq-im-diel-fun">(31)</a> does not depend on the energy loss <span class="math notranslate nohighlight">\(E\)</span>,
+we see that <span class="math notranslate nohighlight">\({\rm Im}[-1/\epsilon(E)]\)</span> will be proportional to the single scattering
+distribution <span class="math notranslate nohighlight">\(I_{\rm SSD}(E)\)</span> with a denominator that decreases with the energy
+(since <span class="math notranslate nohighlight">\(\theta_E\propto E\)</span>) and hence weights more higher energy losses. Given that
+the dielectric response function is causal, the real part of the dielectric function
+can be obtained from the imaginary one by using a Kramers-Kronig relation of the form</p>
+<div class="math notranslate nohighlight" id="equation-eq-kramerskronig">
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-kramerskronig" title="Link to this equation"></a></span>\[{\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE'\, {\rm Im}
+\left[ \frac{-1}{\epsilon(E')}\right] \frac{E'}{E'^2-E^2} \, ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{P}\)</span> stands for Cauchy’s prescription to evaluate the principal
+part of the integral.</p>
+<p>A particularly important application of this relation is the <span class="math notranslate nohighlight">\(E=0\)</span> case,</p>
+<div class="math notranslate nohighlight" id="equation-eq-normalisation-im-deltaeim">
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-normalisation-im-deltaeim" title="Link to this equation"></a></span>\[{\rm Re}\left[ \frac{1}{\epsilon(0)}\right] = 1-\frac{2}{\pi}\mathcal{P}\int_0^{\infty}  dE\, {\rm Im}
+\left[ \frac{-1}{\epsilon(E)}\right] \frac{1}{E} \, ,\]</div>
+<p>which is known as the Kramers-Kronig sum rule. Eq. <a class="reference internal" href="#equation-eq-normalisation-im-deltaeim">(33)</a>
+can be used to determine the overall normalisation of <span class="math notranslate nohighlight">\({\rm Im}\left[ -1/\epsilon(E)\right]\)</span>,
+since <span class="math notranslate nohighlight">\({\rm Re}\left[ 1/\epsilon(0)\right]\)</span> is known for most materials.
+For instance, as mentioned in Eq. <a class="reference internal" href="#equation-eq-refractive-index">(28)</a>, for an insulator
+or semiconductor material it is given in terms of its refractive index <span class="math notranslate nohighlight">\(n\)</span>.
+Once the imaginary part of the dielectric function has been determined from the
+single-scattering distribution, Eq. <a class="reference internal" href="#equation-eq-im-diel-fun">(31)</a>, then one can obtain
+the corresponding real part by means of the Kramers-Kronig relation, Eq. <a class="reference internal" href="#equation-eq-kramerskronig">(32)</a>.
+Afterwards, the full complex dielectric function can be reconstructed by combining
+the calculation of the real and imaginary parts, since</p>
+<div class="math notranslate nohighlight">
+\[\epsilon(E)={\rm Re}\left[ \epsilon(E)\right]+i{\rm Im}\left[ \epsilon(E)\right] \equiv
+\epsilon_1(E)+i\epsilon_2(E) \, ,\]</div>
+<p>implies that</p>
+<div class="math notranslate nohighlight">
+\[{\rm Re}\left[ \frac{1}{\epsilon(E)}\right] = \frac{\epsilon_1(E)}{\epsilon_1^2(E) + \epsilon_2^2(E)}\,,\qquad
+{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right] = \frac{\epsilon_2(E)}{\epsilon_1^2(E) + \epsilon_2^2(E)}\,,\]</div>
+<p>and hence one can express the dielectric function in terms of the quantities that
+one has just evaluated as follows</p>
+<div class="math notranslate nohighlight" id="equation-eq-final-dielectric-function">
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-final-dielectric-function" title="Link to this equation"></a></span>\[\epsilon(E) = \frac{{\rm Re}\left[ \frac{1}{\epsilon(E)}\right]+ i{\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]}{\left( {\rm Re}\left[ \frac{1}{\epsilon(E)}\right]\right)^2+\left( {\rm Im}\left[ \frac{-1}{\epsilon(E)}\right]\right)^2} \, .\]</div>
+<p>Once the complex dielectric function of a material has been determined, it is
+possible to evaluate related quantities that also provide information about the
+opto-electronic properties of a material.</p>
+<p>One example of this would be the optical absorption coefficient, given by</p>
+<div class="math notranslate nohighlight">
+\[\mu(E) = \frac{E}{\hbar c}\left[ 2\left( \epsilon_1^2(E)+\epsilon_2^2(E)\right)^{1/2}-2\epsilon_1(E)\right]^{1/2} \, ,\]</div>
+<p>which represents a measure of how far light of a given wavelength <span class="math notranslate nohighlight">\(\lambda=hc/E\)</span>
+can penetrate into a material before it is fully extinguished via absorption processes.
+The complex dielectric function <span class="math notranslate nohighlight">\(\epsilon(E)\)</span> provides direct information on
+the opto-electronic properties of a material, for example those associated to plasmonic
+resonances. Specifically, a collective plasmonic excitation should be indicated by the
+condition that the real part of the dielectric function crosses the <span class="math notranslate nohighlight">\(x\)</span> axis,
+<span class="math notranslate nohighlight">\(\epsilon_1(E)=0\)</span>, with a positive slope. These plasmonic excitations typically
+are also translated by a well-defined peak in the energy loss spectra. Hence,
+verifying that a plasmonic transition indicated by <span class="math notranslate nohighlight">\(\epsilon_1(E)=0\)</span>
+corresponds to specific energy-loss features provides a valuable handle to
+pinpoint the nature of local electronic excitations present in the analysed specimen.</p>
+</section>
+<section id="the-role-of-surface-scatterings">
+<h2>The role of surface scatterings<a class="headerlink" href="#the-role-of-surface-scatterings" title="Link to this heading"></a></h2>
+<p>The previous derivations assume that the specimen is thick enough such that the
+bulk of the measured energy loss distributions arises from volume inelastic
+scatterings, while edge- and surface-specific contributions can be neglected.
+However, for relatively thin samples with thickness <span class="math notranslate nohighlight">\(t\)</span> below a few tens of nm,
+this approximation is not necessarily suitable. Assuming a locally flat specimen with
+two surfaces, in this case  Eq. <a class="reference internal" href="#equation-eq-eelsmaster">(13)</a> must be generalised to</p>
+<div class="math notranslate nohighlight" id="equation-eq-eelsmaster-v3">
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-eelsmaster-v3" title="Link to this equation"></a></span>\[I_{\rm EELS}(E) = I_{\rm ZLP}(E) + I_{\rm inel}(E) +  I_{S}(E)\]</div>
+<p>with <span class="math notranslate nohighlight">\(I_{S}(E)\)</span> representing the  contribution from surface-specific inelastic
+scattering. This surface contribution can be evaluated in terms of the real <span class="math notranslate nohighlight">\(\epsilon_1\)</span> and
+imaginary <span class="math notranslate nohighlight">\(\epsilon_2\)</span> components of the complex dielectric function,</p>
+<div class="math notranslate nohighlight" id="equation-eq-surface-intensity">
+<span class="eqno">(36)<a class="headerlink" href="#equation-eq-surface-intensity" title="Link to this equation"></a></span>\[I_{S}(E) = \frac{N_0}{\pi a_0 k_0 T} \left[ \frac{\tan^{-1}(\beta/\theta_E)}{\theta_E} -
+\frac{\beta}{\beta^2+\theta_E^2} \right] \left( \frac{4\epsilon_2}{\left( \epsilon_1 + 1 \right)^2
++\epsilon_2^2} - {\rm Im}\left[\frac{-1}{\epsilon(E)} \right] \right) \, ,\]</div>
+<p>where the electron kinetic energy is <span class="math notranslate nohighlight">\(T=m_ev^2/2\)</span>. The main challenge to evaluate
+the surface component from Eq. <a class="reference internal" href="#equation-eq-surface-intensity">(36)</a> is that it depends on the
+complex dielectric function <span class="math notranslate nohighlight">\(\epsilon(E)\)</span>, which in turn is a function of the
+single scattering distribution obtained from the deconvolution of <span class="math notranslate nohighlight">\(I_{\rm inel}(E)\)</span>
+obtained assuming that <span class="math notranslate nohighlight">\(I_S(E)\)</span> vanishes. For not too thin specimens, the best approach
+is then an iterative procedure, whereby one starts by assuming that <span class="math notranslate nohighlight">\(I_{S}(E)\simeq 0\)</span>,
+evaluates <span class="math notranslate nohighlight">\(\epsilon(E)\)</span>, and uses it to evaluate a first approximation to <span class="math notranslate nohighlight">\(I_S(E)\)</span>
+using Eq. <a class="reference internal" href="#equation-eq-surface-intensity">(36)</a>. This approximation is then subtracted from Eq.
+<a class="reference internal" href="#equation-eq-eelsmaster-v3">(35)</a> and hence provides a better estimate of the bulk contribution
+<span class="math notranslate nohighlight">\(I_{\rm inel}(E)\)</span>. One can go back to the first step and iterate the procedure
+until some convergence criterion is met. Whether or not this procedure converges will
+depend on the specimen under consideration, and specifically on the features of the EELS
+spectra at low energy losses, <span class="math notranslate nohighlight">\(E \lesssim 10\)</span> eV.</p>
+<p>For the specimens considered in this study, it is found that this iterative procedure
+to determine the surface contributions converges provided that the local sample
+thickness satisfies <span class="math notranslate nohighlight">\(t \gtrsim 20\)</span> nm. For thinner samples the iterative approach
+fails to converge and another strategy would be needed. Hence in this work we disentangle the
+bulk from the surface contributions to the EELS spectra only when the thickness is above this threshold.</p>
+</section>
+<section id="the-role-of-relativistic-contributions">
+<h2>The role of relativistic contributions<a class="headerlink" href="#the-role-of-relativistic-contributions" title="Link to this heading"></a></h2>
+<p>When an incoming charged particle moves inside a medium, while having a higher velocity than the phase velocity of light
+inside that medium, Cerenkov radiation can be emitted. The magnetic and electric fields that come with the charge
+excite the atoms of the medium. These excited atoms then radiate their energy at a fixed angle with respect to the
+trajectory of the particle. The influence of cerenkov radiation is not to be understated as it contributes most in
+the low loss region between 0 and 5 eV depending on the medium, therefore impacting the dielectric function from
+Kramers-Kronig analysis and band gap determination
+<span id="id6">[<a class="reference internal" href="../bibliography.html#id23" title="C. Von Festenberg and E. Kröger. Retardation effects for the electron energy loss probability in gap and si. Physics Letters A, 26(8):339-340, 1968. doi:https://doi.org/10.1016/0375-9601(68)90360-5.">Von Festenberg and Kröger, 1968</a>, <a class="reference internal" href="../bibliography.html#id26" title="P. Moreau, N. Brun, C. A. Walsh, C. Colliex, and A. Howie. Relativistic effects in electron-energy-loss-spectroscopy observations of the $\mathrm S\mathrm i/\mathrm S\mathrm i\mathrm O_2$ interface plasmon peak. Phys. Rev. B, 56:6774–6781, Sep 1997. doi:https://doi.org/10.1103/PhysRevB.56.6774.">Moreau <em>et al.</em>, 1997</a>, <a class="reference internal" href="../bibliography.html#id18" title="M. Stöger-Pollach, H. Franco, P. Schattschneider, S. Lazar, B. Schaffer, W. Grogger, and H.W. Zandbergen. Čerenkov losses: a limit for bandgap determination and kramers–kronig analysis. Micron, 37(5):396-402, 2006. Proceedings of the International Workshop on Enhanced Data Generated with Electrons (EDGE). doi:https://doi.org/10.1016/j.micron.2006.01.001.">Stöger-Pollach <em>et al.</em>, 2006</a>, <a class="reference internal" href="../bibliography.html#id27" title="M. Stöger-Pollach. Optical properties and bandgaps from low loss eels: pitfalls and solutions. Micron, 39(8):1092-1110, 2008. doi:https://doi.org/10.1016/j.micron.2008.01.023.">Stöger-Pollach, 2008</a>, <a class="reference internal" href="../bibliography.html#id22" title="Rolf Erni and Nigel D. Browning. The impact of surface and retardation losses on valence electron energy-loss spectroscopy. Ultramicroscopy, 108(2):84-99, 2008. doi:https://doi.org/10.1016/j.ultramic.2007.03.005.">Erni and Browning, 2008</a>, <a class="reference internal" href="../bibliography.html#id21" title="M. Stöger-Pollach. Low voltage eels—how low? Ultramicroscopy, 145:98-104, 2014. Low-Voltage Electron Microscopy. doi:https://doi.org/10.1016/j.ultramic.2013.07.004.">Stöger-Pollach, 2014</a>, <a class="reference internal" href="../bibliography.html#id20" title="Michal Horák and Michael Stöger-Pollach. The čerenkov limit of si, gaas and gap in electron energy loss spectrometry. Ultramicroscopy, 157:73-78, 2015. doi:https://doi.org/10.1016/j.ultramic.2015.06.005.">Horák and Stöger-Pollach, 2015</a>, <a class="reference internal" href="../bibliography.html#id19" title="Rolf Erni. On the validity of the čerenkov limit as a criterion for precise band gap measurements by veels. Ultramicroscopy, 160:80-83, 2016. doi:https://doi.org/10.1016/j.ultramic.2015.10.006.">Erni, 2016</a>, <a class="reference internal" href="../bibliography.html#id25" title="Norihito Sakaguchi, Luka Tanda, and Yuji Kunisada. Measurement of the dielectric function of α-al2o3 by transmission electron microscopy – electron energy-loss spectroscopy without cerenkov radiation effects. Ultramicroscopy, 169:37-43, 2016. doi:https://doi.org/10.1016/j.ultramic.2016.07.003.">Sakaguchi <em>et al.</em>, 2016</a>]</span>.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>Here <span class="math notranslate nohighlight">\(E\)</span> indicates the energy lost by EELS electrons, with <span class="math notranslate nohighlight">\(E\)</span> for elastic scatterings.</p>
+</aside>
+<aside class="footnote brackets" id="f2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
+<p>The following derivation assumes that the specimen is not too thin, that is, <span class="math notranslate nohighlight">\(t \gtrsim \lambda\)</span>.</p>
+</aside>
+<aside class="footnote brackets" id="f3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
+<p>Which should not be confused with the normalised velocity often used in relativity, <span class="math notranslate nohighlight">\(\beta=v/c\)</span>.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="nn_training.html" class="btn btn-neutral float-left" title="NN training" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="band_gap_analysis.html" class="btn btn-neutral float-right" title="Band gap analysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

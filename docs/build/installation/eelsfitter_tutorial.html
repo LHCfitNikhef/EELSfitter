@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSfitter tutorial &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Training models in parallel" href="cluster.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="instructions.html">Instructions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">EELSfitter tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Installing-EELSfitter">Installing EELSfitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Loading-the-SI">Loading the SI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Visualising-the-SI">Visualising the SI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Clustering">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Training-of-the-ZLP">Training of the ZLP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Training-report">Training report</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="tutorial.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">EELSfitter tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/installation/eelsfitter_tutorial.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a class="reference external" href="https://colab.research.google.com/github/LHCfitNikhef/EELSfitter/blob/documentation/tutorials/tutorial_eelsfitter.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<section id="EELSfitter-tutorial">
+<h1>EELSfitter tutorial<a class="headerlink" href="#EELSfitter-tutorial" title="Link to this heading"></a></h1>
+<p>In this tutorial, we are going to train a model of the zero-loss peak (ZLP) background of polytopic WS<span class="math notranslate nohighlight">\(_2\)</span> nanoflowers. Individiual spectra are first classified as a function of the integrated intensity, which serves as a direct measure of the local thickness, with <span class="math notranslate nohighlight">\(K\)</span>-means clustering before serving as input to a feedforward neural network.</p>
+<p>The ZLP models can be used to obtain a ZLP-subtracted spectral image (SI), which in turn can be used for quantification such as calculating the local thickness, perform Kramers-Krönig analysis to obtain the dielectric function or fit the onset to determine the band gap energy of the materials if applicable.</p>
+<section id="Installing-EELSfitter">
+<h2>Installing EELSfitter<a class="headerlink" href="#Installing-EELSfitter" title="Link to this heading"></a></h2>
+<p>To install EELSFitter, if not done already, one should run the following command.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>EELSFitter
+</pre></div>
+</div>
+</div>
+<p>This is a necessary step if one chooses to run from google colab. This step can be skipped if one is running locally and EELSFitter has already been installed. Please make sure you have the latest version of EELSFitter installed (currently at 3.1.0).</p>
+<p>Additionally for this tutorial make sure to install wget, as we need to download some files from the EELSFitter repository.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>wget
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Loading-the-SI">
+<h2>Loading the SI<a class="headerlink" href="#Loading-the-SI" title="Link to this heading"></a></h2>
+<p>First of all, let us import the EELSFitter package:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">wget</span>
+
+<span class="kn">import</span> <span class="nn">EELSFitter</span> <span class="k">as</span> <span class="nn">ef</span>
+<span class="kn">from</span> <span class="nn">EELSFitter.plotting.zlp</span> <span class="kn">import</span> <span class="n">plot_zlp_per_pixel</span><span class="p">,</span> <span class="n">plot_zlp_per_cluster</span>
+<span class="kn">from</span> <span class="nn">EELSFitter.plotting.heatmaps</span> <span class="kn">import</span> <span class="n">plot_heatmap</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+
+<span class="c1"># If you want to use LaTeX for typesetting, use this.</span>
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;family&#39;</span><span class="p">:</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span> <span class="s1">&#39;sans-serif&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Computer Modern&#39;</span><span class="p">],</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">})</span>
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Next, we download and load the spectral image and specify the location where we would like to store our output, such as plots.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dm4_url</span><span class="o">=</span><span class="s1">&#39;https://github.com/LHCfitNikhef/EELSfitter/blob/documentation/tutorials/area03-eels-SI-aligned.dm4?raw=true&#39;</span>
+<span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">dm4_url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;area03-eels-SI-aligned.dm4&#39;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_to_image</span> <span class="o">=</span> <span class="s2">&quot;area03-eels-SI-aligned.dm4&quot;</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ef</span><span class="o">.</span><span class="n">SpectralImage</span><span class="o">.</span><span class="n">load_dmfile</span><span class="p">(</span><span class="n">path_to_image</span><span class="p">)</span>
+<span class="n">im</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;output</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">output_path</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">output_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In case the metadata doesn’t contain the correct information (as with this data file), run the following cell to put the correct beam energy, collection angle and convergence angle.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span><span class="o">.</span><span class="n">beam_energy</span> <span class="o">=</span> <span class="mi">200</span>            <span class="c1"># KeV</span>
+<span class="n">im</span><span class="o">.</span><span class="n">collection_angle</span> <span class="o">=</span> <span class="mf">67.2</span>      <span class="c1"># mrad</span>
+<span class="n">im</span><span class="o">.</span><span class="n">convergence_angle</span> <span class="o">=</span> <span class="mf">67.2</span>     <span class="c1"># mrad</span>
+</pre></div>
+</div>
+</div>
+<p>The below specifies some of our plot settings:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Colormap</span>
+<span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span>
+
+<span class="c1"># Title and save location settings</span>
+<span class="n">title_specimen</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;$\rm{WS_2\;nanoflower\;}$&#39;</span>
+<span class="n">save_title_specimen</span> <span class="o">=</span> <span class="s1">&#39;WS2_nanoflower&#39;</span>
+<span class="n">save_loc</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">output_path</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualising-the-SI">
+<h2>Visualising the SI<a class="headerlink" href="#Visualising-the-SI" title="Link to this heading"></a></h2>
+<p>With the spectral image loaded, we can take a first look at what our image actually looks like. We decide to produce a heatmap of the integrated intensity, which is a measure of the local thickness.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">hmap</span> <span class="o">=</span> <span class="n">plot_heatmap</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">=</span><span class="n">intensity</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$\rm{-\;Integrated\;intensity\;}$&#39;</span><span class="p">,</span>
+                    <span class="n">cbarlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{[-]}$&quot;</span><span class="p">,</span>
+                    <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">hmap</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_loc</span> <span class="o">+</span> <span class="n">save_title_specimen</span> <span class="o">+</span> <span class="s1">&#39;_Integrated_Intensity.png&#39;</span><span class="p">,</span>
+             <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_21_0.png" src="../_images/installation_eelsfitter_tutorial_21_0.png" />
+</div>
+</div>
+</section>
+<section id="Clustering">
+<h2>Clustering<a class="headerlink" href="#Clustering" title="Link to this heading"></a></h2>
+<p>Since the ZLP intensity depends strongly on the local thickness of the specimen, first of all we group individual spectra as a function of their thickness by means of unsupervised machine learning, specifically by means of the K-means clustering algorithm:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">based_on</span> <span class="o">=</span> <span class="s1">&#39;log_zlp&#39;</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">12345678</span>
+<span class="n">im</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">based_on</span><span class="o">=</span><span class="n">based_on</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Seed: 12345678 finished after 11 iterations and has cost: 283.9922123911442
+Seed: 12345678 has the lowest cost
+cluster centroids are [13.8523058  13.50187578 13.04870563 11.5047533   9.21580891]
+# of spectra per cluster is [1419 6001 1194  209 3209]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hmap</span> <span class="o">=</span> <span class="n">plot_heatmap</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">im</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">=</span><span class="n">im</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span>  <span class="sa">r</span><span class="s1">&#39;$\rm{-\;K=</span><span class="si">%d</span><span class="s1">\;clusters\;}$&#39;</span> <span class="o">%</span> <span class="n">n_clusters</span><span class="p">,</span>
+                    <span class="n">cbarlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{[-]}$&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">discrete_colormap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">hmap</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_loc</span> <span class="o">+</span> <span class="n">save_title_specimen</span> <span class="o">+</span> <span class="s1">&#39;_Clustered.png&#39;</span><span class="p">,</span>
+             <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_25_0.png" src="../_images/installation_eelsfitter_tutorial_25_0.png" />
+</div>
+</div>
+</section>
+<section id="Training-of-the-ZLP">
+<h2>Training of the ZLP<a class="headerlink" href="#Training-of-the-ZLP" title="Link to this heading"></a></h2>
+<p>The ZLP can be trained with the following lines of code. It produces a couple of plots:</p>
+<ol class="arabic simple">
+<li><p>The raw signal per cluster, including the position of the hyperparamter <span class="math notranslate nohighlight">\(E_I\)</span></p></li>
+<li><p>The slow of the raw signal per cluster</p></li>
+<li><p>The value of the loss per epoch on both training and validation set</p></li>
+</ol>
+<p>The more replicas one uses to train the ZLP, the more accurate the model becomes.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_replica</span> <span class="o">=</span> <span class="mi">1</span>                   <span class="c1"># number of replicas</span>
+<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">1000</span>                 <span class="c1"># number of epochs</span>
+<span class="n">regularisation_constant</span> <span class="o">=</span> <span class="mf">1.</span>    <span class="c1"># Penalty term to prevent models from going up in region II, set to 0 to disable. This will increase training time significantly if enabled.</span>
+<span class="n">display_step</span> <span class="o">=</span> <span class="mi">200</span>              <span class="c1"># show training report after display_step steps</span>
+
+<span class="c1"># Choose to shift the hyperparameters a bit</span>
+<span class="n">shift_dE1</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">shift_dE2</span> <span class="o">=</span> <span class="mf">1.</span>
+
+<span class="n">signal_type</span> <span class="o">=</span> <span class="s1">&#39;EELS&#39;</span>
+
+<span class="n">path_to_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;models&quot;</span><span class="p">)</span> <span class="c1"># where to store the trained models</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_to_models</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path_to_models</span><span class="p">)</span>
+
+<span class="n">im</span><span class="o">.</span><span class="n">train_zlp_models</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
+                    <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                    <span class="n">based_on</span><span class="o">=</span><span class="n">based_on</span><span class="p">,</span>
+                    <span class="n">n_replica</span><span class="o">=</span><span class="n">n_replica</span><span class="p">,</span>
+                    <span class="n">n_epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
+                    <span class="n">shift_de1</span><span class="o">=</span><span class="n">shift_dE1</span><span class="p">,</span>
+                    <span class="n">shift_de2</span><span class="o">=</span><span class="n">shift_dE2</span><span class="p">,</span>
+                    <span class="n">regularisation_constant</span><span class="o">=</span><span class="n">regularisation_constant</span><span class="p">,</span>
+                    <span class="n">display_step</span><span class="o">=</span><span class="n">display_step</span><span class="p">,</span>
+                    <span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_models</span><span class="p">,</span>
+                    <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">)</span>
+
+<span class="n">fig1</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">train_zlps</span><span class="o">.</span><span class="n">plot_hp_cluster</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Position\;of\;dE1\;\&amp;\;dE2\;per\;cluster\;}$&#39;</span><span class="p">,</span>
+                                     <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Energy\;loss\;[eV]\;}$&#39;</span><span class="p">,</span>
+                                     <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Intensity\;[a.u.]\;}$&#39;</span><span class="p">,</span>
+                                     <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                                     <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">],</span>
+                                     <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">train_zlps</span><span class="o">.</span><span class="n">plot_hp_cluster_slope</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Position\;of\;dE1\;\&amp;\;dE2\;per\;slope\;of\;cluster\;}$&#39;</span><span class="p">,</span>
+                                           <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{Energy\;loss\;[eV]\;}$&#39;</span><span class="p">,</span>
+                                           <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rm{dI/dE\;[a.u.]\;}$&#39;</span><span class="p">,</span>
+                                           <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                                           <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Since the actual training time that is needed to obtain a fair amount of models (~1000) takes a couple of hours, we provide a set of <em>pretrained</em> models to experiment with. We will use these in what follows.</p>
+<p>They can be downloaded by</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/LHCfitNikhef/EELSfitter/blob/documentation/Models/tutorial/models_ws2_E1_s09_E2_s1_k5_r10.zip?raw=true&#39;</span>
+<span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>unzip<span class="w"> </span>models_E1_p16_k5.zip
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_to_pretrained_models</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;E1_s09_E2_s1_k5_r10&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Training-report">
+<h2>Training report<a class="headerlink" href="#Training-report" title="Link to this heading"></a></h2>
+<p>The pretaind models have now been downloaded, so let us see what they look like. The cell immediately below loads the models, plots the cost distribution on the training and validation sets and plots how the predicted ZLPs behave as a function of the total integrated intensity per cluster:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">im</span><span class="o">.</span><span class="n">load_zlp_models</span><span class="p">(</span><span class="n">path_to_models</span><span class="o">=</span><span class="n">path_to_pretrained_models</span><span class="p">,</span> <span class="n">based_on</span><span class="o">=</span><span class="s1">&#39;log_zlp&#39;</span><span class="p">,</span> <span class="n">plot_chi2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plot_pred</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This shows that the clustering has been effective, since the ZLPs do not overlap before <span class="math notranslate nohighlight">\(E_I\)</span>. Let us consider a specific pixel, say (30, 90), to see how the subtracted spectrum compares to the raw spectrum.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pixx</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">pixy</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="n">signal_type</span> <span class="o">=</span> <span class="s1">&#39;pool&#39;</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_zlp_per_pixel</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">pixx</span><span class="p">,</span> <span class="n">pixy</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span>
+                          <span class="n">zlp_gen</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">zlp_match</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                          <span class="n">subtract</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">deconv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                          <span class="n">hyper_par</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_zlp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$\rm{ZLP\;matching\;result\;at\;pixel[</span><span class="si">%d</span><span class="s2">,</span><span class="si">%d</span><span class="s2">]}$&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pixx</span><span class="p">,</span> <span class="n">pixy</span><span class="p">),</span>
+                          <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Energy\;loss\;[eV]}$&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Intensity\;[a.u.]}$&quot;</span><span class="p">,</span>
+                          <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">im</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_38_0.png" src="../_images/installation_eelsfitter_tutorial_38_0.png" />
+</div>
+</div>
+<p>We conclude this tutorial by plotting, for each cluster, the raw signal plus the ZLP with uncertainties evaluated at the cluster means:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">signal_type</span> <span class="o">=</span> <span class="s1">&#39;EELS&#39;</span>
+<span class="k">for</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_zlp_per_cluster</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span>
+                               <span class="n">zlp_gen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hyper_par</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">title</span><span class="o">=</span><span class="n">title_specimen</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$\rm{\;ZLPs\;at\;cluster\;</span><span class="si">%d</span><span class="s2">}$&quot;</span> <span class="o">%</span> <span class="n">cluster</span><span class="p">,</span>
+                               <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Energy\;loss\;[eV]}$&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{Intensity\;[a.u.]}$&quot;</span><span class="p">,</span>
+                               <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span>
+                               <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">im</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_40_0.png" src="../_images/installation_eelsfitter_tutorial_40_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_40_1.png" src="../_images/installation_eelsfitter_tutorial_40_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_40_2.png" src="../_images/installation_eelsfitter_tutorial_40_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_40_3.png" src="../_images/installation_eelsfitter_tutorial_40_3.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/installation_eelsfitter_tutorial_40_4.png" src="../_images/installation_eelsfitter_tutorial_40_4.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cluster.html" class="btn btn-neutral float-right" title="Training models in parallel" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

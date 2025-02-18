@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSFitter package &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EELSFitter.core package" href="EELSFitter.core.html" />
+    <link rel="prev" title="Edge-induced excitations in Bi2Te3 from spatially-resolved electron energy-gain spectroscopy" href="../key_results/La2023.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">EELSFitter package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html">EELSFitter.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html">EELSFitter.plotting package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#meta">Meta</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">EELSFitter package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/EELSFitter.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="eelsfitter-package">
+<span id="code"></span><h1>EELSFitter package<a class="headerlink" href="#eelsfitter-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="EELSFitter.core.html">EELSFitter.core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.core.html#module-EELSFitter.core.spectral_image">EELSFitter.core.spectral_image module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage"><code class="docutils literal notranslate"><span class="pre">SpectralImage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.KK_pixel"><code class="docutils literal notranslate"><span class="pre">SpectralImage.KK_pixel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_axes"><code class="docutils literal notranslate"><span class="pre">SpectralImage.calc_axes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.calc_thickness"><code class="docutils literal notranslate"><span class="pre">SpectralImage.calc_thickness()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cluster"><code class="docutils literal notranslate"><span class="pre">SpectralImage.cluster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cluster_on_centroids"><code class="docutils literal notranslate"><span class="pre">SpectralImage.cluster_on_centroids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.compressed_pickle"><code class="docutils literal notranslate"><span class="pre">SpectralImage.compressed_pickle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cut_image_energy"><code class="docutils literal notranslate"><span class="pre">SpectralImage.cut_image_energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.cut_image_pixels"><code class="docutils literal notranslate"><span class="pre">SpectralImage.cut_image_pixels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.decompress_pickle"><code class="docutils literal notranslate"><span class="pre">SpectralImage.decompress_pickle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.deconv_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.deconv_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.deconvolution"><code class="docutils literal notranslate"><span class="pre">SpectralImage.deconvolution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.extrp_signal"><code class="docutils literal notranslate"><span class="pre">SpectralImage.extrp_signal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.find_optimal_amount_of_clusters"><code class="docutils literal notranslate"><span class="pre">SpectralImage.find_optimal_amount_of_clusters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_cluster_signals"><code class="docutils literal notranslate"><span class="pre">SpectralImage.get_cluster_signals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_extrp_param"><code class="docutils literal notranslate"><span class="pre">SpectralImage.get_extrp_param()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_image_signals"><code class="docutils literal notranslate"><span class="pre">SpectralImage.get_image_signals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_pixel_matched_zlp_models"><code class="docutils literal notranslate"><span class="pre">SpectralImage.get_pixel_matched_zlp_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_pixel_signal"><code class="docutils literal notranslate"><span class="pre">SpectralImage.get_pixel_signal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_prefix"><code class="docutils literal notranslate"><span class="pre">SpectralImage.get_prefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.get_zlp_models"><code class="docutils literal notranslate"><span class="pre">SpectralImage.get_zlp_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.kramers_kronig_analysis"><code class="docutils literal notranslate"><span class="pre">SpectralImage.kramers_kronig_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_compressed_Spectral_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.load_compressed_Spectral_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_dmfile"><code class="docutils literal notranslate"><span class="pre">SpectralImage.load_dmfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_spectral_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.load_spectral_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.load_zlp_models"><code class="docutils literal notranslate"><span class="pre">SpectralImage.load_zlp_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.match_zlp_to_signal"><code class="docutils literal notranslate"><span class="pre">SpectralImage.match_zlp_to_signal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.n_clusters"><code class="docutils literal notranslate"><span class="pre">SpectralImage.n_clusters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.n_spectra"><code class="docutils literal notranslate"><span class="pre">SpectralImage.n_spectra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.nmf_cluster"><code class="docutils literal notranslate"><span class="pre">SpectralImage.nmf_cluster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.nmf_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.nmf_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.nmf_pixel"><code class="docutils literal notranslate"><span class="pre">SpectralImage.nmf_pixel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.pca_cluster"><code class="docutils literal notranslate"><span class="pre">SpectralImage.pca_cluster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.pca_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.pca_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.pca_pixel"><code class="docutils literal notranslate"><span class="pre">SpectralImage.pca_pixel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.pool_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.pool_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.pool_pixel"><code class="docutils literal notranslate"><span class="pre">SpectralImage.pool_pixel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.rl_deconvolution"><code class="docutils literal notranslate"><span class="pre">SpectralImage.rl_deconvolution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.save_compressed_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.save_compressed_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.save_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.save_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.set_eaxis"><code class="docutils literal notranslate"><span class="pre">SpectralImage.set_eaxis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.set_mass_density"><code class="docutils literal notranslate"><span class="pre">SpectralImage.set_mass_density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.set_refractive_index"><code class="docutils literal notranslate"><span class="pre">SpectralImage.set_refractive_index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.shape"><code class="docutils literal notranslate"><span class="pre">SpectralImage.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.smooth_signal"><code class="docutils literal notranslate"><span class="pre">SpectralImage.smooth_signal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.subtract_image"><code class="docutils literal notranslate"><span class="pre">SpectralImage.subtract_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.subtract_zlp"><code class="docutils literal notranslate"><span class="pre">SpectralImage.subtract_zlp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage.train_zlp_models"><code class="docutils literal notranslate"><span class="pre">SpectralImage.train_zlp_models()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.core.html#module-EELSFitter.core.training">EELSFitter.core.training module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.MultilayerPerceptron"><code class="docutils literal notranslate"><span class="pre">MultilayerPerceptron</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.MultilayerPerceptron.forward"><code class="docutils literal notranslate"><span class="pre">MultilayerPerceptron.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.calc_scale_var_log_int_i"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.calc_scale_var_log_int_i()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.calculate_hyperparameters"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.calculate_hyperparameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.cleanup_files"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.cleanup_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_difflog_local_minmax_idx"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.find_difflog_local_minmax_idx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_fwhm_idx"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.find_fwhm_idx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_kneedle_idx"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.find_kneedle_idx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_local_min_idx"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.find_local_min_idx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.initialize_x_y_sigma_input"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.initialize_x_y_sigma_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.loss_function"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.loss_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.plot_hp_cluster"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.plot_hp_cluster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.plot_hp_cluster_slope"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.plot_hp_cluster_slope()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.plot_training_report"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.plot_training_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.save_figplot"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.save_figplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.save_hyperparameters"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.save_hyperparameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.save_scale_var_log_int_i"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.save_scale_var_log_int_i()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.scale_eaxis"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.scale_eaxis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_dydx_data"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.set_dydx_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_minimum_intensities"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.set_minimum_intensities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_path_for_training_report"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.set_path_for_training_report()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_sigma"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.set_sigma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_test_x_y_sigma"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.set_test_x_y_sigma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_train_x_y_sigma"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.set_train_x_y_sigma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_y_data"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.set_y_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.train_and_evaluate_model"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.train_and_evaluate_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.train_zlp_models_scaled"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.train_zlp_models_scaled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.write_txt_of_loss"><code class="docutils literal notranslate"><span class="pre">TrainZeroLossPeak.write_txt_of_loss()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.find_scale_var"><code class="docutils literal notranslate"><span class="pre">find_scale_var()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.log10_fit"><code class="docutils literal notranslate"><span class="pre">log10_fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.power_fit"><code class="docutils literal notranslate"><span class="pre">power_fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.scale"><code class="docutils literal notranslate"><span class="pre">scale()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.smooth_signal"><code class="docutils literal notranslate"><span class="pre">smooth_signal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.smooth_signals_per_cluster"><code class="docutils literal notranslate"><span class="pre">smooth_signals_per_cluster()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.training.weight_reset"><code class="docutils literal notranslate"><span class="pre">weight_reset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.core.html#module-EELSFitter.core.gainpeakfitter">EELSFitter.core.gainpeakfitter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.array2D_of_intensity_at_energy_loss"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.array2D_of_intensity_at_energy_loss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.create_new_plot"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.create_new_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.curve_fit_between"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.curve_fit_between()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.curve_fit_between_background"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.curve_fit_between_background()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.determine_parameters"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.determine_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.fit_gain_peak_mc"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.fit_gain_peak_mc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.fit_models"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.fit_models()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.fwhm"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.fwhm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.gaussian"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.gaussian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.generalised_peak"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.generalised_peak()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.get_model"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.get_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.get_subtracted_spectrum"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.get_subtracted_spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.inspect_spectrum"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.inspect_spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.kaiser"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.kaiser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.lorentzian"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.lorentzian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.lorentzian_background"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.lorentzian_background()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.model"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.model_fit_between"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.model_fit_between()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.pearson"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.pearson()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.plot_all_results"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.plot_all_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.plot_array2D_of_intensity_at_energy_loss"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.plot_array2D_of_intensity_at_energy_loss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.pseudo_voigt"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.pseudo_voigt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.signal_subtracted"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.signal_subtracted()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_gaussian"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.split_gaussian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_lorentzian"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.split_lorentzian()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_pearson"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.split_pearson()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_pseudo_voigt"><code class="docutils literal notranslate"><span class="pre">GainPeakFitter.split_pseudo_voigt()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="EELSFitter.plotting.html">EELSFitter.plotting package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.plotting.html#module-EELSFitter.plotting.hyperparameters">EELSFitter.plotting.hyperparameters module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.hyperparameters.plot_figs"><code class="docutils literal notranslate"><span class="pre">plot_figs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.hyperparameters.plot_hp"><code class="docutils literal notranslate"><span class="pre">plot_hp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.plotting.html#module-EELSFitter.plotting.zlp">EELSFitter.plotting.zlp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_figs"><code class="docutils literal notranslate"><span class="pre">plot_figs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_zlp_cluster_predictions"><code class="docutils literal notranslate"><span class="pre">plot_zlp_cluster_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_zlp_per_cluster"><code class="docutils literal notranslate"><span class="pre">plot_zlp_per_cluster()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_zlp_per_pixel"><code class="docutils literal notranslate"><span class="pre">plot_zlp_per_pixel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.zlp.summary_distribution"><code class="docutils literal notranslate"><span class="pre">summary_distribution()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.plotting.html#module-EELSFitter.plotting.training_perf">EELSFitter.plotting.training_perf module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.training_perf.plot_cost_dist"><code class="docutils literal notranslate"><span class="pre">plot_cost_dist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.plotting.html#module-EELSFitter.plotting.heatmaps">EELSFitter.plotting.heatmaps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.plotting.html#EELSFitter.plotting.heatmaps.plot_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_heatmap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="meta">
+<h2>Meta<a class="headerlink" href="#meta" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>License</strong>: GNU General Public License v3 (GPLv3)</p></li>
+<li><p><strong>Author</strong>: A. Brokkelkamp, J.J. ter Hoeve, I. Postmes, L. Maduro, J. Rojo, S. Conesa Boj</p></li>
+<li><p><strong>Requires</strong>: Python <span class="math notranslate nohighlight">\(&gt;= 3.7\)</span></p></li>
+</ul>
+<p>The package is publicly available through <a class="reference external" href="https://pypi.org/project/EELSFitter/">pypi</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../key_results/La2023.html" class="btn btn-neutral float-left" title="Edge-induced excitations in Bi2Te3 from spatially-resolved electron energy-gain spectroscopy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="EELSFitter.core.html" class="btn btn-neutral float-right" title="EELSFitter.core package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

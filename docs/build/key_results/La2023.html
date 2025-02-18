@@ -1,0 +1,171 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edge-induced excitations in Bi2Te3 from spatially-resolved electron energy-gain spectroscopy &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EELSFitter package" href="../modules/EELSFitter.html" />
+    <link rel="prev" title="Localized exciton anatomy and band gap energy modulation in 1D MoS2 nanostructures" href="vanderLippe2023.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#abstract">Abstract</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/key_results/La2023.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="edge-induced-excitations-in-bi2te3-from-spatially-resolved-electron-energy-gain-spectroscopy">
+<h1>Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy<a class="headerlink" href="#edge-induced-excitations-in-bi2te3-from-spatially-resolved-electron-energy-gain-spectroscopy" title="Link to this heading"></a></h1>
+<p><em>This is a summary highlighting the application of EELSFitter in this publication.
+For more detail about the work presented, please refer to the publication itself</em> <span id="id1">[<a class="reference internal" href="../bibliography.html#id6" title="Helena La, Abel Brokkelkamp, Stijn van der Lippe, Jaco ter Hoeve, Juan Rojo, and Sonia Conesa-Boj. Edge-induced excitations in bi2te3 from spatially-resolved electron energy-gain spectroscopy. Ultramicroscopy, 254:113841, 2023. doi:https://doi.org/10.1016/j.ultramic.2023.113841.">La <em>et al.</em>, 2023</a>]</span></p>
+<section id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Link to this heading"></a></h2>
+<p>Among the many potential applications of topological insulator materials, their broad potential for
+the development of novel tunable plasmonics at THz and mid-infrared frequencies for quantum computing,
+terahertz detectors, and spintronic devices is particularly attractive. The required understanding of
+the intricate relationship between nanoscale crystal structure and the properties of the resulting plasmonic
+resonances remains, however, elusive for these materials. Specifically, edge- and surface-induced plasmonic
+resonances, and other collective excitations, are often buried beneath the continuum of electronic transitions,
+making it difficult to isolate and interpret these signals using techniques such as
+electron energy-loss spectroscopy (EELS). Here we focus on the experimentally clean energy-gain EELS region
+to characterise collective excitations in the topologically insulating material Bi<sub>2</sub>Te<sub>3</sub> and
+correlate them with the underlying crystalline structure with nanoscale resolution. We identify with high
+significance the presence of a distinct energy-gain peak around -0.8 eV, with spatially-resolved maps revealing
+that its intensity is markedly enhanced at the edge regions of the specimen. findings illustrate the reach of
+energy-gain EELS analyses to accurately map collective excitations in quantum materials, a key asset in the quest
+towards new tunable plasmonic devices.</p>
+<figure class="align-center align-default" id="id2" style="width: 90%">
+<span id="bi2te3-gain-maps"></span><a class="align-center reference internal image-reference" href="../_images/bi2te3_gain_maps.png"><img alt="../_images/bi2te3_gain_maps.png" class="align-center" src="../_images/bi2te3_gain_maps.png" style="width: 90%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text"><em>Energy-gain peak characterisation with the Monte Carlo replica method. (a) The EELS
+spectral image of Fig. 1c classified into 20 clusters, each of them composed by pixels with similar
+thickness. (b) Same as Fig. 2b now using the Monte Carlo replica method to estimate and propagate the
+ZLP fitting model uncertainties. For the ZLP Gaussian fit, the subtracted spectrum, and the Lorentzian fit
+to the latter we display both the median over replicas and the 68% CL intervals. (c,d) Same as Fig. 3c now
+the lower and upper ranges, respectively, of the 68% CL interval for the area ratio evaluated over the
+Monte Carlo replicas.</em></span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="vanderLippe2023.html" class="btn btn-neutral float-left" title="Localized exciton anatomy and band gap energy modulation in 1D MoS2 nanostructures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../modules/EELSFitter.html" class="btn btn-neutral float-right" title="EELSFitter package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
