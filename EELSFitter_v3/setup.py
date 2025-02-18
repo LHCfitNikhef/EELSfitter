@@ -5,9 +5,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="EELSFitter",
-    version="3.0.0",
-    author="A. Brokkelkamp, S. van der Lippe, H. La, J.J. ter Hoeve, I. Postmes, L. Roest, L. Maduro, J. Rojo, S. Conesa Boj",
-    author_email="a.r.brokkelkamp@tudelft.nl",
+    version="3.1.0",
+    author="J.M. Sangers, A. Brokkelkamp, J.J. ter Hoeve, I. Postmes, L. Maduro, J. Rojo, S. Conesa Boj",
+    author_email="j.j.ter.hoeve@vu.nl",
     description="Electron Energy Loss Spectroscopy Fitter",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -29,12 +29,9 @@ setuptools.setup(
         "numpy>=1.19.2",
         "natsort>=7.1.0",
         "scipy>=1.5.2",
-        "pandas>=1.0.5",
-        "seaborn>=0.11.0",
         "torch>=1.6.0",
         "scikit_learn>=1.0",
         "kneed>=0.8",
-        "wget>=3.2"
         ],
     python_requires=">=3.7",
 )
