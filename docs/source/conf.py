@@ -21,11 +21,11 @@ sys.path.insert(0, os.path.abspath('../../EELSFitter/src/'))
 # -- Project information -----------------------------------------------------
 
 project = 'EELSFitter'
-copyright = '2023, EELSFitter developer team'
+copyright = '2025, EELSFitter developer team'
 author = 'EELSFitter developer team'
 
 # The full version, including alpha/beta/rc tags
-release = '3.0.0'
+release = '3.1.0'
 
 # -- General configuration ---------------------------------------------------
 
@@ -84,7 +84,6 @@ extlinks = {}
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
-# html_theme = 'furo'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -99,7 +98,7 @@ html_css_files = ['css/custom.css']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 # Thanks https://github.com/bskinn/sphobjinv
-intersphinx_mapping = {"python": ("https://docs.python.org/3/", None), "scipy": ("https://docs.scipy.org/doc/scipy/reference", None), "numpy": ("https://numpy.org/doc/stable", None), "pytorch": ("https://pytorch.org/docs/stable/", None), "pandas": ("https://pandas.pydata.org/docs/", None), "seaborn": ("https://seaborn.pydata.org/", None), "matplotlib": ("https://matplotlib.org/", None)}
+intersphinx_mapping = {"python": ("https://docs.python.org/3/", None), "scipy": ("https://docs.scipy.org/doc/scipy/reference", None), "numpy": ("https://numpy.org/doc/stable", None), "pytorch": ("https://pytorch.org/docs/stable/", None), "matplotlib": ("https://matplotlib.org/", None)}
 
 # -- Options for todo extension ----------------------------------------------
 

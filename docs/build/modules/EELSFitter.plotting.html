@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSFitter.plotting package &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bibliography" href="../bibliography.html" />
+    <link rel="prev" title="EELSFitter.core package" href="EELSFitter.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="EELSFitter.html">EELSFitter package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="EELSFitter.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="EELSFitter.core.html">EELSFitter.core package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">EELSFitter.plotting package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-EELSFitter.plotting.hyperparameters">EELSFitter.plotting.hyperparameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-EELSFitter.plotting.zlp">EELSFitter.plotting.zlp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-EELSFitter.plotting.training_perf">EELSFitter.plotting.training_perf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-EELSFitter.plotting.heatmaps">EELSFitter.plotting.heatmaps module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EELSFitter.html#meta">Meta</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="EELSFitter.html">EELSFitter package</a></li>
+      <li class="breadcrumb-item active">EELSFitter.plotting package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/EELSFitter.plotting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="eelsfitter-plotting-package">
+<h1>EELSFitter.plotting package<a class="headerlink" href="#eelsfitter-plotting-package" title="Link to this heading"></a></h1>
+<section id="module-EELSFitter.plotting.hyperparameters">
+<span id="eelsfitter-plotting-hyperparameters-module"></span><h2>EELSFitter.plotting.hyperparameters module<a class="headerlink" href="#module-EELSFitter.plotting.hyperparameters" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.hyperparameters.plot_figs">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.hyperparameters.</span></span><span class="sig-name descname"><span class="pre">plot_figs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.4,</span> <span class="pre">5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[-500,</span> <span class="pre">500]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/hyperparameters.html#plot_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.hyperparameters.plot_figs" title="Link to this definition"></a></dt>
+<dd><p>General parameters to plot figures</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong></p></li>
+<li><p><strong>y</strong></p></li>
+<li><p><strong>xlim</strong></p></li>
+<li><p><strong>ylim</strong></p></li>
+<li><p><strong>yscale</strong></p></li>
+<li><p><strong>kwargs</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fig</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.0)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.hyperparameters.plot_hp">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.hyperparameters.</span></span><span class="sig-name descname"><span class="pre">plot_hp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eaxis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">de1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">de2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/hyperparameters.html#plot_hp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.hyperparameters.plot_hp" title="Link to this definition"></a></dt>
+<dd><p>Plot with location of dE1 &amp; dE2 shown on top of the clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eaxis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – eaxis of the data</p></li>
+<li><p><strong>clusters_data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>N</em><em>)</em>) – Data per cluster</p></li>
+<li><p><strong>de1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Hyperparameter dE1</p></li>
+<li><p><strong>de2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – Hyperparameter dE2</p></li>
+<li><p><strong>**kwargs</strong> (<em>dictionary</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fig</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.0)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-EELSFitter.plotting.zlp">
+<span id="eelsfitter-plotting-zlp-module"></span><h2>EELSFitter.plotting.zlp module<a class="headerlink" href="#module-EELSFitter.plotting.zlp" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.zlp.plot_figs">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.zlp.</span></span><span class="sig-name descname"><span class="pre">plot_figs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">5]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[-10,</span> <span class="pre">3000]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/zlp.html#plot_figs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.zlp.plot_figs" title="Link to this definition"></a></dt>
+<dd><p>General parameters to plot figures</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong></p></li>
+<li><p><strong>y</strong></p></li>
+<li><p><strong>xlim</strong></p></li>
+<li><p><strong>ylim</strong></p></li>
+<li><p><strong>yscale</strong></p></li>
+<li><p><strong>kwargs</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fig</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.0)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.zlp.plot_zlp_cluster_predictions">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.zlp.</span></span><span class="sig-name descname"><span class="pre">plot_zlp_cluster_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/zlp.html#plot_zlp_cluster_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.zlp.plot_zlp_cluster_predictions" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong></p></li>
+<li><p><strong>cmap</strong></p></li>
+<li><p><strong>kwargs</strong></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.zlp.plot_zlp_per_cluster">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.zlp.</span></span><span class="sig-name descname"><span class="pre">plot_zlp_per_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'EELS'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zlp_gen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyper_par</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/zlp.html#plot_zlp_per_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.zlp.plot_zlp_per_cluster" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong></p></li>
+<li><p><strong>cluster</strong></p></li>
+<li><p><strong>signal_type</strong></p></li>
+<li><p><strong>zlp_gen</strong></p></li>
+<li><p><strong>hyper_par</strong></p></li>
+<li><p><strong>kwargs</strong></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.zlp.plot_zlp_per_pixel">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.zlp.</span></span><span class="sig-name descname"><span class="pre">plot_zlp_per_pixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'EELS'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zlp_gen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zlp_match</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subtract</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deconv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyper_par</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_zlp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/zlp.html#plot_zlp_per_pixel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.zlp.plot_zlp_per_pixel" title="Link to this definition"></a></dt>
+<dd><p>Plots for <code class="docutils literal notranslate"><span class="pre">pixx</span></code>, <code class="docutils literal notranslate"><span class="pre">pixy</span></code></p>
+<ul class="simple">
+<li><p>the inelastic scattering distribution plus uncertainties</p></li>
+<li><p>the ZLP plus uncertainties</p></li>
+<li><p>the raw signal</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong></p></li>
+<li><p><strong>pixx</strong></p></li>
+<li><p><strong>pixy</strong></p></li>
+<li><p><strong>signal</strong></p></li>
+<li><p><strong>zlp_gen</strong></p></li>
+<li><p><strong>zlp_match</strong></p></li>
+<li><p><strong>subtract</strong></p></li>
+<li><p><strong>deconv</strong></p></li>
+<li><p><strong>hyper_par</strong></p></li>
+<li><p><strong>random_zlp</strong></p></li>
+<li><p><strong>kwargs</strong></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.zlp.summary_distribution">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.zlp.</span></span><span class="sig-name descname"><span class="pre">summary_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">84</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/zlp.html#summary_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.zlp.summary_distribution" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-EELSFitter.plotting.training_perf">
+<span id="eelsfitter-plotting-training-perf-module"></span><h2>EELSFitter.plotting.training_perf module<a class="headerlink" href="#module-EELSFitter.plotting.training_perf" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.training_perf.plot_cost_dist">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.training_perf.</span></span><span class="sig-name descname"><span class="pre">plot_cost_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cost_trains</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost_tests</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost_tests_std</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'$\\rm{Cost\\;distribution\\;}$'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/training_perf.html#plot_cost_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.training_perf.plot_cost_dist" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cost_trains</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – Cost values of the training set with M trained NNs</p></li>
+<li><p><strong>cost_tests</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>)</em>) – Cost values of the test set with M trained NNs</p></li>
+<li><p><strong>cost_tests_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – 68% CL of the test costs</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Title of the plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fig</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.0)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-EELSFitter.plotting.heatmaps">
+<span id="eelsfitter-plotting-heatmaps-module"></span><h2>EELSFitter.plotting.heatmaps module<a class="headerlink" href="#module-EELSFitter.plotting.heatmaps" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="EELSFitter.plotting.heatmaps.plot_heatmap">
+<span class="sig-prename descclassname"><span class="pre">EELSFitter.plotting.heatmaps.</span></span><span class="sig-name descname"><span class="pre">plot_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'$\\rm{[nm]\\;}$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'$\\rm{[nm]\\;}$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbarlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'$\\rm{[-]\\;}$'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discrete_colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_bin_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robust</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/EELSFitter/plotting/heatmaps.html#plot_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EELSFitter.plotting.heatmaps.plot_heatmap" title="Link to this definition"></a></dt>
+<dd><p>Plots a heatmap for given data input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><em>SpectralImage</em></a>) – <a class="reference internal" href="EELSFitter.core.html#EELSFitter.core.spectral_image.SpectralImage" title="EELSFitter.core.spectral_image.SpectralImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">spectral_image.SpectralImage</span></code></a> object</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>N</em><em>)</em>) – Input data for heatmap, must be 2D.</p></li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>M</em><em>,</em><em>N</em><em>)</em>) – Input data for the mask, must be same shape as <cite>data</cite>. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>window</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>numpy.ndarray</em></a><em>, </em><em>shape=</em><em>(</em><em>4</em><em>,</em><em>)</em>) – Input the window you want to zoom in on. Shape as follows: [y_start, y_end, x_start, x_end].</p></li>
+<li><p><strong>vmin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>optional</em>) – Set the lower (upper) bounds of the heatmap. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>vmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>optional</em>) – Set the lower (upper) bounds of the heatmap. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>xlabel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Set the label of the x-axis (y-axis). Nanometer ([nm]) is assumed as standard scale. Default is ‘[nm]’.</p></li>
+<li><p><strong>ylabel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Set the label of the x-axis (y-axis). Nanometer ([nm]) is assumed as standard scale. Default is ‘[nm]’.</p></li>
+<li><p><strong>cbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Set if you want to have a colorbar or not. Default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>cbarlabel</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Set the label of the colorbar. Default is ‘[-]’.</p></li>
+<li><p><strong>cmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Set the colormap of the heatmap. The default is ‘coolwarm’.</p></li>
+<li><p><strong>discrete_colormap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Enables the heatmap values to be discretised. Best used in conjuction with color_bin_size. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>sig_cbar</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>optional</em>) – Set the amount of significant numbers displayed in the colorbar. Default is 3.</p></li>
+<li><p><strong>color_bin_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>optional</em>) – Set the size of the bins used for discretisation. Best used in conjuction discrete_colormap. Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>robust</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Enable if you want to remove outliers in the plotting. Plots the 99 percentile.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dictionary</em>) – Additional keyword arguments. These are passed to plt.subplots()</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fig</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.0)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="EELSFitter.core.html" class="btn btn-neutral float-left" title="EELSFitter.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../bibliography.html" class="btn btn-neutral float-right" title="Bibliography" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

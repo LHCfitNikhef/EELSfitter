@@ -1,0 +1,22 @@
+.wy-nav-content {
+   max-width: 1000px;
+   margin-right: 10%;
+   margin-left: 10%;
+}
+
+img[src*="logo"]{
+   padding-left: 10px;
+   padding-right: 10px;
+   /*border: 5px dotted black*/
+}
+
+.math {
+    text-align: left;
+}
+.eqno {
+    float: right;
+}
+
+figcaption{
+    text-algin: left;
+}

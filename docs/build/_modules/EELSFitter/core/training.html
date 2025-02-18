@@ -1,0 +1,1276 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSFitter.core.training &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">EELSFitter.core.training</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for EELSFitter.core.training</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">kneed</span> <span class="kn">import</span> <span class="n">KneeLocator</span>
+
+<span class="kn">from</span> <span class="nn">..plotting.hyperparameters</span> <span class="kn">import</span> <span class="n">plot_hp</span>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak">[docs]</a>
+<span class="k">class</span> <span class="nc">TrainZeroLossPeak</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">spectra</span><span class="p">,</span>
+                 <span class="n">eaxis</span><span class="p">,</span>
+                 <span class="n">cluster_centroids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">display_step</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                 <span class="n">training_report_step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">n_batch_of_replica</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">n_batches</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">n_replica</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">n_epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                 <span class="n">shift_de1</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                 <span class="n">shift_de2</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+                 <span class="n">regularisation_constant</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span>
+                 <span class="n">path_to_models</span><span class="o">=</span><span class="s1">&#39;./models/&#39;</span><span class="p">,</span>
+                 <span class="n">remove_temp_files</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span>
+                 <span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The TrainZeroLossPeak class provides the tools to train the ZLP models for the spectra.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        spectra</span>
+<span class="sd">        eaxis</span>
+<span class="sd">        cluster_centroids</span>
+<span class="sd">        path_to_models</span>
+<span class="sd">        display_step</span>
+<span class="sd">        training_report_step</span>
+<span class="sd">        n_batch_of_replica</span>
+<span class="sd">        n_batches</span>
+<span class="sd">        n_replica</span>
+<span class="sd">        n_epochs</span>
+<span class="sd">        shift_de1</span>
+<span class="sd">        shift_de2</span>
+<span class="sd">        regularisation_constant : float</span>
+<span class="sd">            Constant that weighs the fit accuracy to the regularisation term</span>
+<span class="sd">        remove_temp_files</span>
+<span class="sd">        kwargs</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span> <span class="o">=</span> <span class="n">spectra</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">=</span> <span class="n">eaxis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">cluster_centroids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span> <span class="o">=</span> <span class="n">cluster_centroids</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_ebins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span> <span class="o">=</span> <span class="n">path_to_models</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_step</span> <span class="o">=</span> <span class="n">display_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_report_step</span> <span class="o">=</span> <span class="n">training_report_step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_batch_of_replica</span> <span class="o">=</span> <span class="n">n_batch_of_replica</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_replica</span> <span class="o">=</span> <span class="n">n_replica</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_epochs</span> <span class="o">=</span> <span class="n">n_epochs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_batches</span> <span class="o">=</span> <span class="n">n_batches</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">shift_de1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">shift_de1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shift_de1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">))</span> <span class="o">*</span> <span class="n">shift_de1</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">shift_de1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shift_de1</span> <span class="o">=</span> <span class="n">shift_de1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Makes sure shift_de1 is of type float or int or an array of the same length as the clusters&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">shift_de2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">shift_de2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shift_de2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">))</span> <span class="o">*</span> <span class="n">shift_de2</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">shift_de2</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shift_de2</span> <span class="o">=</span> <span class="n">shift_de2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Makes sure shift_de2 is of type float or int or an array of the same length as the clusters&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regularisation_constant</span> <span class="o">=</span> <span class="n">regularisation_constant</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_temp_files</span> <span class="o">=</span> <span class="n">remove_temp_files</span>
+
+<div class="viewcode-block" id="TrainZeroLossPeak.train_zlp_models_scaled">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.train_zlp_models_scaled">[docs]</a>
+    <span class="k">def</span> <span class="nf">train_zlp_models_scaled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Train the ZLP models. This functions calls up the other functions step by step to complete the whole process.</span>
+<span class="sd">        Refer to each function for details what they specifically perform.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lr : float,</span>
+<span class="sd">            Learning rate of the neural network</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Sets the display step in the console / log files per how many epochs the status of the training goes.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_progress</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_step</span> <span class="o">=</span> <span class="mf">1E6</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">print_progress</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;preparing hyperparameters!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_minimum_intensities</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_y_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_dydx_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_sigma</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">find_fwhm_idx</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">find_difflog_local_minmax_idx</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">find_local_min_idx</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">find_kneedle_idx</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mde1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mde2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_hyperparameters</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_progress</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dE1:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dE2:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale_eaxis</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calc_scale_var_log_int_i</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_scale_var_log_int_i</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hyperparameters prepared!&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_test_reps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_replica</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_train_reps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_replica</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_replica</span><span class="p">):</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_replica</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_batch_of_replica</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_replica</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">path_nn_replica</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="s1">&#39;nn_rep_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_progress</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Started training on replica number </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, at time &quot;</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="c1"># Use a list of tensors, because data from the different spectra in the replica will not</span>
+            <span class="c1"># have equal shapes generally and Torch/Numpy cannot handle non-rectangular arrays.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_x_for_derivative</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">cluster_label</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+                <span class="c1"># Initialize the data of the replica by taking a spectra from each cluster</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">initialize_x_y_sigma_input</span><span class="p">(</span><span class="n">cluster_label</span><span class="p">)</span>
+
+            <span class="c1"># Split the replica into a train set and a test set</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_sigma</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_train_x_y_sigma</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_test_x_y_sigma</span><span class="p">()</span>
+
+            <span class="c1"># Train the replica/model</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">MultilayerPerceptron</span><span class="p">(</span><span class="n">num_inputs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_outputs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weight_reset</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_and_evaluate_model</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+            <span class="c1"># save model state when max number of allowed epochs has been reached</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">path_nn_replica</span><span class="p">)</span>
+
+            <span class="c1"># make a training report for every replica</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_report_step</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_report_step</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_path_for_training_report</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">write_txt_of_loss</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_report_path</span><span class="p">,</span> <span class="s1">&#39;train_loss&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_train_n</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">write_txt_of_loss</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_report_path</span><span class="p">,</span> <span class="s1">&#39;test_loss&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_test_n</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">plot_training_report</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_txt_of_loss</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;costs_train_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_batch_of_replica</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_train_reps</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_txt_of_loss</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;costs_test_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_batch_of_replica</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_test_reps</span><span class="p">)</span>
+
+        <span class="c1"># Check if training procedure is finished by counting the number of nn_rep files.</span>
+        <span class="c1"># If required number of files is present the output is cleaned up.</span>
+        <span class="n">num_files</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fnmatch</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">),</span> <span class="s1">&#39;nn_rep_*&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required_num_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_replica</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_batches</span>
+        <span class="k">if</span> <span class="n">num_files</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_num_files</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cleanup_files</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.set_minimum_intensities">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_minimum_intensities">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_minimum_intensities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set all features smaller than 1 to 1.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>  <span class="c1"># There is no even amount of spectra in each cluster, so we have to loop</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.set_y_data">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_y_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_y_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Smooths all the spectra per cluster and takes the median per cluster.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">y_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_log_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_raw</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_raw</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">y_raw</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">50</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_log_median</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.set_dydx_data">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_dydx_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_dydx_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines the slope of all spectra per cluster, smooths the slope and takes the median per cluster.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_light_log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smooth_signal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dydx_median</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">window_length</span><span class="o">=</span><span class="mi">31</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_log</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_log_median</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_light_log</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smooth_signal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_log</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">window_length</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.set_sigma">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_sigma">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine the sigma (spread of spectra per cluster) per cluster.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Single spectra spotted, sigma will be determined by bootstrap parameterization&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ebins</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning! Only a single spectra in the cluster, sigma will be set to 0.&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_ebins</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ci_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="mi">16</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">ci_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="mi">84</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">ci_high</span> <span class="o">-</span> <span class="n">ci_low</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.find_fwhm_idx">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_fwhm_idx">[docs]</a>
+    <span class="k">def</span> <span class="nf">find_fwhm_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine the FWHM indices per cluster (Full Width at Half Maximum):</span>
+<span class="sd">            - indices of the left and right side of the ZLP</span>
+<span class="sd">            - indices of the left and right side of the log of the ZLP</span>
+
+<span class="sd">        These are all determine by taking the local minimum and maximum of the dy/dx</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hwhm_gain_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hwhm_loss_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="n">half_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="nb">int</span><span class="p">((</span><span class="mi">5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span><span class="p">)]</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hwhm_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">half_max</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hwhm_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">half_max</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="c1"># Values of the FWHMs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hwhm_loss_idx</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">hwhm_gain_idx</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.find_difflog_local_minmax_idx">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_difflog_local_minmax_idx">[docs]</a>
+    <span class="k">def</span> <span class="nf">find_difflog_local_minmax_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine the local minimum and maximum of the differential of the log of the signals per cluster</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmax_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="k">if</span> <span class="mi">10</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">lower_bound_idx</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lower_bound_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">10</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_light_log</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">hwhm_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="nb">int</span><span class="p">((</span><span class="mi">10</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span><span class="p">)])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">hwhm_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmax_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_light_log</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">lower_bound_idx</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">hwhm_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span> <span class="o">+</span> <span class="n">lower_bound_idx</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.find_local_min_idx">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_local_min_idx">[docs]</a>
+    <span class="k">def</span> <span class="nf">find_local_min_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine the first local minimum index of the signals per cluster by setting it to the point where the</span>
+<span class="sd">        derivative crosses zero.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_min_loss_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_min_gain_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="n">crossing_loss</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">crossing_loss</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No crossing found in loss region cluster &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, finding minimum of absolute of dydx&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_min_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_min_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="n">crossing_gain</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmax_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">crossing_gain</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No crossing found in gain region cluster &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, finding minimum of absolute of dydx&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_min_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span><span class="p">[</span><span class="n">i</span><span class="p">])[:</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmax_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_min_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dydx_median_smooth_strong</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmax_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.find_kneedle_idx">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.find_kneedle_idx">[docs]</a>
+    <span class="k">def</span> <span class="nf">find_kneedle_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the kneedle index per cluster.</span>
+<span class="sd">        The kneedle algorithm is used to find the point of highest curvature in your concave or convex data set.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kneedle_loss_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kneedle_gain_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="n">x_loss_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">local_min_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">y_loss_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_log_median</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmin_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">local_min_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">kneedle_loss</span> <span class="o">=</span> <span class="n">KneeLocator</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_loss_range</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_loss_range</span><span class="p">,</span> <span class="n">curve</span><span class="o">=</span><span class="s1">&#39;convex&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;decreasing&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kneedle_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">&gt;</span> <span class="n">kneedle_loss</span><span class="o">.</span><span class="n">knee</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">x_gain_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">local_min_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmax_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">y_gain_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_log_median</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">local_min_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">difflog_localmax_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">kneedle_gain</span> <span class="o">=</span> <span class="n">KneeLocator</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_gain_range</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_gain_range</span><span class="p">,</span> <span class="n">curve</span><span class="o">=</span><span class="s1">&#39;convex&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">kneedle_gain</span><span class="o">.</span><span class="n">knee</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">kneedle_gain</span><span class="o">.</span><span class="n">knee</span> <span class="o">=</span> <span class="n">x_gain_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kneedle_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">&lt;</span> <span class="n">kneedle_gain</span><span class="o">.</span><span class="n">knee</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.calculate_hyperparameters">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.calculate_hyperparameters">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the values of the hyperparameters in the gain and loss region, dE1 and mdE1 are calculated by taking</span>
+<span class="sd">        the location of the kneedles at each side of the ZLP and shifting them with the gives shift value.</span>
+
+<span class="sd">        dE2 and mdE2 are calcualted by taking the value of the eaxis where a fit of the log10 function intersects with</span>
+<span class="sd">        a single count. If this value is not found the end point of the signal is taken as location for dE2.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">_find_log10_fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">):</span>
+<span class="w">            </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Calculates the log10 fit</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            x</span>
+<span class="sd">            y</span>
+<span class="sd">            idx1</span>
+<span class="sd">            idx2</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">idx2</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">idx1</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">idx2</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">idx1</span><span class="p">])</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">idx2</span><span class="p">])</span> <span class="o">-</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">idx2</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">log10_fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">slope</span><span class="p">,</span> <span class="n">factor</span><span class="p">)</span>
+
+        <span class="n">de1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+        <span class="n">de2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+        <span class="n">mde1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+        <span class="n">mde2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intersect_loss_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intersect_gain_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="c1"># loss</span>
+            <span class="n">de1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">kneedle_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">shift_de1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">log10_loss</span> <span class="o">=</span> <span class="n">_find_log10_fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                         <span class="n">idx1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kneedle_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">idx2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">local_min_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">intersect_loss_single_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">log10_loss</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">intersect_loss_single_count</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Log10 fit cluster &quot;</span><span class="p">,</span> <span class="n">i</span>
+                      <span class="p">,</span> <span class="s2">&quot; does not cross a single count, setting intersect index to second last eaxis index&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">intersect_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">intersect_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">log10_loss</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">de2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">intersect_loss_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">shift_de2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">de2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">de2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot; is shifted beyond the eaxis, setting de2 to the second last value of the eaxis&quot;</span><span class="p">)</span>
+                <span class="n">de2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="c1"># gain</span>
+            <span class="n">mde1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">kneedle_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">shift_de1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">log10_gain</span> <span class="o">=</span> <span class="n">_find_log10_fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_raw_median</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                         <span class="n">idx1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">local_min_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">idx2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kneedle_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">intersect_gain_single_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">log10_gain</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">intersect_gain_single_count</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Log10 fit cluster &quot;</span><span class="p">,</span> <span class="n">i</span>
+                      <span class="p">,</span> <span class="s2">&quot; does not cross a single count, setting intersect index to second eaxis index&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">intersect_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">intersect_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">log10_gain</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">mde2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">intersect_gain_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">shift_de2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">mde2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">mde2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s2">&quot; is shifted beyond the eaxis, setting de2 to the second value of the eaxis&quot;</span><span class="p">)</span>
+                <span class="n">mde2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">de1</span><span class="p">,</span> <span class="n">de2</span><span class="p">,</span> <span class="n">mde1</span><span class="p">,</span> <span class="n">mde2</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.scale_eaxis">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.scale_eaxis">[docs]</a>
+    <span class="k">def</span> <span class="nf">scale_eaxis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Scales the features of the energy axis between [0.1, 0.9]. This is to optimize the speed</span>
+<span class="sd">        of the neural network.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">scale_var_eaxis</span> <span class="o">=</span> <span class="n">find_scale_var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eaxis_scaled</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">scale_var_eaxis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.calc_scale_var_log_int_i">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.calc_scale_var_log_int_i">[docs]</a>
+    <span class="k">def</span> <span class="nf">calc_scale_var_log_int_i</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">based_on</span><span class="o">=</span><span class="s1">&#39;log_zlp&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the scale variables of the log of the integrated intensity of the spectra for the three highest bins</span>
+<span class="sd">        of the Zero Loss Peak.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Collect all spectra from the data set into a single array</span>
+        <span class="n">all_spectra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ebins</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">)):</span>
+                <span class="n">all_spectra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">all_spectra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">)):</span>
+                <span class="n">all_spectra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">based_on</span> <span class="o">==</span> <span class="s1">&#39;log_zlp&#39;</span><span class="p">:</span>
+            <span class="n">log_int_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">)):</span>
+                <span class="n">max_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">log_int_i</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">max_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">max_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">log_int_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">all_spectra</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_int_i</span> <span class="o">=</span> <span class="n">find_scale_var</span><span class="p">(</span><span class="n">log_int_i</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">all_spectra</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.save_scale_var_log_int_i">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.save_scale_var_log_int_i">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_scale_var_log_int_i</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the scale variables of the log of the total integrated intensity of the spectra, denoted ``I``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path_scale_var</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="s1">&#39;scale_var.txt&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path_scale_var</span><span class="p">):</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">path_scale_var</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_int_i</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.save_hyperparameters">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.save_hyperparameters">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the hyperparameters in hyperparameters.txt. These are:</span>
+<span class="sd">            - cluster centroids, keep note if they were determined from the raw data, or if the log had been taken.</span>
+<span class="sd">            - dE1 for all clusters</span>
+<span class="sd">            - dE2 for all clusters</span>
+<span class="sd">            - FWHM for all clusters</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I&#39;m saving hyperparameters.txt so hang on...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;clusters centroids=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="si">}</span><span class="s2"> size </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dE1=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="si">}</span><span class="s2"> has size </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dE2=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="si">}</span><span class="s2"> has size </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FWHM=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="si">}</span><span class="s2"> has size </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="s2">&quot;hyperparameters.txt&quot;</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved hyperparameters.txt!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.initialize_x_y_sigma_input">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.initialize_x_y_sigma_input">[docs]</a>
+    <span class="k">def</span> <span class="nf">initialize_x_y_sigma_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cluster_label</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the x, y and sigma input for the Neural Network. The spectrum is split into the</span>
+<span class="sd">        3 regions as given by the toy model. For the y data, the data in region I is set to the log intensity</span>
+<span class="sd">        up to dE1, the data in region III is set to zero. For the x data two input features, first is the values</span>
+<span class="sd">        of the energy axis in region I and III, second is the rescaled log of the total integrated intensity.</span>
+<span class="sd">        This factor is to ensure symmetry is retained between input and output values. For the sigma data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cluster_label : int</span>
+<span class="sd">            Label of the cluster</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># From the amount of spectra in the cluster, pick a random signal</span>
+        <span class="n">n_spectra</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">cluster_label</span><span class="p">])</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_spectra</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">cluster_label</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="c1"># Get the size of regions I and III,</span>
+        <span class="c1"># we will construct our replica with the information we have from these regions.</span>
+        <span class="c1"># region1 = len(self.eaxis[self.eaxis &lt; self.de1[cluster_label]])</span>
+        <span class="c1"># region3 = len(self.eaxis[self.eaxis &gt; self.de2[cluster_label]])</span>
+
+        <span class="c1"># First line is mask where condition holds</span>
+        <span class="c1"># Second line are the indices where the condition holds</span>
+        <span class="c1"># Third line is the number of elements where condition holds</span>
+        <span class="n">region1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="p">[</span><span class="n">cluster_label</span><span class="p">]</span>
+        <span class="n">region2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="p">[</span><span class="n">cluster_label</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="p">[</span><span class="n">cluster_label</span><span class="p">])</span>
+        <span class="n">region3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="p">[</span><span class="n">cluster_label</span><span class="p">]</span>
+        <span class="n">idx_region1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">region1</span><span class="p">)</span>
+        <span class="n">idx_region2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">region2</span><span class="p">)</span>
+        <span class="n">idx_region3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">region3</span><span class="p">)</span>
+        <span class="n">num_elements_region1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">region1</span><span class="p">)</span>
+        <span class="n">num_elements_region2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">region2</span><span class="p">)</span>
+        <span class="n">num_elements_region3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">region3</span><span class="p">)</span>
+
+        <span class="c1"># The y data is constructed by taking the log of the data in region I from the random spectra and</span>
+        <span class="c1"># by setting the data to zero in region III for the random spectra. These are then added to the array.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">idx_region1</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_elements_region3</span><span class="p">))</span>
+
+        <span class="c1"># The x data has two input features: 1) the scaled energy axis,</span>
+        <span class="c1"># 2) the scaled log of the integrated intensity of the random spectrum.</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_elements_region1</span> <span class="o">+</span> <span class="n">num_elements_region3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">features</span><span class="p">[:</span><span class="n">num_elements_region1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis_scaled</span><span class="p">[</span><span class="n">idx_region1</span><span class="p">]</span>
+        <span class="n">features</span><span class="p">[</span><span class="o">-</span><span class="n">num_elements_region3</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis_scaled</span><span class="p">[</span><span class="n">idx_region3</span><span class="p">]</span>
+
+        <span class="n">features_for_derivative</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_elements_region2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">features_for_derivative</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eaxis_scaled</span><span class="p">[</span><span class="n">idx_region2</span><span class="p">]</span>
+
+        <span class="n">max_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+        <span class="n">log_int_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">max_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">max_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]))</span>
+        <span class="n">features</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">log_int_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_int_i</span><span class="p">)</span>
+        <span class="n">features_for_derivative</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">log_int_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_var_log_int_i</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data_x</span><span class="p">,</span> <span class="n">features</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_x_for_derivative</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">features_for_derivative</span><span class="p">))</span>
+
+        <span class="c1"># The values of sigma calculated from the cluster will be our input data for sigma</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="n">cluster_label</span><span class="p">][</span><span class="n">idx_region1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_sigma</span><span class="p">,</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_elements_region3</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.set_train_x_y_sigma">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_train_x_y_sigma">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_train_x_y_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Take the x, y and sigma data for the train set and reshape them for neural network input</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_test</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_test</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_test</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">n_train</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_train</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_train</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_sigma</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_train</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_sigma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_sigma</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.set_test_x_y_sigma">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_test_x_y_sigma">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_test_x_y_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Take the x, y and sigma data for the test set and reshape them for neural network input</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_test</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_test</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_test</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="n">n_test</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_test</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_test</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_sigma</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_test</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_sigma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_sigma</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.train_and_evaluate_model">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.train_and_evaluate_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">train_and_evaluate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Train and evaluate the model. Also saves the values of cost_train and cost_test per epoch.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">        j : int</span>
+<span class="sd">        lr : float</span>
+<span class="sd">            learning rate</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># store the test and train loss per epoch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_test_n</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_train_n</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_epochs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># Set model to training mode</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+            <span class="n">output_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_x</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+            <span class="c1"># Because self.train_x_for_derivative is a list of tensors</span>
+            <span class="c1"># we need to explicitly loop over the entries to compute the outputs</span>
+            <span class="n">output_for_derivative_train</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">input_tensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_x_for_derivative</span><span class="p">:</span>
+                <span class="n">output_for_derivative_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">float</span><span class="p">()))</span>
+            <span class="n">loss_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_function</span><span class="p">(</span><span class="n">output_train</span><span class="p">,</span> <span class="n">output_for_derivative_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_sigma</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss_train_n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_train</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+            <span class="c1"># update weights</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">loss_train</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="c1"># Set model to evaluation mode</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">output_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_x</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+                <span class="n">output_for_derivative_test</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">input_tensor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_x_for_derivative</span><span class="p">:</span>
+                    <span class="n">output_for_derivative_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">float</span><span class="p">()))</span>
+                <span class="n">loss_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_function</span><span class="p">(</span><span class="n">output_test</span><span class="p">,</span> <span class="n">output_for_derivative_test</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_sigma</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">loss_test_n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_test</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_step</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_progress</span><span class="p">:</span>
+                    <span class="n">training_loss</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">loss_train</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="n">testing_loss</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_test_n</span><span class="p">[</span><span class="n">epoch</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Rep </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1">, Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Training loss </span><span class="si">{</span><span class="n">training_loss</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Testing loss </span><span class="si">{</span><span class="n">testing_loss</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+                <span class="c1"># update the test and train loss of the replica</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">loss_test_reps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">loss_test</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">loss_train_reps</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">loss_train</span><span class="o">.</span><span class="n">item</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.loss_function">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.loss_function">[docs]</a>
+    <span class="k">def</span> <span class="nf">loss_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">output_for_derivative</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The loss function to train the ZLP takes the model ``output``, the raw  spectrum ``target`` and the associated</span>
+<span class="sd">        ``error``. The latter corresponds to  the one sigma spread within a given cluster at fixed :math:`\Delta E`.</span>
+<span class="sd">        It returns the cost function :math:`C_{\mathrm{ZLP}}^{(m)}` associated with the replica :math:`m` as</span>
+
+<span class="sd">        .. math:: :label: eq:lossfunction</span>
+
+<span class="sd">            C_{\mathrm{ZLP}}^{(m)} = \frac{1}{n_{E}} \sum_{k=1}^K \sum_{\ell_k=1}^{n_E^{(k)}} \frac{\left[I^{(i_{m,k}, j_{m,k})}(E_{\ell_k}) - I_{\rm ZLP}^{({\mathrm{NN}})(m)} \left(E_{\ell_k},\ln \left( N_{\mathrm{ tot}}^{(i_{m,k},j_{m,k})} \right) \right) \right]^2}{\sigma^2_k \left(E_{\ell_k} \right)}.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        eaxis : np.ndarray</span>
+<span class="sd">            Energy-loss axis</span>
+<span class="sd">        output: torch.tensor</span>
+<span class="sd">            Neural Network output</span>
+<span class="sd">        output_for_derivative : list of torch.tensor</span>
+<span class="sd">            Each entry in the list should correspond to the neural </span>
+<span class="sd">            network output between de1 and de2 of a single spectrum </span>
+<span class="sd">            in the replica</span>
+<span class="sd">        target: torch.tensor</span>
+<span class="sd">            Raw EELS spectrum</span>
+<span class="sd">        error: torch.tensor</span>
+<span class="sd">            Uncertainty on :math:`\log I_{\mathrm{EELS}}(\Delta E)`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        loss: torch.tensor</span>
+<span class="sd">            Loss associated with the model ``output``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">output_tensor</span> <span class="ow">in</span> <span class="n">output_for_derivative</span><span class="p">:</span>
+            <span class="n">derivative</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">output_tensor</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+            <span class="c1"># Penalise for bins where derivative is positive</span>
+            <span class="n">cost</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">derivative</span><span class="p">[</span><span class="n">derivative</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">square</span><span class="p">((</span><span class="n">output</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span> <span class="o">/</span> <span class="n">error</span><span class="p">))</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularisation_constant</span> <span class="o">*</span> <span class="n">cost</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.set_path_for_training_report">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.set_path_for_training_report">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_path_for_training_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the save directory for the training report of the replica being trained on.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        j : int</span>
+<span class="sd">            Index of the replica being trained on.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_report_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="s1">&#39;training_reports/rep_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_report_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_report_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.plot_training_report">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.plot_training_report">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_training_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creat the training report plot: evolution of the training and validation</span>
+<span class="sd">        loss per epoch.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_train_n</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Loss&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_test_n</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Validation Loss&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_report_path</span><span class="p">,</span> <span class="s1">&#39;loss.pdf&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.write_txt_of_loss">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.write_txt_of_loss">[docs]</a>
+    <span class="k">def</span> <span class="nf">write_txt_of_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">loss</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write train/test loss to a .txt file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        base_path : str</span>
+<span class="sd">            Directory to store the report in.</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Filename of .txt file to store report in.</span>
+<span class="sd">        loss : list</span>
+<span class="sd">            List containing loss value per epoch.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">base_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">.txt&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">text_file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">loss</span><span class="p">:</span>
+                <span class="n">text_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.cleanup_files">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.cleanup_files">[docs]</a>
+    <span class="k">def</span> <span class="nf">cleanup_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cleans up the files generated by train_zlp_models_scaled.</span>
+<span class="sd">        costs_train_*, costs_test_*, and nn_rep_* files are merged into single files</span>
+<span class="sd">        costs_train, costs_test, and nn_parameters respectively.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Output file names</span>
+        <span class="n">train_cost_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="s1">&#39;costs_train.txt&#39;</span><span class="p">)</span>
+        <span class="n">test_cost_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="s1">&#39;costs_test.txt&#39;</span><span class="p">)</span>
+        <span class="n">nn_replicas_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="s1">&#39;nn_replicas&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Loop over all costs files, which are indexed starting from index 1.</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_cost_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">text_file_train</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">test_cost_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">text_file_test</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_batches</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">filename_train</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;costs_train_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.txt&#39;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename_train</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_train</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f_train</span><span class="p">:</span>
+                        <span class="n">text_file_train</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_temp_files</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename_train</span><span class="p">)</span>
+
+                <span class="n">filename_test</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;costs_test_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.txt&#39;</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename_test</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_test</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f_test</span><span class="p">:</span>
+                        <span class="n">text_file_test</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_temp_files</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename_test</span><span class="p">)</span>
+
+        <span class="c1"># Dictionary to store models in</span>
+        <span class="n">model_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MultilayerPerceptron</span><span class="p">(</span><span class="n">num_inputs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_outputs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Loop over all nn_rep files, which are indexed starting from index 1.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_num_files</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">path_to_model</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;nn_rep_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path_to_model</span><span class="p">))</span>
+            <span class="n">model_dict</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;model_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">())</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_temp_files</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path_to_model</span><span class="p">)</span>
+
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_dict</span><span class="p">,</span> <span class="n">nn_replicas_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.save_figplot">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.save_figplot">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_figplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;no_title.pdf&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display the computed values of dE1 (both methods) together with the</span>
+<span class="sd">        raw EELS spectrum.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fig : matplotlib.Figure</span>
+<span class="sd">            Figure to be saved.</span>
+<span class="sd">        title : str</span>
+<span class="sd">            Filename to store the plot in.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_to_models</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plot </span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> stored in </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.plot_hp_cluster_slope">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.plot_hp_cluster_slope">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_hp_cluster_slope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a plot of the hyperparameters plotted on top of the slopes of the spectra per cluster.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spectra_dydx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="n">spectra_dydx_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="n">spectra_dydx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">deltaE</span>
+            <span class="n">spectra_dydx_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smooth_signals_per_cluster</span><span class="p">(</span><span class="n">spectra_dydx</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">window_length</span><span class="o">=</span><span class="mi">31</span><span class="p">)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_hp</span><span class="p">(</span><span class="n">eaxis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">clusters_data</span><span class="o">=</span><span class="n">spectra_dydx_smooth</span><span class="p">,</span> <span class="n">de1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="p">,</span> <span class="n">de2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="TrainZeroLossPeak.plot_hp_cluster">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.TrainZeroLossPeak.plot_hp_cluster">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_hp_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a plot of the hyperparameters plotted on top of the spectra per cluster.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spectra_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+            <span class="n">spectra_smooth</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">smooth_signals_per_cluster</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectra</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">window_length</span><span class="o">=</span><span class="mi">31</span><span class="p">)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_hp</span><span class="p">(</span><span class="n">eaxis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">clusters_data</span><span class="o">=</span><span class="n">spectra_smooth</span><span class="p">,</span> <span class="n">de1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">de1</span><span class="p">,</span> <span class="n">de2</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">de2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MultilayerPerceptron">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.MultilayerPerceptron">[docs]</a>
+<span class="k">class</span> <span class="nc">MultilayerPerceptron</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Multilayer Perceptron (MLP) class. It uses the following architecture</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">       [n_i, 10, 15, 5, n_f],</span>
+
+<span class="sd">    where :math:`n_i` and :math:`n_f` denote the number of input features and </span>
+<span class="sd">    output target values respectively.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_inputs: int</span>
+<span class="sd">        number of input features</span>
+<span class="sd">    num_outputs: int</span>
+<span class="sd">        dimension of the target output.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">,</span> <span class="n">num_outputs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Initialize the modules we need to build the network</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">num_outputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MultilayerPerceptron.forward">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.MultilayerPerceptron.forward">[docs]</a>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Propagates the input features ``x`` through the MLP.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x: torch.tensor</span>
+<span class="sd">            input features</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x: torch.tensor</span>
+<span class="sd">            MLP outcome</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Perform the calculation of the model to determine the prediction</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span></div>
+</div>
+
+
+
+<span class="c1"># STATIC FUNCTIONS</span>
+<div class="viewcode-block" id="scale">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.scale">[docs]</a>
+<span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">ab</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rescale the training data to lie between 0.1 and 0.9. Rescaling features is to help speed up the neural network</span>
+<span class="sd">    training process. The value range [0.1, 0.9] ensures the neuron activation states will typically lie close to the</span>
+<span class="sd">    linear region of the sigmoid activation function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inp: numpy.ndarray, shape=(M,)</span>
+<span class="sd">        training data to be rescaled, e.g. :math:`\Delta E`</span>
+<span class="sd">    ab: numpy.ndarray, shape=(M,)</span>
+<span class="sd">        scaling parameters, which can be found with</span>
+<span class="sd">        :py:meth:`find_scale_var() &lt;find_scale_var&gt;`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Rescaled training data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">inp</span> <span class="o">*</span> <span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="find_scale_var">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.find_scale_var">[docs]</a>
+<span class="k">def</span> <span class="nf">find_scale_var</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">min_out</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_out</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the scaling parameters needed to rescale the training data to lie </span>
+<span class="sd">    between ``min_out`` and ``max_out``. For our neural network the value range [0.1, 0.9] ensures the</span>
+<span class="sd">    neuron activation states will typically lie close to the linear region of the sigmoid activation function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    inp: numpy.ndarray, shape=(M,)</span>
+<span class="sd">        training data to be rescaled</span>
+<span class="sd">    min_out: float</span>
+<span class="sd">        lower limit. Set to 0.1 by default.</span>
+<span class="sd">    max_out: float</span>
+<span class="sd">        upper limit. Set to 0.9 by default</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a, b: list</span>
+<span class="sd">        list of rescaling parameters</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_out</span> <span class="o">-</span> <span class="n">min_out</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">inp</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">min_out</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">inp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="weight_reset">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.weight_reset">[docs]</a>
+<span class="k">def</span> <span class="nf">weight_reset</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reset the weights and biases associated with the model ``m``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    m: MLP</span>
+<span class="sd">        Model of type :py:meth:`MLP &lt;MLP&gt;`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">):</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="smooth_signals_per_cluster">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.smooth_signals_per_cluster">[docs]</a>
+<span class="k">def</span> <span class="nf">smooth_signals_per_cluster</span><span class="p">(</span><span class="n">signals</span><span class="p">,</span> <span class="n">window_length</span><span class="o">=</span><span class="mi">51</span><span class="p">,</span> <span class="n">window_type</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Smooth all signals in a cluster using a window length ``window_len`` and a window type ``window``.</span>
+
+<span class="sd">    This method is based on the convolution of a scaled window with the signal.</span>
+<span class="sd">    The signal is prepared by introducing reflected copies of the signal </span>
+<span class="sd">    (with the window size) in both ends so that transient parts are minimized</span>
+<span class="sd">    in the beginning and end part of the output signal.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    signals: numpy.ndarray, shape=(M,)</span>
+<span class="sd">        The input data</span>
+<span class="sd">    window_length: int, optional</span>
+<span class="sd">        The dimension of the smoothing window; should be an odd integer. Default is 51</span>
+<span class="sd">    window_type: str, optional</span>
+<span class="sd">        the type of window from ``&quot;flat&quot;``, ``&quot;hanning&quot;``, ``&quot;hamming&quot;``, ``&quot;bartlett&quot;``,</span>
+<span class="sd">        ``&quot;blackman&quot;`` and ``&quot;kasier&quot;``. ``&quot;flat&quot;`` window will produce a moving average smoothing.</span>
+<span class="sd">        Default is ``&quot;hanning&quot;``</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    signal_smooth: numpy.ndarray, shape=(M,)</span>
+<span class="sd">        The smoothed signal</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Set window length to uneven number</span>
+    <span class="n">window_length</span> <span class="o">+=</span> <span class="p">(</span><span class="n">window_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
+
+    <span class="c1"># extend the signal with the window length on both ends</span>
+    <span class="n">signals_padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="n">signals</span><span class="p">[:,</span> <span class="n">window_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">signals</span><span class="p">,</span> <span class="n">signals</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="n">window_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="c1"># Pick the window type</span>
+    <span class="k">if</span> <span class="n">window_type</span> <span class="o">==</span> <span class="s1">&#39;flat&#39;</span><span class="p">:</span>  <span class="c1"># moving average</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">window_length</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;np.&#39;</span> <span class="o">+</span> <span class="n">window_type</span> <span class="o">+</span> <span class="s1">&#39;(window_length)&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Determine the smoothed signal and throw away the padded ends</span>
+    <span class="n">surplus_data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">window_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">window_convolve</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window</span> <span class="o">/</span> <span class="n">window</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+
+    <span class="n">signals_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">window_convolve</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">signals_padded</span><span class="p">)[:,</span> <span class="n">surplus_data</span><span class="p">:</span><span class="o">-</span><span class="n">surplus_data</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">signals_smooth</span></div>
+
+
+
+<div class="viewcode-block" id="smooth_signal">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.smooth_signal">[docs]</a>
+<span class="k">def</span> <span class="nf">smooth_signal</span><span class="p">(</span><span class="n">signal</span><span class="p">,</span> <span class="n">window_length</span><span class="o">=</span><span class="mi">51</span><span class="p">,</span> <span class="n">window_type</span><span class="o">=</span><span class="s1">&#39;hanning&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">14.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Smooth a signal using a window length ``window_length`` and a window type ``window_type``.</span>
+
+<span class="sd">    This method is based on the convolution of a scaled window with the signal.</span>
+<span class="sd">    The signal is prepared by introducing reflected copies of the signal</span>
+<span class="sd">    (with the window size) in both ends so that transient parts are minimized</span>
+<span class="sd">    in the beginning and end part of the output signal.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    signal: numpy.ndarray, shape=(M,)</span>
+<span class="sd">        Signal of length M</span>
+<span class="sd">    window_length: int, optional</span>
+<span class="sd">        The dimension of the smoothing window; should be an odd integer. Default is 51.</span>
+<span class="sd">    window_type: str, optional</span>
+<span class="sd">        the type of window from ``&#39;flat&#39;``, ``&#39;hanning&#39;``, ``&#39;hamming&#39;``, ``&#39;bartlett&#39;``,</span>
+<span class="sd">        ``&#39;blackman&#39;`` and ``&#39;kaiser&#39;``. ``&#39;flat&#39;`` window will produce a moving average smoothing.</span>
+<span class="sd">        Default is ``&#39;hanning&#39;``</span>
+<span class="sd">    beta: float, optional</span>
+<span class="sd">            If using the kaiser window, beta determines the shape parameter for window.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    signal_smooth: numpy.ndarray, shape=(M,)</span>
+<span class="sd">        The smoothed signal</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Set window length to uneven number</span>
+    <span class="n">window_length</span> <span class="o">+=</span> <span class="p">(</span><span class="n">window_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
+
+    <span class="c1"># extend the signal with the window length on both ends</span>
+    <span class="n">signal_padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="n">signal</span><span class="p">[</span><span class="n">window_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">signal</span><span class="p">,</span> <span class="n">signal</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="n">window_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="c1"># Pick the window type</span>
+    <span class="k">if</span> <span class="n">window_type</span> <span class="o">==</span> <span class="s1">&#39;flat&#39;</span><span class="p">:</span>  <span class="c1"># moving average</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">window_length</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">window_type</span> <span class="o">==</span> <span class="s1">&#39;kaiser&#39;</span><span class="p">:</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">kaiser</span><span class="p">(</span><span class="n">M</span><span class="o">=</span><span class="n">window_length</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">beta</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;np.&#39;</span> <span class="o">+</span> <span class="n">window_type</span> <span class="o">+</span> <span class="s1">&#39;(window_length)&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Determine the smoothed signal and throw away the padded ends</span>
+    <span class="n">surplus_data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">window_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">signal_smooth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">signal_padded</span><span class="p">,</span> <span class="n">window</span> <span class="o">/</span> <span class="n">window</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)[</span><span class="n">surplus_data</span><span class="p">:</span><span class="o">-</span><span class="n">surplus_data</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">signal_smooth</span></div>
+
+
+
+<div class="viewcode-block" id="log10_fit">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.log10_fit">[docs]</a>
+<span class="k">def</span> <span class="nf">log10_fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">b</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">order</span><span class="p">)))</span></div>
+
+
+
+<div class="viewcode-block" id="power_fit">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.training.power_fit">[docs]</a>
+<span class="k">def</span> <span class="nf">power_fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">r</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSFitter.plotting.zlp &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">EELSFitter.plotting.zlp</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for EELSFitter.plotting.zlp</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">..core.training</span> <span class="kn">import</span> <span class="n">smooth_signals_per_cluster</span>
+
+
+<div class="viewcode-block" id="summary_distribution">
+<a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.zlp.summary_distribution">[docs]</a>
+<span class="k">def</span> <span class="nf">summary_distribution</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">84</span><span class="p">):</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">median</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="plot_zlp_cluster_predictions">
+<a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_zlp_cluster_predictions">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_zlp_cluster_predictions</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image</span>
+<span class="sd">    cmap</span>
+<span class="sd">    kwargs</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_figs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;plt.cm.&#39;</span> <span class="o">+</span> <span class="n">cmap</span> <span class="o">+</span> <span class="s1">&#39;(np.linspace(0, 1, len(image.cluster_centroids)))&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">top</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cluster_centroid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_centroids</span><span class="p">):</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\rm{Cluster\;</span><span class="si">%d</span><span class="s2">}$&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">zlps</span> <span class="o">=</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">get_zlp_models</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">cluster_centroid</span><span class="p">)))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlps</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zlps</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlps</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">zlps</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">top</span><span class="p">:</span>
+            <span class="n">top</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">zlps</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">top</span><span class="p">])</span>
+    <span class="c1"># ax.legend(loc=kwargs.get(&#39;loc&#39;), frameon=False)</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+
+<div class="viewcode-block" id="plot_zlp_per_pixel">
+<a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_zlp_per_pixel">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_zlp_per_pixel</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">pixx</span><span class="p">,</span> <span class="n">pixy</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="n">zlp_gen</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">zlp_match</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">subtract</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">deconv</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hyper_par</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_zlp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots for ``pixx``, ``pixy``</span>
+
+<span class="sd">    - the inelastic scattering distribution plus uncertainties</span>
+<span class="sd">    - the ZLP plus uncertainties</span>
+<span class="sd">    - the raw signal</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image</span>
+<span class="sd">    pixx</span>
+<span class="sd">    pixy</span>
+<span class="sd">    signal</span>
+<span class="sd">    zlp_gen</span>
+<span class="sd">    zlp_match</span>
+<span class="sd">    subtract</span>
+<span class="sd">    deconv</span>
+<span class="sd">    hyper_par</span>
+<span class="sd">    random_zlp</span>
+<span class="sd">    kwargs</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_figs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">signal</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_pixel_signal</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">pixy</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">pixx</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">)</span>
+    <span class="c1"># ax.plot(image.eaxis, signal, label=r&quot;$\rm{I_{total}}$&quot;, color=&#39;black&#39;)</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="s1">&#39;mid&#39;</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">signal</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{I_</span><span class="si">{total}</span><span class="s2">}$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">zlp_gen</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">random_zlp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">max_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+        <span class="n">int_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">signal</span><span class="p">[</span><span class="n">max_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">max_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="n">zlps_gen</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_zlp_models</span><span class="p">(</span><span class="n">int_i</span><span class="o">=</span><span class="n">int_i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">random_zlp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">random_zlp</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">zlps_gen</span><span class="p">):</span>     <span class="c1"># Plot all models</span>
+                <span class="k">for</span> <span class="n">zlp_gen</span> <span class="ow">in</span> <span class="n">zlps_gen</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlp_gen</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>   <span class="c1"># Randomly select a model</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random_zlp</span><span class="p">):</span>
+                    <span class="n">zlp_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">zlps_gen</span><span class="p">))</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlps_gen</span><span class="p">[</span><span class="n">zlp_idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">zlp_gen</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">zlps_gen_dist</span> <span class="o">=</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">zlps_gen</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlps_gen_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zlps_gen_dist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlps_gen_dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{I_{zlp_</span><span class="si">{model}</span><span class="s2">}}$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:red&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">zlp_match</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">subtract</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="n">zlps_match</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_pixel_matched_zlp_models</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">pixy</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">pixx</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">deconv</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">signal_extrp</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">extrp_signal</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="n">signal</span><span class="p">)</span>
+            <span class="n">signal_ssds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">zlps_match</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">zlps_match</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">zlp_k</span> <span class="o">=</span> <span class="n">zlps_match</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">signal_ssd_k</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">deconvolution</span><span class="p">(</span><span class="n">signal</span><span class="o">=</span><span class="n">signal_extrp</span><span class="p">,</span> <span class="n">zlp</span><span class="o">=</span><span class="n">zlp_k</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+                <span class="n">signal_ssds</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">signal_ssd_k</span><span class="p">[:</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">ssd</span> <span class="o">=</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">signal_ssds</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">ssd</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ssd</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:cyan&#39;</span><span class="p">)</span>
+            <span class="c1"># ax.plot(image.eaxis, ssd[0], label=r&quot;$\rm{I_{inel_{deconvoluted}}}$&quot;, color=&#39;tab:cyan&#39;)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">ssd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">where</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{I_{inel_</span><span class="si">{deconvoluted}</span><span class="s2">}}$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:cyan&#39;</span><span class="p">)</span>
+
+        <span class="n">zlps_match_dist</span> <span class="o">=</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">zlps_match</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">zlp_match</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlps_match_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zlps_match_dist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:orange&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlps_match_dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{I_{zlp_</span><span class="si">{matched}</span><span class="s2">}}$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:orange&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">subtract</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">signal</span> <span class="o">-</span> <span class="n">zlps_match_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">signal</span> <span class="o">-</span> <span class="n">zlps_match_dist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                            <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
+            <span class="c1"># ax.plot(image.eaxis, signal - zlps_match_dist[0],</span>
+            <span class="c1">#         label=r&quot;$\rm{I_{inel_{subtracted}}}$&quot;, color=&#39;tab:blue&#39;)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">signal</span> <span class="o">-</span> <span class="n">zlps_match_dist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">where</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{I_{inel_</span><span class="si">{subtracted}</span><span class="s2">}}$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">hyper_par</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">de1</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">dE1</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">[</span><span class="n">pixy</span><span class="p">,</span> <span class="n">pixx</span><span class="p">])]</span>
+        <span class="n">de2</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">dE2</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">[</span><span class="n">pixy</span><span class="p">,</span> <span class="n">pixx</span><span class="p">])]</span>
+        <span class="n">fwhm</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">FWHM</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">[</span><span class="n">pixy</span><span class="p">,</span> <span class="n">pixx</span><span class="p">])]</span>
+        <span class="n">de0</span> <span class="o">=</span> <span class="p">(</span><span class="n">fwhm</span> <span class="o">+</span> <span class="n">de1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">de1</span><span class="p">,</span> <span class="n">de2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:olive&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">de1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:olive&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">de2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:olive&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">de0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:brown&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+
+<div class="viewcode-block" id="plot_zlp_per_cluster">
+<a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_zlp_per_cluster">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_zlp_per_cluster</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cluster</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="n">zlp_gen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hyper_par</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image</span>
+<span class="sd">    cluster</span>
+<span class="sd">    signal_type</span>
+<span class="sd">    zlp_gen</span>
+<span class="sd">    hyper_par</span>
+<span class="sd">    kwargs</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_figs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">cluster_signals</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_cluster_signals</span><span class="p">(</span><span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">)[</span><span class="n">cluster</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">smooth</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">cluster_signals</span> <span class="o">=</span> <span class="n">smooth_signals_per_cluster</span><span class="p">(</span><span class="n">cluster_signals</span><span class="p">)</span>
+    <span class="n">cluster_signals_dist</span> <span class="o">=</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">cluster_signals</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">99</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">cluster_signals_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cluster_signals_dist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{I_</span><span class="si">{cluster}</span><span class="s2">}$&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">zlp_gen</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">max_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cluster_signals_dist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">cluster_median</span> <span class="o">=</span> <span class="n">cluster_signals_dist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">int_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cluster_median</span><span class="p">[</span><span class="n">max_idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span><span class="n">max_idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="n">zlp_dist</span> <span class="o">=</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">get_zlp_models</span><span class="p">(</span><span class="n">int_i</span><span class="o">=</span><span class="n">int_i</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">zlp_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zlp_dist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\rm{I_{zlp_</span><span class="si">{model}</span><span class="s2">}}$&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">hyper_par</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">de1</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">dE1</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
+        <span class="n">de2</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">dE2</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
+        <span class="n">fwhm</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">FWHM</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
+        <span class="n">de0</span> <span class="o">=</span> <span class="p">(</span><span class="n">fwhm</span> <span class="o">+</span> <span class="n">de1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">de1</span><span class="p">,</span> <span class="n">de2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:olive&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">de1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:olive&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">de2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:olive&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">de0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:cyan&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+
+<div class="viewcode-block" id="plot_figs">
+<a class="viewcode-back" href="../../../modules/EELSFitter.plotting.html#EELSFitter.plotting.zlp.plot_figs">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_figs</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3000</span><span class="p">],</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    General parameters to plot figures</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x</span>
+<span class="sd">    y</span>
+<span class="sd">    xlim</span>
+<span class="sd">    ylim</span>
+<span class="sd">    yscale</span>
+<span class="sd">    kwargs</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fig: matplotlib.figure.Figure</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;figsize&#39;</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dpi&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;xlabel&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ylabel&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">yscale</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([])</span>
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

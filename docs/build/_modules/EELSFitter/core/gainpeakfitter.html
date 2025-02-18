@@ -1,0 +1,1342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EELSFitter.core.gainpeakfitter &mdash; EELSFitter 3.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=6f954d08" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=dd1205ac"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            EELSFitter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/instructions.html">Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/eelsfitter_tutorial.html">EELSfitter tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/cluster.html">Training models in parallel</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/clustering_pooling.html">Pooling and clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/nn_training.html">NN training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/kk_analysis.html">Kramers-Kronig analysis of EEL spectra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory/band_gap_analysis.html">Band gap analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Key Results</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Roest2021.html">Charting the low-loss region in Electron Energy Loss Spectroscopy with machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanHeijst2021.html">Illuminating the Electronic Properties of WS<sub>2</sub> Polytypism with Electron Microscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/Brokkelkamp2022.html">Spatially-resolved band gap and dielectric function in 2D materials from Electron Energy Loss Spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/vanderLippe2023.html">Localized exciton anatomy and band gap energy modulation in 1D MoS<sub>2</sub> nanostructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../key_results/La2023.html">Edge-induced excitations in Bi<sub>2</sub>Te<sub>3</sub> from spatially-resolved electron energy-gain spectroscopy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/EELSFitter.html">EELSFitter package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Bibliography</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">EELSFitter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">EELSFitter.core.gainpeakfitter</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for EELSFitter.core.gainpeakfitter</h1><div class="highlight"><pre>
+<span></span><span class="c1"># @AUTHOR:        H.LA, S.VANDERLIPPE</span>
+<span class="c1"># @STATUS:        PRODUCTION</span>
+<span class="c1"># @DATE_CREATED:  25-09-2022</span>
+<span class="c1"># @DESCRIPTION:   This script generates intensity heatmaps of gain peaks to</span>
+<span class="c1">#                 investigate its spatial distribution. The GainPeakFitter</span>
+<span class="c1">#                 fits the ZLP to a Gaussian based on the ZLP&#39;s FWHM. The ZLP is</span>
+<span class="c1">#                 then subtractred from the EEL spectrum (also referred to as</span>
+<span class="c1">#                 &#39;the signal&#39;). The subtracted signal contains a peak which</span>
+<span class="c1">#                 is then fitted to a Lorentzian. From the Lorentzian, the energy</span>
+<span class="c1">#                 of the gain peak is determined.</span>
+
+
+<span class="kn">from</span> <span class="nn">re</span> <span class="kn">import</span> <span class="n">X</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>  <span class="c1"># pyplot style</span>
+
+
+<div class="viewcode-block" id="GainPeakFitter">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter">[docs]</a>
+<span class="k">class</span> <span class="nc">GainPeakFitter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class extracts gain peaks from an EEL spectrum. The GainPeakFitter</span>
+<span class="sd">    fits the ZLP to a Gaussian based on the ZLP&#39;s FWHM. The ZLP is then </span>
+<span class="sd">    subtractred from the EEL spectrum (also referred to as &#39;the signal&#39;). The </span>
+<span class="sd">    subtracted signal contains a peak which is then fitted to a Lorentzian. </span>
+<span class="sd">    From the Lorentzian, the energy of the gain peak is determined.</span>
+
+<span class="sd">    INPUT</span>
+<span class="sd">    -----</span>
+<span class="sd">    image : spectral image</span>
+<span class="sd">        4D data from a .dm4 file</span>
+
+<span class="sd">    EXAMPLE</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    To fit the gain/loss peaks:</span>
+
+<span class="sd">        lrtz = GainPeakFitter(x_signal, y_signal, image_shape)</span>
+
+<span class="sd">        lrtz.generate_best_fits()</span>
+
+<span class="sd">        lrtz.fit_gain_peak()</span>
+
+<span class="sd">        lrtz.fit_loss_peak()</span>
+
+<span class="sd">    To plot the gain/loss peaks:</span>
+
+<span class="sd">        lrtz.create_new_plot()</span>
+
+<span class="sd">        lrtz.plot_all_results()</span>
+
+<span class="sd">        lrtz.ax.set_ylim(0, 1e4)</span>
+
+<span class="sd">        lrtz.fig</span>
+
+<span class="sd">        lrtz.plot_signal()</span>
+
+<span class="sd">        lrtz.plot_model()</span>
+
+<span class="sd">        lrtz.plot_subtracted()</span>
+
+<span class="sd">        lrtz.plot_gain_peak()</span>
+
+<span class="sd">        lrtz.plot_loss_peak()</span>
+
+<span class="sd">        lrtz.print_results()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_signal</span><span class="p">,</span> <span class="n">y_signal</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load processed signal.</span>
+<span class="sd">        </span>
+<span class="sd">        ARGUMENTS</span>
+<span class="sd">        ---------</span>
+<span class="sd">        x_A : float, optional)</span>
+<span class="sd">            Gain peak left bound. Defaults to -3.2.</span>
+<span class="sd">        x_B : float, optional</span>
+<span class="sd">            Gain peak right bound. Defaults to -0.4.</span>
+<span class="sd">        x_C : float, optional</span>
+<span class="sd">            Loss peak left bound. Defaults to 0.4.</span>
+<span class="sd">        x_D : float, optional</span>
+<span class="sd">            Loss peak right bound. Defaults to 3.2.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span> <span class="o">=</span> <span class="n">x_signal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">=</span> <span class="n">y_signal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_rows</span> <span class="o">=</span> <span class="n">image_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_cols</span> <span class="o">=</span> <span class="n">image_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_A</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_B</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_C</span> <span class="o">=</span> <span class="mf">0.4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_D</span> <span class="o">=</span> <span class="mf">2.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">)</span>  <span class="c1"># energy loss (eV)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_signals_subtracted</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">generate_best_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_signal_subtracted</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># get x,y coordinates for model fit of the ZLP</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_model</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_signal_subtracted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># best fit values from model fit of the ZLP</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_zlp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_fit_between</span><span class="p">(</span>
+                                                        <span class="n">function</span><span class="o">=</span><span class="n">function</span><span class="p">,</span>
+                                                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_subtracted</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">set_area_under_zlp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ym_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_count_zlp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_model</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">ratio_between_gain_peak_and_zlp_fwhm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm_idx</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_model</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">ratio_between_loss_peak_and_zlp_fwhm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm_idx</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_model</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">ratio_between_gain_peak_and_zlp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_count_gain_peak</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_count_zlp</span>
+
+    <span class="k">def</span> <span class="nf">ratio_between_loss_peak_and_zlp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_count_loss_peak</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_count_zlp</span>
+
+    <span class="k">def</span> <span class="nf">fit_gain_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L_bound</span><span class="o">=-</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">R_bound</span><span class="o">=-</span><span class="mf">.5</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_gain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_fit_between</span><span class="p">(</span>
+                <span class="n">L_bound</span><span class="p">,</span> <span class="n">R_bound</span><span class="p">)</span>  <span class="c1"># mirror of loss peak</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_total_count_gain_peak</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Gain peak fit FAILED!!&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fit_loss_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L_bound</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">R_bound</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_fit_between</span><span class="p">(</span>
+                <span class="n">L_bound</span><span class="p">,</span> <span class="n">R_bound</span><span class="p">)</span>  <span class="c1"># mirror of gain peak</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_total_count_loss_peak</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Loss peak fit FAILED!!&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fit_loss_peak_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">L_bound</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">R_bound</span><span class="o">=</span><span class="mf">3.5</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_fit_between_background</span><span class="p">(</span>
+                <span class="n">L_bound</span><span class="p">,</span> <span class="n">R_bound</span><span class="p">)</span>  <span class="c1"># mirror of loss peak</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">background_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_fit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentzian_background</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_total_count_loss_peak</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Gain peak fit FAILED!!&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GainPeakFitter.inspect_spectrum">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.inspect_spectrum">[docs]</a>
+    <span class="k">def</span> <span class="nf">inspect_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;fit&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit chosen ``function`` model to the ZLP and obtain subtracted spectrum.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        function : str, {&#39;Gaussian&#39;, &#39;Split Gausian&#39;, &#39;Lorentzian&#39;, &#39;Pearson VII&#39;, &#39;Split Pearson VII&#39;, &#39;Pseudo-Voigt&#39;, &#39;Split Pseudo-Voigt&#39;, &#39;Generalised Peak&#39;, &#39;Kaiser window&#39;}</span>
+<span class="sd">            Model choice for the ZLP.</span>
+<span class="sd">        method : str, {``&#39;fit&#39;``, ``&#39;FWHM&#39;``}</span>
+<span class="sd">            Method to use to extract model fit parameters. ``&#39;FWHM&#39;`` is only supported for Gaussian and</span>
+<span class="sd">            Lorentzian ZLP models.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments.        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_pixel_signal</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pixel </span><span class="si">{</span><span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row</span> <span class="o">=</span> <span class="n">row</span>  <span class="c1"># pixel row</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col</span> <span class="o">=</span> <span class="n">col</span>  <span class="c1"># pixel column</span>
+
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;FWHM&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">determine_parameters</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;fit&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_zlp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_fit_between</span><span class="p">(</span>
+                <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_subtracted</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">generate_model</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.fwhm">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.fwhm">[docs]</a>
+    <span class="k">def</span> <span class="nf">fwhm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">do_fit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the FWHM of the ZLP in a particular pixel (``row``, ``col`` ). Optionally</span>
+<span class="sd">        calculate FWHM through fitting a Gaussian to the ZLP and extracting the FWHM.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        do_fit : bool, default=True</span>
+<span class="sd">            Option to obtain FWHM through fitting a Gaussian.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fwhm : float</span>
+<span class="sd">            FWHM of the ZLP in chosen pixel.</span>
+<span class="sd">        fit : float</span>
+<span class="sd">            FWHM obtained through fitting a Gaussian to the ZLP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_pixel_signal</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">)</span>
+        <span class="c1"># Find locations where data is larger than half the peak height.</span>
+        <span class="c1"># The left edge of the FWMM is the first index, the right edge the last index.</span>
+        <span class="c1"># We subtract and add 1 respectively to get a better estimate of the FWHM.</span>
+        <span class="n">fwhm_idx1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">fwhm_idx2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">fwhm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">[</span><span class="n">fwhm_idx2</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">[</span><span class="n">fwhm_idx1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">do_fit</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_zlp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_fit_between</span><span class="p">()</span>
+            <span class="n">fit</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fit</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">fwhm</span><span class="p">,</span> <span class="n">fit</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.fit_models">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.fit_models">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_rep</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="n">conf_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the Monte Carlo replica method to fit chosen ``function`` model to the ZLP. In this method</span>
+<span class="sd">        it is assumed that in each cluster the ZLP is sampled from the same underlying distribution in that </span>
+<span class="sd">        particular cluster. This methods samples the underlying distribution in order to obtain the median, </span>
+<span class="sd">        low, and high predictions for the ZLP at teach loss value.</span>
+
+<span class="sd">        The model predictions are stored in self.zlp_models_all, where the median, low, and high values are the first, </span>
+<span class="sd">        second, and third element respectively.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_rep : int, default=500</span>
+<span class="sd">            Number of Monte Carlo replicas to use.</span>
+<span class="sd">        n_clusters : int, default=5</span>
+<span class="sd">            Number of clusters to use.</span>
+<span class="sd">        function : str, {&#39;Gaussian&#39;, &#39;Split Gausian&#39;, &#39;Lorentzian&#39;, &#39;Pearson VII&#39;, &#39;Split Pearson VII&#39;, &#39;Pseudo-Voigt&#39;, &#39;Split Pseudo-Voigt&#39;, &#39;Generalised Peak&#39;, &#39;Kaiser window&#39;}</span>
+<span class="sd">            Model choice for the ZLP.</span>
+<span class="sd">        conf_interval : float, optional</span>
+<span class="sd">            The ratio of spectra returned. The spectra are selected based on the </span>
+<span class="sd">            based_on value. The default is 1.</span>
+<span class="sd">        signal_type: str, optional</span>
+<span class="sd">            Description of signal, ``&#39;EELS&#39;`` by default.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_rep</span> <span class="o">=</span> <span class="n">n_rep</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spectral image has not been clustered yet. Clustering with default parameters.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># If the number of unique values is not equal to the number of clusters,</span>
+        <span class="c1"># then the clustering used a different number of values and needs to be redone.</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">))</span> <span class="o">!=</span> <span class="n">n_clusters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">spectra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_cluster_signals</span><span class="p">(</span><span class="n">conf_interval</span><span class="o">=</span><span class="n">conf_interval</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">)</span>
+
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+
+        <span class="c1"># Each of the clusters will have n_rep models for the ZLP, each fitted on a different spectrum.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">n_rep</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rep</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">):</span>
+                <span class="c1"># Number of spectra in the cluster</span>
+                <span class="n">n_spectra</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">spectra</span><span class="p">[</span><span class="n">cluster</span><span class="p">])</span>
+                <span class="c1"># Select a random spectrum in the cluster</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">n_spectra</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">=</span> <span class="n">spectra</span><span class="p">[</span><span class="n">cluster</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+
+                <span class="c1"># Best fit values from model fit of the ZLP</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_zlp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_fit_between</span><span class="p">(</span>
+                    <span class="n">function</span><span class="o">=</span><span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+                <span class="c1"># Get x, y coordinates for model fit of the ZLP</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">generate_model</span><span class="p">(</span><span class="n">function</span><span class="o">=</span><span class="n">function</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span><span class="p">[</span><span class="n">cluster</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ym_model</span><span class="p">)</span></div>
+
+        
+        <span class="c1"># # Array that holds the median, low and high of each cluster ZLP prediction for each energy loss</span>
+        <span class="c1"># self.zlp_models = np.zeros((n_clusters, 3, len(self.x_signal)))</span>
+        <span class="c1"># for cluster in range(n_clusters):</span>
+        <span class="c1">#     self.zlp_models[cluster] = summary_distribution(self.zlp_models_all[cluster])</span>
+
+<div class="viewcode-block" id="GainPeakFitter.fit_gain_peak_mc">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.fit_gain_peak_mc">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit_gain_peak_mc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">L_bound</span><span class="o">=-</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">R_bound</span><span class="o">=-</span><span class="mf">.5</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_conf_interval</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the Monte Carlo replica method to fit a Lorentzian model to the subtracted spectrum</span>
+<span class="sd">        in a specified energy interval [``L_bound, R_bound``].</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            y-coordinate of the pixel.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            x-coordinate of the pixel.</span>
+<span class="sd">        L_bound : float, optional</span>
+<span class="sd">            Left bound of the interval in which to fit to the subtracted spectrum.</span>
+<span class="sd">        R_bound : float, optional</span>
+<span class="sd">            Right bound of the interval in which to fit to the subtracted spectrum.</span>
+<span class="sd">        return_all : bool, optional</span>
+<span class="sd">            Option to return the subtracted spectra for all replicas corresponding</span>
+<span class="sd">            to this pixel.</span>
+<span class="sd">        return_conf_interval : bool, optional</span>
+<span class="sd">            Option to specify if the upper and lower bounds of the confidence </span>
+<span class="sd">            interval must be returned.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        gain : numpy.ndarray</span>
+<span class="sd">            Array with the median Lorentzian fit to the subtracted spectrum.</span>
+<span class="sd">        gain_low : numpy.ndarray, optional</span>
+<span class="sd">            Lower bound of the Lorentzian fit.</span>
+<span class="sd">        gain_high : numpy.ndarray, optional</span>
+<span class="sd">            Upper bound of the Lorentzian fit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y_signal_subtracted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_subtracted_spectrum</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">y_gain_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_rep</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_rep</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_signal_subtracted</span> <span class="o">=</span> <span class="n">y_signal_subtracted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pcov_gain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curve_fit_between</span><span class="p">(</span>
+                    <span class="n">L_bound</span><span class="p">,</span> <span class="n">R_bound</span><span class="p">)</span>  <span class="c1"># mirror of loss peak</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_gain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="p">)</span>
+                <span class="n">y_gain_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_gain</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Gain peak fit FAILED!!&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="n">y_gain_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">if</span> <span class="n">return_all</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">y_gain_all</span>
+        <span class="k">if</span> <span class="n">return_conf_interval</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">y_gain_all</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">y_gain_all</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.get_subtracted_spectrum">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.get_subtracted_spectrum">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_subtracted_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_conf_interval</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the subtracted spectrum at pixel (``i``, ``j``).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            y-coordinate of the pixel.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            x-coordinate of the pixel.</span>
+<span class="sd">        signal_type: str, optional</span>
+<span class="sd">            The type of signal that is requested, should comply with the defined</span>
+<span class="sd">            names. Set to ``&#39;EELS&#39;`` by default.</span>
+<span class="sd">        return_all : bool, optional</span>
+<span class="sd">            Option to return the subtracted spectra for all replicas corresponding</span>
+<span class="sd">            to this pixel.</span>
+<span class="sd">        return_conf_interval : bool, optional</span>
+<span class="sd">            Option to specify if the upper and lower bounds of the confidence </span>
+<span class="sd">            interval must be returned.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments. </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        signal : numpy.ndarray</span>
+<span class="sd">            Array with the median subtracted spectrum from the requested pixel.</span>
+<span class="sd">        signal_low : numpy.ndarray, optional</span>
+<span class="sd">            Lower bound of the confidence interval of the subtracted spectrum.</span>
+<span class="sd">        signal_high : numpy.ndarray, optional</span>
+<span class="sd">            Upper bound of the confidence interval of the subtracted spectrum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spectral image has not been clustered yet. Clustering with default parameters.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ZLP models have not been fitted yet. Fitting with default parameters.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit_models</span><span class="p">(</span><span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_pixel_signal</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">y_signal_subtracted</span> <span class="o">=</span> <span class="n">signal</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
+        <span class="c1"># Intensity is a positive definite quantity</span>
+        <span class="n">y_signal_subtracted</span><span class="p">[</span><span class="n">y_signal_subtracted</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">return_all</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">y_signal_subtracted</span>
+        <span class="k">if</span> <span class="n">return_conf_interval</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">y_signal_subtracted</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="n">y_signal_subtracted</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="GainPeakFitter.get_model">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.get_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">signal_type</span><span class="o">=</span><span class="s1">&#39;EELS&#39;</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_conf_interval</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the model fit to the ZLP at pixel (``i``, ``j``).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            y-coordinate of the pixel.</span>
+<span class="sd">        j : int</span>
+<span class="sd">            x-coordinate of the pixel.</span>
+<span class="sd">        signal_type: str, optional</span>
+<span class="sd">            The type of signal that is requested, should comply with the defined</span>
+<span class="sd">            names. Set to ``&#39;EELS&#39;`` by default.</span>
+<span class="sd">        return_all : bool, optional</span>
+<span class="sd">            Option to return all models.</span>
+<span class="sd">        return_conf_interval : bool, optional</span>
+<span class="sd">            Option to specify if the upper and lower bounds of the confidence </span>
+<span class="sd">            interval must be returned.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments. </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        model : numpy.ndarray</span>
+<span class="sd">            Array with the median model fit to the ZLP from the requested pixel.</span>
+<span class="sd">        model_low : numpy.ndarray, optional</span>
+<span class="sd">            Lower bound of the confidence interval of the model fit to the ZLP.</span>
+<span class="sd">        model_high : numpy.ndarray, optional</span>
+<span class="sd">            Upper bound of the confidence interval of the model fit to the ZLP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Spectral image has not been clustered yet. Clustering with default parameters.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">cluster_labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ZLP models have not been fitted yet. Fitting with default parameters.&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit_models</span><span class="p">(</span><span class="n">signal_type</span><span class="o">=</span><span class="n">signal_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_all</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span><span class="p">[</span><span class="n">cluster</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">return_conf_interval</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span><span class="p">[</span><span class="n">cluster</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">summary_distribution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zlp_models_all</span><span class="p">[</span><span class="n">cluster</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span></div>
+
+    
+    <span class="k">def</span> <span class="nf">plot_single_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mf">1e5</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">perr_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="p">))</span>
+
+<div class="viewcode-block" id="GainPeakFitter.gaussian">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.gaussian">[docs]</a>
+    <span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gaussian centered around ``x`` = ``x0``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndrray</span>
+<span class="sd">            1D array of the energy loss.</span>
+<span class="sd">        x0 : float</span>
+<span class="sd">            Energy loss at the center of the Gaussian.</span>
+<span class="sd">        a : float</span>
+<span class="sd">            Height of the Gaussian peak.</span>
+<span class="sd">        sigma : float</span>
+<span class="sd">            Standard deviation of the Gaussian.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Gaussian.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.split_gaussian">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_gaussian">[docs]</a>
+    <span class="k">def</span> <span class="nf">split_gaussian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sigma_left</span><span class="p">,</span> <span class="n">sigma_right</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gaussian centered around ``x`` = ``x0`` with a different standard deviation for ``x`` &lt; ``x0``</span>
+<span class="sd">        and ``x`` &gt; ``x0``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndrray</span>
+<span class="sd">            1D array of the energy loss.</span>
+<span class="sd">        x0 : float</span>
+<span class="sd">            Energy loss at the center of the Gaussian.</span>
+<span class="sd">        a : float</span>
+<span class="sd">            Height of the Gaussian peak.</span>
+<span class="sd">        sigma_left : float</span>
+<span class="sd">            Standard deviation of the left half of the Gaussian.</span>
+<span class="sd">        sigma_right : float</span>
+<span class="sd">            Standard deviation of the right half of the Gaussian.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Split Gaussian.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">x0</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_left</span><span class="o">**</span><span class="mi">2</span><span class="p">)),</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma_right</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.lorentzian">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.lorentzian">[docs]</a>
+    <span class="k">def</span> <span class="nf">lorentzian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">gam</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lorentzian centered around ``x`` = ``x0``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        x0 : float</span>
+<span class="sd">            Energy loss at the center of the Lorentzian.</span>
+<span class="sd">        a : float</span>
+<span class="sd">            Height of the Lorentzian peak.</span>
+<span class="sd">        gam : float</span>
+<span class="sd">            2 * ``gamma`` is full width at half maximum (FWHM).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Lorentzian.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">gam</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gam</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Lorentzian</span></div>
+
+    
+    <span class="c1"># def lorentzian_background(self, x, x0, a, gam, b):</span>
+<div class="viewcode-block" id="GainPeakFitter.lorentzian_background">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.lorentzian_background">[docs]</a>
+    <span class="k">def</span> <span class="nf">lorentzian_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">gam</span><span class="p">,</span> <span class="n">E_0</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="c1"># def lorentzian_background(self, x, x0, a, gam, E_0, b, c):</span>
+    <span class="c1"># def lorentzian_background(self, x, x0, a, gam, E_0, a_0, b, c):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lorentzian centered around ``x`` = ``x0``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        x0 : float</span>
+<span class="sd">            Energy loss at the center of the Lorentzian.</span>
+<span class="sd">        a : float</span>
+<span class="sd">            Height of the Lorentzian peak.</span>
+<span class="sd">        gam : float</span>
+<span class="sd">            2 * ``gamma`` is full width at half maximum (FWHM).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Lorentzian.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># return a * gam**2 / (gam**2 + (x - x0)**2) + self.background(x, b)</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">gam</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gam</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">background</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">E_0</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></div>
+
+        <span class="c1"># return a * gam**2 / (gam**2 + (x - x0)**2) + self.background(x, E_0, b, c)</span>
+        <span class="c1"># return a * gam**2 / (gam**2 + (x - x0)**2) + self.background(x, E_0, a_0, b, c)</span>
+    
+    <span class="c1"># def background(self, x, b):</span>
+    <span class="k">def</span> <span class="nf">background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">E_0</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="c1"># def background(self, x, E_0, b, c):</span>
+    <span class="c1"># def background(self, x, E_0, a_0, b, c):</span>
+        <span class="c1"># return np.where(x &gt; E_0, b*np.sqrt(x) + c*x**(3/2), 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, a_0 + b*x + c*x**2, 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b * x**c, 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b * (x - E_0)**c, 0)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">E_0</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b * np.sqrt(x - E_0), 0)</span>
+        <span class="c1"># return np.where(x &gt; 0, b * np.sqrt(x), 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b / np.sqrt(x), 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b / np.sqrt(x - E_0), 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b*x**(3/2), 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b*(x - E_0)**(3/2), 0)</span>
+        <span class="c1"># return np.where(x &gt; E_0, b / (x)**(3/2), 0)</span>
+
+<div class="viewcode-block" id="GainPeakFitter.split_lorentzian">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_lorentzian">[docs]</a>
+    <span class="k">def</span> <span class="nf">split_lorentzian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">gam_left</span><span class="p">,</span> <span class="n">gam_right</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lorentzian centered around ``x`` = ``x0`` with a different FWHM for ``x`` &lt; ``x0``</span>
+<span class="sd">        and ``x`` &gt; ``x0``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        x0 : float</span>
+<span class="sd">            Energy loss at the center of the Lorentzian.</span>
+<span class="sd">        a : float</span>
+<span class="sd">            Height of the Lorentzian peak.</span>
+<span class="sd">        gam_left : float</span>
+<span class="sd">            2 * ``gam_left`` is full width at half maximum (FWHM) of the left half of the Lorentzian.</span>
+<span class="sd">        gam_right : float</span>
+<span class="sd">            2 * ``gam_right`` is full width at half maximum (FWHM) of the right half of the Lorentzian.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Split Lorentzian.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">x0</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">gam_left</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gam_left</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">a</span> <span class="o">*</span> <span class="n">gam_right</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gam_right</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># Lorentzian</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.pearson">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.pearson">[docs]</a>
+    <span class="k">def</span> <span class="nf">pearson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Pearson VII function calculated as </span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            I(x, I_{\mathrm{max}}, x_0, w, m) = I_{\mathrm{max}} \frac{w^{2m}}{\left[w^2 + \left(2^\frac{1}{m} - 1 \right) \left(x - x_0 \right)^2 \right]^2}.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        I_max : float</span>
+<span class="sd">            Height of the peak.</span>
+<span class="sd">        x_0 : float</span>
+<span class="sd">            Energy loss at the center of the peak.</span>
+<span class="sd">        w : float</span>
+<span class="sd">            Parameter related to the width of the peak.</span>
+<span class="sd">        m : float</span>
+<span class="sd">            Parameter chosen to suit a particular peak shape.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Pearson VII function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">I_max</span> <span class="o">*</span> <span class="n">w</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="n">m</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.split_pearson">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_pearson">[docs]</a>
+    <span class="k">def</span> <span class="nf">split_pearson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">w_left</span><span class="p">,</span> <span class="n">w_right</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pearson VII function with a different ``w`` for ``x`` &lt; ``x_0`` </span>
+<span class="sd">        and ``x`` &gt; ``x_0``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        I_max : float</span>
+<span class="sd">            Height of the peak.</span>
+<span class="sd">        x_0 : float</span>
+<span class="sd">            Energy loss at the center of the peak.</span>
+<span class="sd">        w : float</span>
+<span class="sd">            Parameter related to the width of the peak.</span>
+<span class="sd">        m : float</span>
+<span class="sd">            Parameter chosen to suit a particular peak shape.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Split Pearson VII function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">I_max</span> <span class="o">*</span> <span class="n">w_left</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">w_left</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="n">m</span><span class="p">,</span> <span class="n">I_max</span> <span class="o">*</span> <span class="n">w_right</span> <span class="o">**</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">w_right</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="n">m</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.pseudo_voigt">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.pseudo_voigt">[docs]</a>
+    <span class="k">def</span> <span class="nf">pseudo_voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Linear combination of a Gaussian and Lorentzian function, both described by</span>
+<span class="sd">        the same FWHM ``f``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        I_max : float</span>
+<span class="sd">            Height of the peak.</span>
+<span class="sd">        x_0 : float</span>
+<span class="sd">            Energy loss at the center of the peak.</span>
+<span class="sd">        f : float</span>
+<span class="sd">            FWHM.</span>
+<span class="sd">        eta : float</span>
+<span class="sd">            Mixing parameter.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Pseudo-Voigt function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">eta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">f</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))),</span> <span class="n">x_0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">eta</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">f</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.split_pseudo_voigt">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.split_pseudo_voigt">[docs]</a>
+    <span class="k">def</span> <span class="nf">split_pseudo_voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">f_left</span><span class="p">,</span> <span class="n">f_right</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pseudo-Voigt function with a different FWHM for ``x`` &lt; ``x_0`` </span>
+<span class="sd">        and ``x`` &gt; ``x_0``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        I_max : float</span>
+<span class="sd">            Height of the peak.</span>
+<span class="sd">        x_0 : float</span>
+<span class="sd">            Energy loss at the center of the peak.</span>
+<span class="sd">        f_left : float</span>
+<span class="sd">            FWHM for the left half of the function.</span>
+<span class="sd">        f_right : float</span>
+<span class="sd">            FWHM for the right half of the function.</span>
+<span class="sd">        eta : float</span>
+<span class="sd">            Mixing parameter.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Split Pseudo-Voigt function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">eta</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">f_left</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))),</span> <span class="n">f_right</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))),</span> <span class="n">x_0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">eta</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_lorentzian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">f_left</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">f_right</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.generalised_peak">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.generalised_peak">[docs]</a>
+    <span class="k">def</span> <span class="nf">generalised_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">nu</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Generalised Peak function calculated as </span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            \frac{2}{\pi \delta} \Bigg|\frac{\Gamma\left[\frac{\nu}{2} + i \gamma_\nu \left(\frac{4 x_s^2}{\pi^2 \delta^2} \right)^2 \right]}{\Gamma\left[\frac{\nu}{2}] \right]}\Bigg|^2,</span>
+
+<span class="sd">        where :math:`\gamma_\nu = \sqrt{\pi} \frac{\Gamma\left[\frac{\nu + 1}{2} \right]}{\Gamma\left[\nu + \frac{1}{2} \right]}`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        x_0 : float</span>
+<span class="sd">            Energy offset.</span>
+<span class="sd">        delta : float</span>
+<span class="sd">            Parameter describing the peak width.</span>
+<span class="sd">        nu : float</span>
+<span class="sd">            Parameter describing the peak shape.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Generalised Peak function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gamma_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">gamma</span><span class="p">((</span><span class="n">nu</span> <span class="o">+</span>
+                                                        <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">nu</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">q_s</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x_0</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">nu</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">gamma_v</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">q_s</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">delta</span><span class="p">))</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">nu</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.kaiser">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.kaiser">[docs]</a>
+    <span class="k">def</span> <span class="nf">kaiser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Kaiser window function, calculated as</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            w_0(x) \triangleq \begin{array}{cl} \frac{1}{L} \frac{I_0\left[m \sqrt{1-(2 x / L)^2}\right]}{I_0[m]},</span>
+<span class="sd">            &amp; |x| \leq L / 2 \\ 0, &amp; |x|&gt;L / 2 \end{array},</span>
+
+<span class="sd">        where :math:`I_0` is the zeroth-order modified Bessel function of the first kind.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        L : float</span>
+<span class="sd">            Window duration.</span>
+<span class="sd">        m : float</span>
+<span class="sd">            Parameter determining the window shape.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Kaiser window function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">L</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">emath</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">/</span> <span class="n">L</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">L</span> <span class="o">*</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">iv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.model">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.model">[docs]</a>
+    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the ZLP model using the optimal fit parameters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : numpy.ndarray</span>
+<span class="sd">            1D array of energy loss.</span>
+<span class="sd">        function : str, {&#39;Gaussian&#39;, &#39;Split Gausian&#39;, &#39;Lorentzian&#39;, &#39;Pearson VII&#39;, &#39;Split Pearson VII&#39;, &#39;Pseudo-Voigt&#39;, &#39;Split Pseudo-Voigt&#39;, &#39;Generalised Peak&#39;, &#39;Kaiser window&#39;}</span>
+<span class="sd">            Model choice for the ZLP.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments.       </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            ZLP model fit.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Gaussian&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Split Gaussian&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Lorentzian&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Pearson VII&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pearson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Split Pearson VII&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_pearson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Pseudo-Voigt&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pseudo_voigt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Split Pseudo-Voigt&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_pseudo_voigt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Generalised peak&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generalised_peak</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Kaiser window&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">kaiser</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_zlp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.curve_fit_between">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.curve_fit_between">[docs]</a>
+    <span class="k">def</span> <span class="nf">curve_fit_between</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_left</span><span class="o">=-</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">x_right</span><span class="o">=-</span><span class="mf">0.6</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Curve fit between chosen eloss fitting range.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (np.array): eloss [in eV]</span>
+<span class="sd">            y (np.array): signal, intensity, electron count [in a.u.]</span>
+<span class="sd">            x_left (float): left margin of eloss fitting range</span>
+<span class="sd">            x_right (float): right margin of eloss fitting range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">idx_L</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">x_left</span><span class="p">)</span>
+        <span class="n">idx_R</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">x_right</span><span class="p">)</span>
+        <span class="n">x_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">[</span><span class="n">idx_L</span><span class="p">:</span><span class="n">idx_R</span><span class="p">]</span>
+        <span class="n">y_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_signal_subtracted</span><span class="p">[</span><span class="n">idx_L</span><span class="p">:</span><span class="n">idx_R</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;==&gt; Lorentzian fit failed!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.curve_fit_between_background">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.curve_fit_between_background">[docs]</a>
+    <span class="k">def</span> <span class="nf">curve_fit_between_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_left</span><span class="o">=-</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">x_right</span><span class="o">=-</span><span class="mf">0.6</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Curve fit between chosen eloss fitting range.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (np.array): eloss [in eV]</span>
+<span class="sd">            y (np.array): signal, intensity, electron count [in a.u.]</span>
+<span class="sd">            x_left (float): left margin of eloss fitting range</span>
+<span class="sd">            x_right (float): right margin of eloss fitting range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">idx_L</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">x_left</span><span class="p">)</span>
+        <span class="n">idx_R</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">x_right</span><span class="p">)</span>
+        <span class="n">x_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">[</span><span class="n">idx_L</span><span class="p">:</span><span class="n">idx_R</span><span class="p">]</span>
+        <span class="n">y_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_signal_subtracted</span><span class="p">[</span><span class="n">idx_L</span><span class="p">:</span><span class="n">idx_R</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lorentzian_background</span><span class="p">,</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.model_fit_between">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.model_fit_between">[docs]</a>
+    <span class="k">def</span> <span class="nf">model_fit_between</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Model fit of the ZLP. Delete x coordinates that contain information about gain/loss peaks.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        function : str, {&#39;Gaussian&#39;, &#39;Split Gausian&#39;, &#39;Lorentzian&#39;, &#39;Pearson VII&#39;, &#39;Split Pearson VII&#39;, &#39;Pseudo-Voigt&#39;, &#39;Split Pseudo-Voigt&#39;, &#39;Generalised Peak&#39;, &#39;Kaiser window&#39;}</span>
+<span class="sd">            Model choice for the ZLP.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments.  </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        popt: numpy.ndarray</span>
+<span class="sd">            Optimal values for the parameters so that the sum of the squared residuals of</span>
+<span class="sd">            f(xdata, *popt) - ydata is minimized.</span>
+<span class="sd">        pcov : numpy.ndarray</span>
+<span class="sd">            The estimated covariance of popt. The diagonals provide the  variance of the parameter estimates.</span>
+<span class="sd">            To compute one standard deviation errors on the parameters use perr = np.sqrt(np.diag(pcov)).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Define which indices in the array of the signal should be ignored</span>
+        <span class="n">idx_A</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_A</span><span class="p">)</span>
+        <span class="n">idx_B</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_B</span><span class="p">)</span>
+        <span class="n">idx_C</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_C</span><span class="p">)</span>
+        <span class="n">idx_D</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">find_nearest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_D</span><span class="p">)</span>
+        <span class="n">idx_delete_from_A_to_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">idx_A</span><span class="p">,</span> <span class="n">idx_B</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">idx_delete_from_C_to_D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">idx_C</span><span class="p">,</span> <span class="n">idx_D</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">idx_delete</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx_delete_from_A_to_B</span><span class="p">,</span> <span class="n">idx_delete_from_C_to_D</span><span class="p">)</span>
+
+        <span class="c1"># Delete all indices between idx_A &amp; idx_B; keep relevant ranges.</span>
+        <span class="n">x_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">idx_delete</span><span class="p">)</span>
+        <span class="n">y_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">,</span> <span class="n">idx_delete</span><span class="p">)</span>
+        <span class="n">x_0</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Gaussian&#39;</span><span class="p">:</span>
+                <span class="n">fwhm_est</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">(</span><span class="n">do_fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># return curve_fit(lambda x, a, sigma: self.gaussian(x, a, sigma, 0), x_new, y_new)</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gaussian</span><span class="p">,</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">),</span> <span class="n">fwhm_est</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))),</span> <span class="n">x_0</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Split Gaussian&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">split_gaussian</span><span class="p">,</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Lorentzian&#39;</span><span class="p">:</span>
+                <span class="n">fwhm_est</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">(</span><span class="n">do_fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lorentzian</span><span class="p">,</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="n">x_0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">),</span> <span class="n">fwhm_est</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Pearson VII&#39;</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+                <span class="n">fwhm_est</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">(</span><span class="n">do_fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pearson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">),</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">fwhm_est</span><span class="p">])</span>
+                <span class="c1"># return curve_fit(self.pearson, x_new, y_new)</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Split Pearson VII&#39;</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+                <span class="n">fwhm_est</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">(</span><span class="n">do_fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">w_left</span><span class="p">,</span> <span class="n">w_right</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_pearson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">I_max</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">w_left</span><span class="p">,</span> <span class="n">w_right</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">),</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">fwhm_est</span><span class="p">,</span> <span class="n">fwhm_est</span><span class="p">])</span>
+                <span class="c1"># return curve_fit(self.pearson, x_new, y_new)</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Pseudo-Voigt&#39;</span><span class="p">:</span>
+                <span class="n">fwhm_est</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">(</span><span class="n">do_fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pseudo_voigt</span><span class="p">,</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">),</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">fwhm_est</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Split Pseudo-Voigt&#39;</span><span class="p">:</span>
+                <span class="n">fwhm_est</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm</span><span class="p">(</span><span class="n">do_fit</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">split_pseudo_voigt</span><span class="p">,</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">),</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">fwhm_est</span><span class="p">,</span> <span class="n">fwhm_est</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Generalised peak&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generalised_peak</span><span class="p">,</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Kaiser window&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">curve_fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kaiser</span><span class="p">,</span> <span class="n">x_new</span><span class="p">,</span> <span class="n">y_new</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model not recognised. Use one of the possible options.&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;==&gt; Model ZLP-fit failed!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.determine_parameters">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.determine_parameters">[docs]</a>
+    <span class="k">def</span> <span class="nf">determine_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Determines the parameters specifying a Gaussian or Lorentzian function using</span>
+<span class="sd">        the signal&#39;s peak height and the FWHM of the peak.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        function : str, {&#39;Gaussian&#39;, &#39;Lorentzian&#39;}</span>
+<span class="sd">            Model choice for the ZLP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="c1"># Find locations where data is larger than half the peak height.</span>
+        <span class="c1"># The left edge of the FWMM is the first index, the right edge the last index.</span>
+        <span class="c1"># We subtract and add 1 respectively to get a better estimate of the FWHM.</span>
+        <span class="n">fwhm_idx1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">fwhm_idx2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">fwhm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">[</span><span class="n">fwhm_idx2</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">[</span><span class="n">fwhm_idx1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Gaussian&#39;</span><span class="p">:</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">fwhm</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">height</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">x0</span>
+        <span class="k">elif</span> <span class="n">function</span> <span class="o">==</span> <span class="s1">&#39;Lorentzian&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">fwhm</span><span class="o">/</span><span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.signal_subtracted">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.signal_subtracted">[docs]</a>
+    <span class="k">def</span> <span class="nf">signal_subtracted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate signal spectrum minus model fitted ZLP.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        function : str, {&#39;Gaussian&#39;, &#39;Split Gausian&#39;, &#39;Lorentzian&#39;, &#39;Pearson VII&#39;, &#39;Split Pearson VII&#39;, &#39;Pseudo-Voigt&#39;, &#39;Split Pseudo-Voigt&#39;, &#39;Generalised Peak&#39;, &#39;Kaiser window&#39;}</span>
+<span class="sd">            Model choice for the ZLP.</span>
+<span class="sd">        kwargs: dict, optional</span>
+<span class="sd">            Additional keyword arguments.  </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            1D array of signal spectrum minus model fitted ZLP. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># SUBTRACT OBTAINED MODEL FROM THE SIGNAL</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_signal_subtracted</span> <span class="o">=</span> \
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># Intensity is a positive definite quantity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_signal_subtracted</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y_signal_subtracted</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.create_new_plot">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.create_new_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_new_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create pyplot.subplots figure with axes.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.plot_all_results">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.plot_all_results">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_all_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">monte_carlo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Plot all components: original signal, Model-fit ZLP, subtracted</span>
+<span class="sd">        spectrum, Lorentzian-fit gain peak.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_signal</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="p">,</span> <span class="n">monte_carlo</span><span class="o">=</span><span class="n">monte_carlo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="p">,</span> <span class="n">monte_carlo</span><span class="o">=</span><span class="n">monte_carlo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_subtracted</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="p">,</span> <span class="n">monte_carlo</span><span class="o">=</span><span class="n">monte_carlo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_gain_peak</span><span class="p">()</span>
+        <span class="c1"># self.plot_loss_peak()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="nf">set_ax_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Title here.&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clr</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;spX&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                    <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">monte_carlo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">monte_carlo</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_pixel_signal</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_signal</span><span class="p">,</span>
+                     <span class="n">c</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">generate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Get coordinates for Gaussian fit of the ZLP</span>
+        <span class="c1"># self.xm = np.arange(-4, 4, 1e-3)  # energy loss (eV)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ym_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clr</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;spX ZLP fit&#39;</span><span class="p">,</span>
+                   <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                   <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">monte_carlo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">plot_intervals</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">monte_carlo</span><span class="p">:</span>
+            <span class="n">ym_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">plot_intervals</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">ym_model</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ym_model</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> 
+                                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">clr</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">ym_model</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="n">c</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">linestyle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generate_model</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_model</span><span class="p">,</span>
+                     <span class="n">c</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">linestyle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_subtracted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clr</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;subtracted&#39;</span><span class="p">,</span>
+                        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">monte_carlo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">plot_intervals</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">monte_carlo</span><span class="p">:</span>
+            <span class="n">subtracted_signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_subtracted_spectrum</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">j</span><span class="p">,</span> <span class="n">return_conf_interval</span><span class="o">=</span><span class="n">plot_intervals</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">plot_intervals</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">subtracted_signal</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">subtracted_signal</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> 
+                                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">clr</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">subtracted_signal</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="n">c</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">linestyle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_signal_subtracted</span><span class="p">,</span>
+                     <span class="n">c</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">linestyle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">perr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pcov</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">pcov</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">fwhm_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">i1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">i2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span>
+
+    <span class="k">def</span> <span class="nf">fwhm_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm_idx</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">plot_gain_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clr</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;mode #1 gain&#39;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit_gain_peak</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fwhm_idx</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span><span class="p">[</span><span class="n">i1</span><span class="p">:</span><span class="n">i2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;gain : x0 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">perr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pcov_gain</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashdot&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_loss_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clr</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;mode #1 loss&#39;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit_loss_peak</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">clr</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;loss : x0 = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">perr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pcov_loss</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_loss</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                        <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashdot&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_spectral_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;turbo_r&#39;</span><span class="p">):</span>
+        <span class="n">fig0</span><span class="p">,</span> <span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig0</span><span class="p">,</span> <span class="n">ax0</span>
+
+    <span class="k">def</span> <span class="nf">set_total_count_gain_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_count_gain_peak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_gain</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">set_total_count_loss_peak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_count_loss_peak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ym_loss</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;count=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">total_count_gain_peak</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">, popt=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">popt_gain</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># print(f&quot;count={self.total_count_loss_peak:.1e}, popt={self.popt_loss}&quot;)</span>
+
+<div class="viewcode-block" id="GainPeakFitter.array2D_of_intensity_at_energy_loss">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.array2D_of_intensity_at_energy_loss">[docs]</a>
+    <span class="k">def</span> <span class="nf">array2D_of_intensity_at_energy_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eloss</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate 2D array of intensities for each SI-pixel at a chosen energy </span>
+<span class="sd">        loss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_pooled_spectrum_from_each_pixel_in_one_array</span><span class="p">()</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_rows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_cols</span><span class="p">))</span>
+        <span class="n">arr</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="c1"># intensity at eloss -2.1eV</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">eloss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_signal</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">:,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">arr</span></div>
+
+
+<div class="viewcode-block" id="GainPeakFitter.plot_array2D_of_intensity_at_energy_loss">
+<a class="viewcode-back" href="../../../modules/EELSFitter.core.html#EELSFitter.core.gainpeakfitter.GainPeakFitter.plot_array2D_of_intensity_at_energy_loss">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_array2D_of_intensity_at_energy_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eloss</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+                                                 <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;turbo&#39;</span><span class="p">,</span>
+                                                 <span class="n">cbar_title</span><span class="o">=</span><span class="s1">&#39;intensity&#39;</span><span class="p">,</span>
+                                                 <span class="n">dm4_filename</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Example heatmap plot: SI with only intensity at energy loss -1.1eV.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            eloss (float, optional): energy loss value. Defaults to -1.1.</span>
+<span class="sd">            cmap (str, optional): color map. Defaults to &#39;turbo&#39;.</span>
+<span class="sd">            cbar_title (str, optional): color bar title. Defaults to &#39;intensity&#39;.</span>
+<span class="sd">            dm4_filename (str, optional): file name. Defaults to &#39;&#39;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            fig: pyplot figure</span>
+<span class="sd">            ax:  pyplot axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">array2D_of_intensity_at_energy_loss</span><span class="p">(</span><span class="n">eloss</span><span class="p">)</span>  <span class="c1"># [eV]</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dm4_filename</span><span class="si">}</span><span class="se">\n</span><span class="s2">@ </span><span class="si">{</span><span class="n">eloss</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> eV&quot;</span><span class="p">)</span>
+        <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">cbar_title</span><span class="p">)</span>  <span class="c1"># intensity lower for thicker sample</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
+</div>
+
+
+
+<span class="k">class</span> <span class="nc">RectangleInSpectralImage</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create rectangle in spectral image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load spectral image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (dm4): spectral image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="n">image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intensity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_i</span> <span class="o">=</span> <span class="mi">1</span>                                 <span class="c1"># vertical index top</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_f</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intensity</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># vertical index bottom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_i</span> <span class="o">=</span> <span class="mi">1</span>                                 <span class="c1"># horizontal index left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_f</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intensity</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># horizontal index right</span>
+
+    <span class="k">def</span> <span class="nf">get_rectangle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_f</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_i</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_f</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_i</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rectangle</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">col_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_i</span><span class="p">),</span>
+                                           <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span>
+                                           <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                           <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+                                           <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                                           <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                                           <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_spectral_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;turbo_r&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intensity</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_highlight_single_pixel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color_pixel</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">):</span>
+        <span class="c1"># Choose spectrum and mark its pixel in the Spectral Image.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_spectral_image</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax0</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color_pixel</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">marker</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_rectangle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_spectral_image</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_rectangle</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax0</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rectangle</span><span class="p">)</span>  <span class="c1"># rectangle</span>
+
+    <span class="k">def</span> <span class="nf">plot_spectra_within_rectangle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                      <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+                                      <span class="n">xmin</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span>
+                                      <span class="n">xmax</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                      <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                      <span class="n">ymax</span><span class="o">=</span><span class="mi">300000</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">row_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_f</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_f</span><span class="p">):</span>
+                <span class="c1"># plot each spectrum within the rectangle</span>
+                <span class="n">signal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">get_pixel_signal</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">eaxis</span><span class="p">,</span> <span class="n">signal</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">find_nearest</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">array</span> <span class="o">-</span> <span class="n">value</span><span class="p">))</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">idx</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">save_figure</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">path_to_fig</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./figs/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">plot_type</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">path_to_fig</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span>
+                <span class="n">pad_inches</span><span class="o">=</span><span class="n">pad_inches</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved under </span><span class="si">{</span><span class="n">path_to_fig</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">summary_distribution</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">84</span><span class="p">):</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">median</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">]</span>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, EELSFitter developer team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
